@@ -19,8 +19,9 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     private int itemCount;
     private OnClickHandler clickHandler;
 
-    PopularMoviesAdapter(int numOfItems) {
+    PopularMoviesAdapter(int numOfItems, OnClickHandler clickHandler) {
         this.itemCount = numOfItems;
+        this.clickHandler = clickHandler;
     }
 
 
@@ -51,7 +52,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     }
 
 
-    public interface OnClickHandler{
+    public interface OnClickHandler {
         public void onItemClick(int item);
     }
 
@@ -64,19 +65,13 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
         public PopularMoviesViewHolder(@NonNull View itemView) {
             super(itemView);
-//            tempTV = (TextView) itemView.findViewById(R.id.tv_movieCard);
             movieCard = (ImageView) itemView.findViewById(R.id.iv_movieCard);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
-//            clickHandler.onItemClick(getAdapterPosition());
-
-
-            Intent intent = new Intent(context, MovieDetail.class);
-            context.startActivity(intent);
+            clickHandler.onItemClick(getAdapterPosition());
         }
     }
 }
