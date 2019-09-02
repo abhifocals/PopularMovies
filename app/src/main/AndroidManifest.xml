@@ -19,4 +19,6 @@
         <activity android:name=".MovieDetail"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
