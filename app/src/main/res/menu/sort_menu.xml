@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/sortMenu"
+        android:title="Sort"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/item1"
+                android:title="Placeholder"></item>
+
+            <item
+                android:id="@+id/item2"
+                android:title="Placeholder"></item>
+        </menu>
+
+    </item>
+
+
+    <!--    <Spinner-->
+    <!--        android:id="@+id/planets_spinner"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content" />-->
+</menu>
