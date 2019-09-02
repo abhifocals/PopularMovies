@@ -62,19 +62,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         Intent intent = new Intent(this, MovieDetail.class);
 
-        intent.putExtra("response",response);
+        intent.putExtra("response", response);
 
         startActivity(intent);
     }
-
-
-
-
-
-
-
-
-
 
     class FetchMovieData extends AsyncTask<URL, Void, String> {
 

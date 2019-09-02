@@ -27,9 +27,6 @@ public class MovieDetail extends AppCompatActivity {
 
            title.setText(response);
 
-
         }
-
-
     }
 }
