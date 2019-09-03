@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.focals.popularmoviews.utils.MovieJsonParser;
 import com.focals.popularmoviews.utils.NetworkUtils;
 
 import java.io.IOException;
@@ -63,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         Intent intent = new Intent(this, MovieDetail.class);
 
         intent.putExtra("response", response);
+
+        MovieJsonParser.buildMovieArray(response);
+
+
+
 
         startActivity(intent);
     }
