@@ -2,6 +2,7 @@ package com.focals.popularmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -11,6 +12,12 @@ public class MovieDetail extends AppCompatActivity {
 
     TextView title;
 
+
+//    original title
+//    movie poster image thumbnail
+//    A plot synopsis (called overview in the api)
+//    user rating (called vote_average in the api)
+//    release date
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,3 +37,4 @@ public class MovieDetail extends AppCompatActivity {
         }
     }
 }
+

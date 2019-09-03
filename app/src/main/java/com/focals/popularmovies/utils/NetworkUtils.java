@@ -13,6 +13,7 @@ public class NetworkUtils {
 
     private final static String API_KEY = "900e5f3653a851c0593341c8edb05ad6";
     private final static String POPULAR_MOVIES_BASE_URL = "https://api.themoviedb.org/3/movie/popular";
+    private final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
 
     public static URL buildUrl(String baseUrl) {
         URL url = null;
