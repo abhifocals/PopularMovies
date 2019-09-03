@@ -1,27 +1,18 @@
-package com.focals.popularmoviews;
+package com.focals.popularmovies;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
-import com.focals.popularmoviews.utils.MovieJsonParser;
-import com.focals.popularmoviews.utils.NetworkUtils;
+import com.focals.popularmovies.utils.MovieJsonParser;
+import com.focals.popularmovies.utils.NetworkUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
 
@@ -62,10 +53,9 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         System.out.println();
 
         Intent intent = new Intent(this, MovieDetail.class);
-
         intent.putExtra("response", response);
 
-        MovieJsonParser.buildMovieArray(response);
+
 
 
 
@@ -87,6 +77,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             response = s;
+
+            MovieJsonParser.buildMovieArray(response);
+
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.focals.popularmoviews.utils;
+package com.focals.popularmovies.utils;
 
 import android.net.Uri;
 

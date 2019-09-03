@@ -1,4 +1,4 @@
-package com.focals.popularmoviews;
+package com.focals.popularmovies;
 
 import org.junit.Test;
 

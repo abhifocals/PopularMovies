@@ -1,6 +1,6 @@
-package com.focals.popularmoviews.utils;
+package com.focals.popularmovies.utils;
 
-import com.focals.popularmoviews.Movie;
+import com.focals.popularmovies.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;

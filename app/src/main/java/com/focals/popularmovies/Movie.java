@@ -1,4 +1,4 @@
-package com.focals.popularmoviews;
+package com.focals.popularmovies;
 
 public class Movie {
 

@@ -1,9 +1,6 @@
-package com.focals.popularmoviews;
+package com.focals.popularmovies;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
