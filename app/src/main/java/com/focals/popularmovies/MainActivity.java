@@ -8,38 +8,35 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
 
     RecyclerView rv_main;
-    RecyclerView.Adapter<PopularMoviesAdapter.PopularMoviesViewHolder> adapter;
+    PopularMoviesAdapter adapter;
     String response;
+    List<Movie> movieList;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rv_main = (RecyclerView) findViewById(R.id.rv_movies);
-
-        adapter = new PopularMoviesAdapter(20, this);
-
-        // Attach Adapter
-        rv_main.setAdapter(adapter);
-        rv_main.setHasFixedSize(true);
-
-        // Provide a Layout Manager
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        rv_main.setLayoutManager(gridLayoutManager);
 
         // Get Popular Movies
         FetchMovieData fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+
+        adapter = new PopularMoviesAdapter(20, this);
+        gridLayoutManager = new GridLayoutManager(this, 2);
     }
 
     @Override
@@ -49,16 +46,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     }
 
     @Override
-    public void onItemClick(int item) {
-        System.out.println();
-
+    public void onItemClick(View view) {
         Intent intent = new Intent(this, MovieDetail.class);
+
+        String posterPath = null;
         intent.putExtra("response", response);
-
-
-
-
-
 
         startActivity(intent);
     }
@@ -78,8 +70,16 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             super.onPostExecute(s);
             response = s;
 
-            MovieJsonParser.buildMovieArray(response);
+            movieList = MovieJsonParser.buildMovieArray(response);
+            adapter.setMovies(movieList);
 
+            // Attach Adapter
+            rv_main = (RecyclerView) findViewById(R.id.rv_movies);
+            rv_main.setAdapter(adapter);
+            rv_main.setHasFixedSize(true);
+
+            // Provide a Layout Manager
+            rv_main.setLayoutManager(gridLayoutManager);
 
         }
     }

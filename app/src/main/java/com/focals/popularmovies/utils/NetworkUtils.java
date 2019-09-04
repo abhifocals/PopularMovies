@@ -13,7 +13,7 @@ public class NetworkUtils {
 
     private final static String API_KEY = "900e5f3653a851c0593341c8edb05ad6";
     private final static String POPULAR_MOVIES_BASE_URL = "https://api.themoviedb.org/3/movie/popular";
-    private final static String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
+    private final static String POSTER_BASE_URL = "https://image.tmdb.org/t/p";
 
     public static URL buildUrl(String baseUrl) {
         URL url = null;
@@ -60,6 +60,20 @@ public class NetworkUtils {
 
     public static URL getPopularMoviesURL() {
         return buildUrl(POPULAR_MOVIES_BASE_URL);
+    }
+
+    public static Uri buildPosterUrl(String posterPath) {
+
+        Uri uri = Uri.parse(POSTER_BASE_URL).buildUpon().appendEncodedPath("w154").appendEncodedPath(posterPath.replace("/", "")).build();
+        URL posterUrl = null;
+
+//        try {
+//            posterUrl = new URL(uri.toString());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+
+        return uri;
     }
 
 }
