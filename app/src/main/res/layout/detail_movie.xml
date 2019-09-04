@@ -1,37 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ImageView>
-
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"></TextView>
+        android:paddingBottom="16dp"
+        android:text="Title"
+        android:textSize="30sp"
+        android:textAlignment="center"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/doodle"
+            android:paddingLeft="0dp"></ImageView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating"
+                android:paddingLeft="10dp"></TextView>
+
+            <TextView
+                android:id="@+id/releaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release Date"
+                android:paddingLeft="10dp"></TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/plotSynopsis"
+        android:id="@+id/plotTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Plot"></TextView>
+        android:text="Plot"
+        android:textSize="20sp"></TextView>
 
     <TextView
-        android:id="@+id/userRating"
+        android:id="@+id/plot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating"></TextView>
-
-    <TextView
-        android:id="@+id/releaseDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Release Date"></TextView>
+        android:text="Plot Content"
+        android:textSize="15sp"></TextView>
 
 
 </LinearLayout>
