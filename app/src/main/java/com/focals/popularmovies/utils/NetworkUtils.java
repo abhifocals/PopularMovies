@@ -62,7 +62,7 @@ public class NetworkUtils {
         return buildUrl(POPULAR_MOVIES_BASE_URL);
     }
 
-    public static Uri buildPosterUrl(String posterPath) {
+    public static Uri buildPosterUri(String posterPath) {
         Uri uri = Uri.parse(POSTER_BASE_URL).buildUpon().appendEncodedPath("w500").appendEncodedPath(posterPath.replace("/", "")).build();
         return uri;
     }

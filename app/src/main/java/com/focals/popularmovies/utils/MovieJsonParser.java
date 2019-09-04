@@ -1,5 +1,7 @@
 package com.focals.popularmovies.utils;
 
+import android.net.Uri;
+
 import com.focals.popularmovies.Movie;
 
 import org.json.JSONArray;
@@ -33,7 +35,9 @@ public class MovieJsonParser {
                 String posterPath = movieJson.getString("poster_path");
                 String plotSynopsis = movieJson.getString("overview");
                 String releaseDate = movieJson.getString("release_date");
-                Movie movie = new Movie(title, posterPath, plotSynopsis, releaseDate);
+
+                Uri posterUri = NetworkUtils.buildPosterUri(posterPath);
+                Movie movie = new Movie(title, posterUri, plotSynopsis, releaseDate);
 
                 if (!listOfMovies.contains(movie)) {
                     listOfMovies.add(movie);

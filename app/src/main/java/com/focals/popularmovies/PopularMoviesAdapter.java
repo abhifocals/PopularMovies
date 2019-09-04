@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -46,8 +45,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        posterUri = NetworkUtils.buildPosterUrl(movies.get(position).poster_path);
-        Picasso.get().load(posterUri).into(holder.movieCard);
+        Picasso.get().load(movies.get(position).posterUri).into(holder.movieCard);
     }
 
     @Override
