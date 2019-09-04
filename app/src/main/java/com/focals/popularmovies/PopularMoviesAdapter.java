@@ -45,17 +45,8 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-//        holder.title.setText(movies.get(position).title);
-
         Uri posterUri = NetworkUtils.buildPosterUrl(movies.get(position).poster_path);
-
         Picasso.get().load(posterUri).into(holder.movieCard);
-
-
-
-
-//        holder.title.setText("test");
-//        holder.movieCard.setImageResource(R.drawable.doodle);
     }
 
     @Override
@@ -77,17 +68,14 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
         public PopularMoviesViewHolder(@NonNull View itemView) {
             super(itemView);
             movieCard = (ImageView) itemView.findViewById(R.id.iv_movieCard);
-            title = (TextView) itemView.findViewById(R.id.tv_title);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
             if (v.getId() == R.id.iv_movieCard) {
                 clickHandler.onItemClick((v));
             }
-
         }
     }
 }

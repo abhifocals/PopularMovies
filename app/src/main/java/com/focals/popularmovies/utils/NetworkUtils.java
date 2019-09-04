@@ -63,17 +63,7 @@ public class NetworkUtils {
     }
 
     public static Uri buildPosterUrl(String posterPath) {
-
-        Uri uri = Uri.parse(POSTER_BASE_URL).buildUpon().appendEncodedPath("w154").appendEncodedPath(posterPath.replace("/", "")).build();
-        URL posterUrl = null;
-
-//        try {
-//            posterUrl = new URL(uri.toString());
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
-
+        Uri uri = Uri.parse(POSTER_BASE_URL).buildUpon().appendEncodedPath("w500").appendEncodedPath(posterPath.replace("/", "")).build();
         return uri;
     }
-
 }
