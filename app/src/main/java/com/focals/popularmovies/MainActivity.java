@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
 
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         String title = movieList.get(index).title;
         intent.putExtra("title", title);
-
+        intent.setData(movieList.get(index).posterUri);
         startActivity(intent);
     }
 
