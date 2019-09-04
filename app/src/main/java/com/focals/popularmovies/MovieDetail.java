@@ -30,7 +30,7 @@ public class MovieDetail extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            String response = intent.getStringExtra("response");
+            String response = intent.getStringExtra("title");
 
            title.setText(response);
 

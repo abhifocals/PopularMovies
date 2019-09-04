@@ -46,11 +46,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     }
 
     @Override
-    public void onItemClick(View view) {
+    public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetail.class);
 
-        String posterPath = null;
-        intent.putExtra("response", response);
+        String title = movieList.get(index).title;
+        intent.putExtra("title", title);
 
         startActivity(intent);
     }

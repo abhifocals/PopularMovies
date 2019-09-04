@@ -23,6 +23,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     private int itemCount;
     private OnClickHandler clickHandler;
     private List<Movie> movies;
+    private Uri posterUri;
 
     PopularMoviesAdapter(int numOfItems, OnClickHandler clickHandler) {
         this.itemCount = numOfItems;
@@ -45,7 +46,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        Uri posterUri = NetworkUtils.buildPosterUrl(movies.get(position).poster_path);
+        posterUri = NetworkUtils.buildPosterUrl(movies.get(position).poster_path);
         Picasso.get().load(posterUri).into(holder.movieCard);
     }
 
@@ -56,7 +57,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
 
     public interface OnClickHandler {
-        public void onItemClick(View view);
+        void onItemClick(int index);
     }
 
 
@@ -72,10 +73,8 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
         }
 
         @Override
-        public void onClick(View v) {
-            if (v.getId() == R.id.iv_movieCard) {
-                clickHandler.onItemClick((v));
-            }
+        public void onClick(View view) {
+            clickHandler.onItemClick(getAdapterPosition());
         }
     }
 }
