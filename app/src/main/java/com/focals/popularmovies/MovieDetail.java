@@ -1,7 +1,6 @@
 package com.focals.popularmovies;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +17,7 @@ public class MovieDetail extends AppCompatActivity {
     TextView rating;
     TextView releaseDate;
     TextView plot;
+    Movie currentMovie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,15 +30,16 @@ public class MovieDetail extends AppCompatActivity {
         rating = (TextView) findViewById(R.id.rating);
         releaseDate = (TextView) findViewById(R.id.releaseDate);
         plot = (TextView) findViewById(R.id.plot);
-        
+
         Intent intent = getIntent();
+        currentMovie = intent.getParcelableExtra("movie");
 
         if (intent != null) {
-            title.setText(intent.getStringExtra("title"));
-            Picasso.get().load(intent.getStringExtra("posterPath")).into(thumbnail);
-            releaseDate.setText(intent.getStringExtra("releaseDate"));
-            plot.setText(intent.getStringExtra("plot"));
-            rating.setText(intent.getStringExtra("rating"));
+            title.setText(currentMovie.title);
+            Picasso.get().load(currentMovie.posterPath).into(thumbnail);
+            releaseDate.setText(currentMovie.releaseDate);
+            plot.setText(currentMovie.plotSynopsis);
+            rating.setText(currentMovie.rating);
         }
     }
 }

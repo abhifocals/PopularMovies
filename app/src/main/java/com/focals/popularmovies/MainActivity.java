@@ -81,12 +81,20 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetail.class);
 
-        String title = movieList.get(index).title;
-        intent.putExtra("title", title);
-        intent.putExtra("posterPath", movieList.get(index).posterUri);
-        intent.putExtra("plot", movieList.get(index).plotSynopsis);
-        intent.putExtra("releaseDate", movieList.get(index).releaseDate);
-        intent.putExtra("rating", movieList.get(index).rating);
+        intent.putExtra("movie", movieList.get(index));
+
+
+
+
+
+
+
+//        String title = movieList.get(index).title;
+//        intent.putExtra("title", title);
+//        intent.putExtra("posterPath", movieList.get(index).posterPath);
+//        intent.putExtra("plot", movieList.get(index).plotSynopsis);
+//        intent.putExtra("releaseDate", movieList.get(index).releaseDate);
+//        intent.putExtra("rating", movieList.get(index).rating);
         startActivity(intent);
     }
 
