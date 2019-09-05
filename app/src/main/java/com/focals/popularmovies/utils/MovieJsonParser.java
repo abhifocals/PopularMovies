@@ -36,7 +36,8 @@ public class MovieJsonParser {
                 String popularity = movieJson.getString("popularity");
 
                 Uri posterUri = NetworkUtils.buildPosterUri(posterPath);
-                Movie movie = new Movie(title, posterUri, plotSynopsis, releaseDate, rating, popularity);
+
+                Movie movie = new Movie(title, posterUri.toString(), plotSynopsis, releaseDate, rating, popularity);
 
                 if (!listOfMovies.contains(movie)) {
                     listOfMovies.add(movie);

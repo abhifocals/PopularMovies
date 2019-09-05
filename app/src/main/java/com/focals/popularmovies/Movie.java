@@ -7,14 +7,14 @@ import android.os.Parcelable;
 public class Movie implements Parcelable {
 
     String title;
-    Uri posterUri;
+    String posterUri;
     String plotSynopsis;
     String releaseDate;
     String rating;
     String popularity;
 
 
-    public Movie(String title, Uri posterUri, String plotSynopsis, String releaseDate, String rating, String popularity) {
+    public Movie(String title, String posterUri, String plotSynopsis, String releaseDate, String rating, String popularity) {
         this.title = title;
         this.posterUri = posterUri;
         this.plotSynopsis = plotSynopsis;

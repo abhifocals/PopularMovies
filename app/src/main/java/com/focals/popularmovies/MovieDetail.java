@@ -30,13 +30,12 @@ public class MovieDetail extends AppCompatActivity {
         rating = (TextView) findViewById(R.id.rating);
         releaseDate = (TextView) findViewById(R.id.releaseDate);
         plot = (TextView) findViewById(R.id.plot);
-
+        
         Intent intent = getIntent();
 
         if (intent != null) {
             title.setText(intent.getStringExtra("title"));
-            Picasso.get().load(intent.getData()).into(thumbnail);
-
+            Picasso.get().load(intent.getStringExtra("posterPath")).into(thumbnail);
             releaseDate.setText(intent.getStringExtra("releaseDate"));
             plot.setText(intent.getStringExtra("plot"));
             rating.setText(intent.getStringExtra("rating"));
