@@ -1,13 +1,11 @@
 package com.focals.popularmovies;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Movie implements Parcelable {
-
     String title;
-    String posterUri;
+    String posterPath;
     String plotSynopsis;
     String releaseDate;
     String rating;
@@ -16,7 +14,7 @@ public class Movie implements Parcelable {
 
     public Movie(String title, String posterUri, String plotSynopsis, String releaseDate, String rating, String popularity) {
         this.title = title;
-        this.posterUri = posterUri;
+        this.posterPath = posterUri;
         this.plotSynopsis = plotSynopsis;
         this.releaseDate = releaseDate;
         this.rating = rating;
@@ -25,7 +23,7 @@ public class Movie implements Parcelable {
 
     public Movie(Parcel in) {
         title = in.readString();
-        posterUri = null;
+        posterPath = in.readString();
         plotSynopsis = in.readString();
         releaseDate = in.readString();
         rating = in.readString();
@@ -48,10 +46,11 @@ public class Movie implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
-        dest.writeString(posterUri.toString());
+        dest.writeString(posterPath);
         dest.writeString(plotSynopsis);
         dest.writeString(releaseDate);
         dest.writeString(rating);
+        dest.writeString(popularity);
     }
 
     public final static Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
