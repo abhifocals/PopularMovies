@@ -20,7 +20,7 @@ public class MovieJsonParser {
 
     public static List<Movie> buildMovieArray(String response) {
 
-        try {
+        try { // add a null check
             JSONObject jsonObject = new JSONObject(response);
 
             JSONArray results = jsonObject.getJSONArray("results");
