@@ -24,7 +24,7 @@
     <LinearLayout
         android:id="@+id/two"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
         android:orientation="horizontal"
         android:paddingLeft="10dp">
 
