@@ -25,9 +25,6 @@ public class MovieJsonParser {
 
             JSONArray results = jsonObject.getJSONArray("results");
 
-            System.out.println();
-
-
             // Iterate through response and build Array of MovieObjects
             for (int i = 0; i < results.length(); i++) {
                 JSONObject movieJson = results.getJSONObject(i);
@@ -36,9 +33,10 @@ public class MovieJsonParser {
                 String plotSynopsis = movieJson.getString("overview");
                 String releaseDate = movieJson.getString("release_date");
                 String rating = movieJson.getString("vote_average");
+                String popularity = movieJson.getString("popularity");
 
                 Uri posterUri = NetworkUtils.buildPosterUri(posterPath);
-                Movie movie = new Movie(title, posterUri, plotSynopsis, releaseDate, rating);
+                Movie movie = new Movie(title, posterUri, plotSynopsis, releaseDate, rating, popularity);
 
                 if (!listOfMovies.contains(movie)) {
                     listOfMovies.add(movie);

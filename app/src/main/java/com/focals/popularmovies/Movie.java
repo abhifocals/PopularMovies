@@ -8,14 +8,26 @@ public class Movie {
     Uri posterUri;
     String plotSynopsis;
     String releaseDate;
+
+    public String getRating() {
+        return rating;
+    }
+
     String rating;
 
+    public String getPopularity() {
+        return popularity;
+    }
 
-    public Movie(String title, Uri posterUri, String plotSynopsis, String releaseDate, String rating) {
+    String popularity;
+
+
+    public Movie(String title, Uri posterUri, String plotSynopsis, String releaseDate, String rating, String popularity) {
         this.title = title;
         this.posterUri = posterUri;
         this.plotSynopsis = plotSynopsis;
         this.releaseDate = releaseDate;
         this.rating = rating;
+        this.popularity = popularity;
     }
 }
