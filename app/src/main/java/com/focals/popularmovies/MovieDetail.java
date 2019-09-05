@@ -15,6 +15,9 @@ public class MovieDetail extends AppCompatActivity {
 
     TextView title;
     ImageView thumbnail;
+    TextView rating;
+    TextView releaseDate;
+    TextView plot;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,16 +26,20 @@ public class MovieDetail extends AppCompatActivity {
         setContentView(R.layout.detail_movie);
 
         title = (TextView) findViewById(R.id.title);
-        thumbnail = (ImageView) findViewById(R.id.three_1);
+        thumbnail = (ImageView) findViewById(R.id.thumbnail);
+        rating = (TextView) findViewById(R.id.rating);
+        releaseDate = (TextView) findViewById(R.id.releaseDate);
+        plot = (TextView) findViewById(R.id.plot);
 
         Intent intent = getIntent();
 
         if (intent != null) {
-            String response = intent.getStringExtra("title");
-            Uri uri = intent.getData();
+            title.setText(intent.getStringExtra("title"));
+            Picasso.get().load(intent.getData()).into(thumbnail);
 
-            title.setText(response);
-            Picasso.get().load(uri).into(thumbnail);
+            releaseDate.setText(intent.getStringExtra("releaseDate"));
+            plot.setText(intent.getStringExtra("plot"));
+            rating.setText(intent.getStringExtra("rating"));
         }
     }
 }
