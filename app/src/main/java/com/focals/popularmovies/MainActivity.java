@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
@@ -44,6 +45,22 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.sort_popular) {
+            FetchMovieData fetchTask = new FetchMovieData();
+            fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+        }
+
+        if (item.getItemId() == R.id.sort_rated) {
+            FetchMovieData fetchTask = new FetchMovieData();
+            fetchTask.execute(NetworkUtils.getTopRatedMoviesUrl());
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetail.class);
 
@@ -70,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             response = s;
+            movieList = null;
 
             movieList = MovieJsonParser.buildMovieArray(response);
             adapter.setMovies(movieList);
