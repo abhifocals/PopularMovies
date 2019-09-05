@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.focals.popularmovies.MovieDetail"></activity>
+        <activity
+            android:name="com.focals.popularmovies.MovieDetail"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
