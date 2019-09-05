@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.focals.popularmovies.comparators.PopularityComparator;
 import com.focals.popularmovies.comparators.RatingComparator;
@@ -26,12 +28,16 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     String response;
     List<Movie> movieList;
     private GridLayoutManager gridLayoutManager;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initializing Views
+        rv_main = (RecyclerView) findViewById(R.id.rv_movies);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         // Get Popular Movies
         FetchMovieData fetchTask = new FetchMovieData();
@@ -39,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         adapter = new PopularMoviesAdapter(20, this);
         gridLayoutManager = new GridLayoutManager(this, 2);
+
+        showProgressBar();
     }
 
     @Override
@@ -95,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            hideProgressBar();
             response = s;
             movieList = null;
 
@@ -102,15 +112,23 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
             // Attach Adapter and Layout Manager
             setUpAdapterAndLayoutManager();
-
         }
     }
 
     private void setUpAdapterAndLayoutManager() {
         adapter.setMovies(movieList);
-        rv_main = (RecyclerView) findViewById(R.id.rv_movies);
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
+    }
+
+    private void hideProgressBar() {
+        rv_main.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void showProgressBar() {
+        rv_main.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 }
