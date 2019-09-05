@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -45,7 +44,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        Picasso.get().load(movies.get(position).posterUri).into(holder.movieCard);
+        Picasso.get().load(movies.get(position).posterPath).into(holder.movieCard);
     }
 
     @Override
