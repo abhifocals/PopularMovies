@@ -5,70 +5,121 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:text="Title"
-        android:textSize="30sp"
-        android:textAlignment="center"></TextView>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:text="Title"
+            android:textAlignment="center"
+            android:textSize="30sp"></TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/two"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/three_1"
+            android:layout_width="160dp"
+            android:layout_height="284dp"
+            android:layout_gravity="fill"
+            android:src="@drawable/samplemovie"></ImageView>
+
+        <LinearLayout
+            android:id="@+id/three_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/four_1"
+                android:layout_width="match_parent"
+                android:layout_height="97dp"
+                android:layout_gravity="fill"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/five_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="28dp"
+                    android:text="Rating"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/five_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="FiveStar"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/four_2"
+                android:layout_width="match_parent"
+                android:layout_height="161dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/five_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:text="ReleaseDate"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/five_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Jan5th"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
-        <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/doodle"
-            android:paddingLeft="0dp"></ImageView>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/plotTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:paddingTop="10dp"
+            android:text="Plot"
+            android:textSize="20sp"></TextView>
 
-            <TextView
-                android:id="@+id/userRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rating"
-                android:paddingLeft="10dp"></TextView>
-
-            <TextView
-                android:id="@+id/releaseDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Release Date"
-                android:paddingLeft="10dp"></TextView>
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/plotContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="Plot Content"
+            android:textSize="15sp"></TextView>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/plotTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plot"
-        android:textSize="20sp"></TextView>
-
-    <TextView
-        android:id="@+id/plot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plot Content"
-        android:textSize="15sp"></TextView>
-
-
 </LinearLayout>
-
-
-
-
-
-
-
