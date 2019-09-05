@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.focals.popularmovies.comparators.PopularityComparator;
+import com.focals.popularmovies.comparators.RatingComparator;
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
@@ -48,17 +51,23 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.sort_popular) {
-            FetchMovieData fetchTask = new FetchMovieData();
-            fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+
+            // Get List sorted by popular here
+            Collections.sort(movieList, new PopularityComparator());
+            setUpAdapterAndLayoutManager();
         }
 
         if (item.getItemId() == R.id.sort_rated) {
-            FetchMovieData fetchTask = new FetchMovieData();
-            fetchTask.execute(NetworkUtils.getTopRatedMoviesUrl());
+
+            // Get List sorted by popular here
+            Collections.sort(movieList, new RatingComparator());
+            setUpAdapterAndLayoutManager();
+
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onItemClick(int index) {
@@ -90,16 +99,18 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             movieList = null;
 
             movieList = MovieJsonParser.buildMovieArray(response);
-            adapter.setMovies(movieList);
 
-            // Attach Adapter
-            rv_main = (RecyclerView) findViewById(R.id.rv_movies);
-            rv_main.setAdapter(adapter);
-            rv_main.setHasFixedSize(true);
-
-            // Provide a Layout Manager
-            rv_main.setLayoutManager(gridLayoutManager);
+            // Attach Adapter and Layout Manager
+            setUpAdapterAndLayoutManager();
 
         }
+    }
+
+    private void setUpAdapterAndLayoutManager() {
+        adapter.setMovies(movieList);
+        rv_main = (RecyclerView) findViewById(R.id.rv_movies);
+        rv_main.setAdapter(adapter);
+        rv_main.setHasFixedSize(true);
+        rv_main.setLayoutManager(gridLayoutManager);
     }
 }
