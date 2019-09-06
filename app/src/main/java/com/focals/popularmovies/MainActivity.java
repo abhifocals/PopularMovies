@@ -54,24 +54,18 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.sort_popular) {
+        switch (item.getItemId()) {
+            case R.id.sort_popular:
+                Collections.sort(movieList, new PopularityComparator());
+                break;
 
-            // Get List sorted by popular here
-            Collections.sort(movieList, new PopularityComparator());
-            setUpAdapterAndLayoutManager();
+            case R.id.sort_rated:
+                Collections.sort(movieList, new RatingComparator());
+                break;
         }
-
-        if (item.getItemId() == R.id.sort_rated) {
-
-            // Get List sorted by popular here
-            Collections.sort(movieList, new RatingComparator());
-            setUpAdapterAndLayoutManager();
-
-        }
-
+        setUpAdapterAndLayoutManager();
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onItemClick(int index) {
@@ -99,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
             if (s == null) {
                 showError();
+                findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE);
             } else {
                 // Build Movie Objects from Response
                 movieList = MovieJsonParser.buildMovieArray(s);
