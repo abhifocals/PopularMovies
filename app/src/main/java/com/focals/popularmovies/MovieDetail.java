@@ -11,12 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MovieDetail extends AppCompatActivity {
-    TextView title;
-    ImageView thumbnail;
-    TextView rating;
-    TextView releaseDate;
-    TextView plot;
-    Movie currentMovie;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,18 +19,18 @@ public class MovieDetail extends AppCompatActivity {
         setContentView(R.layout.detail_movie);
 
         // Getting views
-        title = (TextView) findViewById(R.id.title);
-        thumbnail = (ImageView) findViewById(R.id.thumbnail);
-        rating = (TextView) findViewById(R.id.rating);
-        releaseDate = (TextView) findViewById(R.id.releaseDate);
-        plot = (TextView) findViewById(R.id.plot);
+        TextView title = findViewById(R.id.title);
+        ImageView thumbnail = findViewById(R.id.thumbnail);
+        TextView rating = findViewById(R.id.rating);
+        TextView releaseDate = findViewById(R.id.releaseDate);
+        TextView plot = findViewById(R.id.plot);
 
         // Getting intent
         Intent intent = getIntent();
-        currentMovie = intent.getParcelableExtra("movie");
+        Movie currentMovie = intent.getParcelableExtra("movie");
 
         // Setting content in views
-        if (intent != null) {
+        if (currentMovie != null) {
             title.setText(currentMovie.title);
             Picasso.get().load(currentMovie.posterPath).into(thumbnail);
             releaseDate.setText(currentMovie.releaseDate);

@@ -15,7 +15,7 @@ public class NetworkUtils {
     private final static String POPULAR_MOVIES_BASE_URL = "https://api.themoviedb.org/3/movie/popular";
     private final static String POSTER_BASE_URL = "https://image.tmdb.org/t/p";
 
-    public static URL buildUrl(String baseUrl) {
+    private static URL buildUrl(String baseUrl) {
         URL url = null;
 
         Uri uri = Uri.parse(baseUrl).buildUpon()
@@ -52,7 +52,9 @@ public class NetworkUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            httpURLConnection.disconnect();
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
         }
 
         return null;
@@ -63,7 +65,6 @@ public class NetworkUtils {
     }
 
     public static Uri buildPosterUri(String posterPath) {
-        Uri uri = Uri.parse(POSTER_BASE_URL).buildUpon().appendEncodedPath("w500").appendEncodedPath(posterPath.replace("/", "")).build();
-        return uri;
+        return Uri.parse(POSTER_BASE_URL).buildUpon().appendEncodedPath("w500").appendEncodedPath(posterPath.replace("/", "")).build();
     }
 }

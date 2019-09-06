@@ -1,7 +1,5 @@
 package com.focals.popularmovies.comparators;
 
-import android.widget.LinearLayout;
-
 import com.focals.popularmovies.Movie;
 
 import java.util.Comparator;

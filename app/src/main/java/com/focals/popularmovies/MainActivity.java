@@ -24,12 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
 
-    RecyclerView rv_main;
-    PopularMoviesAdapter adapter;
-    List<Movie> movieList;
-    private GridLayoutManager gridLayoutManager;
-    ProgressBar progressBar;
-    TextView error;
+    private RecyclerView rv_main;
+    private List<Movie> movieList;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         setContentView(R.layout.activity_main);
 
         // Initializing Views
-        rv_main = (RecyclerView) findViewById(R.id.rv_movies);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        rv_main = findViewById(R.id.rv_movies);
+        progressBar = findViewById(R.id.progressBar);
 
         // Get Popular Movies
         FetchMovieData fetchTask = new FetchMovieData();
@@ -80,9 +77,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             showProgressBar();
 
             URL url = urls[0];
-            String response = NetworkUtils.getResponseFromUrl(url);
-
-            return response;
+            return NetworkUtils.getResponseFromUrl(url);
         }
 
         @Override
@@ -104,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     }
 
     private void setUpAdapterAndLayoutManager() {
-        adapter = new PopularMoviesAdapter(movieList.size(), this);
-        gridLayoutManager = new GridLayoutManager(this, 2);
+        PopularMoviesAdapter adapter = new PopularMoviesAdapter(movieList.size(), this);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
         adapter.setMovies(movieList);
         rv_main.setAdapter(adapter);
@@ -125,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
     private void showError() {
         progressBar.setVisibility(View.INVISIBLE);
-        error = (TextView) findViewById(R.id.tv_error);
+        TextView error = findViewById(R.id.tv_error);
         error.setVisibility(View.VISIBLE);
     }
 }

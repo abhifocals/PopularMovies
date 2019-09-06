@@ -1,12 +1,10 @@
 package com.focals.popularmovies;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,11 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdapter.PopularMoviesViewHolder> {
 
-    private Context context;
-    private int itemCount;
-    private OnClickHandler clickHandler;
+    private final int itemCount;
+    private final OnClickHandler clickHandler;
     private List<Movie> movies;
-    private Uri posterUri;
 
     PopularMoviesAdapter(int numOfItems, OnClickHandler clickHandler) {
         this.itemCount = numOfItems;
@@ -35,7 +31,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     @NonNull
     @Override
     public PopularMoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.movie_card, parent, false);
 
@@ -58,12 +54,11 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     }
 
     class PopularMoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView title;
-        private ImageView movieCard;
+        private final ImageView movieCard;
 
-        public PopularMoviesViewHolder(@NonNull View itemView) {
+        PopularMoviesViewHolder(@NonNull View itemView) {
             super(itemView);
-            movieCard = (ImageView) itemView.findViewById(R.id.iv_movieCard);
+            movieCard = itemView.findViewById(R.id.iv_movieCard);
             itemView.setOnClickListener(this);
         }
 

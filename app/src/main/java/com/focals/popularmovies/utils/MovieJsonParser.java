@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MovieJsonParser {
 
-    public static List<Movie> listOfMovies = new ArrayList<>();
+    private static final List<Movie> listOfMovies = new ArrayList<>();
 
     public static List<Movie> buildMovieArray(String response) {
 
