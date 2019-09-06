@@ -6,7 +6,6 @@ import java.util.Comparator;
 
 public class PopularityComparator implements Comparator<Movie> {
 
-
     @Override
     public int compare(Movie o1, Movie o2) {
         if (Double.valueOf(o2.getPopularity()) < Double.valueOf(o1.getPopularity())) {

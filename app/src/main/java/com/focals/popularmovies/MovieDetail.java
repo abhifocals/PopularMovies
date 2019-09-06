@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MovieDetail extends AppCompatActivity {
-
     TextView title;
     ImageView thumbnail;
     TextView rating;

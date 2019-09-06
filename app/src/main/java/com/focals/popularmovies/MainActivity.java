@@ -1,9 +1,5 @@
 package com.focals.popularmovies;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +17,10 @@ import com.focals.popularmovies.utils.NetworkUtils;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
 
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.sort_popular:
                 Collections.sort(movieList, new PopularityComparator());

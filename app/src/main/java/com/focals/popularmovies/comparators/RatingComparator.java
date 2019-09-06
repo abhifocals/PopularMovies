@@ -8,7 +8,6 @@ import java.util.Comparator;
 
 public class RatingComparator implements Comparator<Movie> {
 
-
     @Override
     public int compare(Movie o1, Movie o2) {
         if (Double.valueOf(o2.getRating()) < Double.valueOf(o1.getRating())) {

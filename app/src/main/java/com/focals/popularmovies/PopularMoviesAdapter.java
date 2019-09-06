@@ -57,9 +57,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
         void onItemClick(int index);
     }
 
-
     class PopularMoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         private TextView title;
         private ImageView movieCard;
 
