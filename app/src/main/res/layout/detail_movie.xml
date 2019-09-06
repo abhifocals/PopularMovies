@@ -36,15 +36,13 @@
             android:id="@+id/thumbnail"
             android:layout_width="160dp"
             android:layout_height="284dp"
-            android:layout_gravity="fill"
-            android:src="@drawable/samplemovie"></ImageView>
+            android:layout_gravity="fill"></ImageView>
 
         <LinearLayout
             android:id="@+id/three_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:id="@+id/four_1"
@@ -53,14 +51,13 @@
                 android:layout_gravity="fill"
                 android:orientation="horizontal">
 
-
                 <TextView
                     android:id="@+id/ratingLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingTop="28dp"
-                    android:text="Rating"
+                    android:text="Rating:"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -70,7 +67,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="FiveStar"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp" />
 
@@ -87,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
-                    android:text="ReleaseDate"
+                    android:text="ReleaseDate:"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -97,7 +93,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="Jan5th"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp" />
 
