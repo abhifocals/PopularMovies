@@ -24,15 +24,18 @@ public class MovieDetail extends AppCompatActivity {
 
         setContentView(R.layout.detail_movie);
 
+        // Getting views
         title = (TextView) findViewById(R.id.title);
         thumbnail = (ImageView) findViewById(R.id.thumbnail);
         rating = (TextView) findViewById(R.id.rating);
         releaseDate = (TextView) findViewById(R.id.releaseDate);
         plot = (TextView) findViewById(R.id.plot);
 
+        // Getting intent
         Intent intent = getIntent();
         currentMovie = intent.getParcelableExtra("movie");
 
+        // Setting content in views
         if (intent != null) {
             title.setText(currentMovie.title);
             Picasso.get().load(currentMovie.posterPath).into(thumbnail);
