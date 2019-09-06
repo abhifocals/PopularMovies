@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.focals.popularmovies.comparators.PopularityComparator;
 import com.focals.popularmovies.comparators.RatingComparator;
@@ -25,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
     RecyclerView rv_main;
     PopularMoviesAdapter adapter;
-    String response;
     List<Movie> movieList;
     private GridLayoutManager gridLayoutManager;
     ProgressBar progressBar;
+    TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         // Get Popular Movies
         FetchMovieData fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-
-        adapter = new PopularMoviesAdapter(20, this);
-        gridLayoutManager = new GridLayoutManager(this, 2);
-
-        showProgressBar();
     }
 
     @Override
@@ -88,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         @Override
         protected String doInBackground(URL... urls) {
+            showProgressBar();
+
             URL url = urls[0];
             String response = NetworkUtils.getResponseFromUrl(url);
 
@@ -97,19 +95,24 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
             hideProgressBar();
-            response = s;
-            movieList = null;
 
-            movieList = MovieJsonParser.buildMovieArray(response);
+            if (s == null) {
+                showError();
+            } else {
+                // Build Movie Objects from Response
+                movieList = MovieJsonParser.buildMovieArray(s);
 
-            // Attach Adapter and Layout Manager
-            setUpAdapterAndLayoutManager();
+                // Attach Adapter and Layout Manager
+                setUpAdapterAndLayoutManager();
+            }
         }
     }
 
     private void setUpAdapterAndLayoutManager() {
+        adapter = new PopularMoviesAdapter(movieList.size(), this);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+
         adapter.setMovies(movieList);
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
@@ -124,5 +127,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     private void showProgressBar() {
         rv_main.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void showError() {
+        progressBar.setVisibility(View.INVISIBLE);
+        error = (TextView) findViewById(R.id.tv_error);
+        error.setVisibility(View.VISIBLE);
     }
 }
