@@ -15,6 +15,7 @@ import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
 
     private RecyclerView rv_main;
-    private List<Movie> movieList;
+    private ArrayList<Movie> movieList;
     private ProgressBar progressBar;
 
     @Override
@@ -38,8 +39,13 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         progressBar = findViewById(R.id.progressBar);
 
         // Get Popular Movies
-        FetchMovieData fetchTask = new FetchMovieData();
-        fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+        if (savedInstanceState == null) {
+            FetchMovieData fetchTask = new FetchMovieData();
+            fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+        } else {
+            movieList = savedInstanceState.getParcelableArrayList("movies");
+            setUpAdapterAndLayoutManager();
+        }
     }
 
     @Override
@@ -68,6 +74,12 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         Intent intent = new Intent(this, MovieDetail.class);
         intent.putExtra("movie", movieList.get(index));
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("movies", movieList);
     }
 
     class FetchMovieData extends AsyncTask<URL, Void, String> {

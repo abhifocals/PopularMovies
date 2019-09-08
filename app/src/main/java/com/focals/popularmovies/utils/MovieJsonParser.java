@@ -13,9 +13,9 @@ import java.util.List;
 
 public class MovieJsonParser {
 
-    private static final List<Movie> listOfMovies = new ArrayList<>();
+    private static final ArrayList<Movie> listOfMovies = new ArrayList<>();
 
-    public static List<Movie> buildMovieArray(String response) {
+    public static ArrayList<Movie> buildMovieArray(String response) {
 
         try { // add a null check
             JSONObject jsonObject = new JSONObject(response);
