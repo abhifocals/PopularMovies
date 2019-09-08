@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="error">Something bad happened! Please try later.</string>
+    <string name="title">Title</string>
+    <string name="rating">Rating:</string>
+    <string name="releaseDate">Release Date:</string>
+    <string name="plot">Plot</string>
 </resources>

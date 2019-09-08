@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,14 +15,13 @@
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:paddingTop="5dp"
-            android:text="Title"
+            android:text="@string/title"
             android:textAlignment="textStart"
             android:textColor="@color/colorWhite"
             android:textSize="30sp"
             android:textStyle="bold"></TextView>
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/two"
@@ -57,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
                     android:paddingTop="28dp"
-                    android:text="Rating:"
+                    android:text="@string/rating"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -83,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
-                    android:text="ReleaseDate:"
+                    android:text="@string/releaseDate"
                     android:textColor="@color/colorWhite"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -100,7 +98,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -114,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Plot"
+            android:text="@string/plot"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"
             android:textStyle="bold"></TextView>
