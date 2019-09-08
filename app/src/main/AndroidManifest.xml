@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_movie_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <activity android:name="com.focals.popularmovies.MainActivity">
+        <activity android:name="com.focals.popularmovies.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
