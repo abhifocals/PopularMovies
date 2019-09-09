@@ -40,13 +40,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         progressBar = findViewById(R.id.progressBar);
 
         // Get Popular Movies
-        if (savedInstanceState == null) {
+        if (movieList == null) {
             FetchMovieData fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-        } else if (movieList != null) {
-            movieList = savedInstanceState.getParcelableArrayList("movies");
         } else {
-            showError();
+            movieList = savedInstanceState.getParcelableArrayList("movies");
         }
     }
 
@@ -99,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
             if (s == null) {
                 showError();
-                hideSortMenu();
             } else {
                 // Build Movie Objects from Response
                 movieList = MovieJsonParser.buildMovieArray(s);
@@ -108,10 +105,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 setUpAdapterAndLayoutManager();
             }
         }
-    }
-
-    private void hideSortMenu() {
-        findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE);
     }
 
     private void setUpAdapterAndLayoutManager() {
@@ -140,6 +133,9 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             progressBar.setVisibility(View.INVISIBLE);
             TextView error = findViewById(R.id.tv_error);
             error.setVisibility(View.VISIBLE);
+
+            // Hide Sort Menu
+            findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE);
         }
     }
 }
