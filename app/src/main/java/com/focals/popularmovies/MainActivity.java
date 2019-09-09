@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         if (savedInstanceState == null) {
             FetchMovieData fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-        } else {
+        } else if (movieList != null) {
             movieList = savedInstanceState.getParcelableArrayList("movies");
+        } else {
             showError();
         }
     }
@@ -66,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 Collections.sort(movieList, new RatingComparator());
                 break;
         }
-
-        showError();
         return super.onOptionsItemSelected(item);
     }
 
