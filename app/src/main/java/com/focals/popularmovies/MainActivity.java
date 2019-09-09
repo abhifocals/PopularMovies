@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 Collections.sort(movieList, new RatingComparator());
                 break;
         }
+        setUpAdapterAndLayoutManager();
         return super.onOptionsItemSelected(item);
     }
 
