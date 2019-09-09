@@ -89,10 +89,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         protected String doInBackground(URL... urls) {
             showProgressBar();
 
-            URL url = urls[0];
-
-
-            return NetworkUtils.getResponseFromUrl(url);
+            return NetworkUtils.getResponseFromUrl(urls[0]);
         }
 
         @Override
