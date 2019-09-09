@@ -45,11 +45,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
-
-            if (movieList != null)
-                setUpAdapterAndLayoutManager();
-            else
-                showError();
+            showError();
         }
     }
 
@@ -70,11 +66,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 Collections.sort(movieList, new RatingComparator());
                 break;
         }
-        if (movieList != null) {
-            setUpAdapterAndLayoutManager();
-        } else {
-            showError();
-        }
+
+        showError();
         return super.onOptionsItemSelected(item);
     }
 
@@ -99,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
             URL url = urls[0];
 
-            
+
             return NetworkUtils.getResponseFromUrl(url);
         }
 
@@ -147,8 +140,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     }
 
     private void showError() {
-        progressBar.setVisibility(View.INVISIBLE);
-        TextView error = findViewById(R.id.tv_error);
-        error.setVisibility(View.VISIBLE);
+        if (movieList == null) {
+            progressBar.setVisibility(View.INVISIBLE);
+            TextView error = findViewById(R.id.tv_error);
+            error.setVisibility(View.VISIBLE);
+        }
     }
 }
