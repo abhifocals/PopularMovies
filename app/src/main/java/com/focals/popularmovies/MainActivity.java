@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +45,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
-            setUpAdapterAndLayoutManager();
+
+            if (movieList != null)
+                setUpAdapterAndLayoutManager();
+            else
+                showError();
         }
     }
 
@@ -65,7 +70,11 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 Collections.sort(movieList, new RatingComparator());
                 break;
         }
-        setUpAdapterAndLayoutManager();
+        if (movieList != null) {
+            setUpAdapterAndLayoutManager();
+        } else {
+            showError();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -89,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             showProgressBar();
 
             URL url = urls[0];
+
+            
             return NetworkUtils.getResponseFromUrl(url);
         }
 
@@ -99,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
             if (s == null) {
                 showError();
-                findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE);
+                hideSortMenu();
             } else {
                 // Build Movie Objects from Response
                 movieList = MovieJsonParser.buildMovieArray(s);
@@ -110,6 +121,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         }
     }
 
+    private void hideSortMenu() {
+        findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE);
+    }
+
     private void setUpAdapterAndLayoutManager() {
         PopularMoviesAdapter adapter = new PopularMoviesAdapter(movieList.size(), this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
@@ -118,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
+
     }
 
     private void hideProgressBar() {

@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    private final static String API_KEY = "900e5f3653a851c0593341c8edb05ad6";
+    private final static String API_KEY = "Add your API Key here";
     private final static String POPULAR_MOVIES_BASE_URL = "https://api.themoviedb.org/3/movie/popular";
     private final static String POSTER_BASE_URL = "https://image.tmdb.org/t/p";
 
