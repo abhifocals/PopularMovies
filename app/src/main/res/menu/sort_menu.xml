@@ -11,7 +11,8 @@
         <menu>
             <item
                 android:id="@+id/sort_popular"
-                android:title="Popular"></item>
+                android:title="Popular"
+                android:enabled="false"></item>
 
             <item
                 android:id="@+id/sort_rated"

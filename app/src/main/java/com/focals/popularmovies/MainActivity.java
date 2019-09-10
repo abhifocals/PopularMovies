@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     private ArrayList<Movie> movieList;
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.sort_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -58,12 +60,22 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 fetchTask = new FetchMovieData();
                 fetchTask.execute(NetworkUtils.getPopularMoviesURL());
                 showProgressBar();
+
+                // Disable this option, enable other
+                item.setEnabled(false);
+                menu.findItem(R.id.sort_rated).setEnabled(true);
+
                 break;
 
             case R.id.sort_rated:
                 fetchTask = new FetchMovieData();
                 fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
                 showProgressBar();
+
+                // Disable this option, enable other
+                item.setEnabled(false);
+                menu.findItem(R.id.sort_popular).setEnabled(true);
+
                 break;
         }
         setUpAdapterAndLayoutManager();
