@@ -9,17 +9,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.focals.popularmovies.comparators.PopularityComparator;
-import com.focals.popularmovies.comparators.RatingComparator;
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
