@@ -40,7 +40,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        Picasso.get().load(movies.get(position).posterPath).into(holder.movieCard);
+        Picasso.get().load(movies.get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
     }
 
     @Override
