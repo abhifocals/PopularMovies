@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     private RecyclerView rv_main;
     private ArrayList<Movie> movieList;
     private ProgressBar progressBar;
-    FetchMovieData fetchTask;
+    private FetchMovieData fetchTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
