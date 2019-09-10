@@ -13,13 +13,11 @@ import java.util.List;
 
 public class MovieJsonParser {
 
-    private static final ArrayList<Movie> listOfMovies = new ArrayList<>();
-
     public static ArrayList<Movie> buildMovieArray(String response) {
+        ArrayList<Movie> listOfMovies = new ArrayList<>();
 
         try { // add a null check
             JSONObject jsonObject = new JSONObject(response);
-
             JSONArray results = jsonObject.getJSONArray("results");
 
             // Iterate through response and build Array of MovieObjects

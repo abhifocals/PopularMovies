@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     private RecyclerView rv_main;
     private ArrayList<Movie> movieList;
     private ProgressBar progressBar;
+    FetchMovieData fetchTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,9 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         // Get Popular Movies
         if (movieList == null) {
-            FetchMovieData fetchTask = new FetchMovieData();
+            fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+            showProgressBar();
         } else {
             movieList = savedInstanceState.getParcelableArrayList("movies");
         }
@@ -58,11 +60,15 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_popular:
-                Collections.sort(movieList, new PopularityComparator());
+                fetchTask = new FetchMovieData();
+                fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+                showProgressBar();
                 break;
 
             case R.id.sort_rated:
-                Collections.sort(movieList, new RatingComparator());
+                fetchTask = new FetchMovieData();
+                fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
+                showProgressBar();
                 break;
         }
         setUpAdapterAndLayoutManager();
@@ -86,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         @Override
         protected String doInBackground(URL... urls) {
-            showProgressBar();
-
             return NetworkUtils.getResponseFromUrl(urls[0]);
         }
 
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 showError();
             } else {
                 // Build Movie Objects from Response
+                movieList = null;
                 movieList = MovieJsonParser.buildMovieArray(s);
 
                 // Attach Adapter and Layout Manager
