@@ -51,22 +51,16 @@
 
                 <TextView
                     android:id="@+id/ratingLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/DetailActivityStyle"
                     android:paddingLeft="5dp"
                     android:paddingTop="28dp"
                     android:text="@string/rating"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="15sp" />
+                    style="@style/DetailActivityStyle"
+                    android:paddingLeft="10dp" />
 
             </LinearLayout>
 
@@ -78,21 +72,15 @@
 
                 <TextView
                     android:id="@+id/releaseDateLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/DetailActivityStyle"
                     android:paddingLeft="5dp"
                     android:text="@string/releaseDate"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/releaseDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="15sp" />
+                    style="@style/DetailActivityStyle"
+                    android:paddingLeft="10dp" />
 
             </LinearLayout>
 
@@ -101,11 +89,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/plotContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:id="@+id/plotContainer">
+        android:paddingLeft="10dp">
 
         <TextView
             android:id="@+id/plotTitle"
@@ -119,12 +107,9 @@
 
         <TextView
             android:id="@+id/plot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/DetailActivityStyle"
             android:paddingTop="5dp"
-            android:text="Plot Content"
-            android:textColor="@color/colorWhite"
-            android:textSize="15sp"></TextView>
+            android:text="Plot Content"></TextView>
 
     </LinearLayout>
 
