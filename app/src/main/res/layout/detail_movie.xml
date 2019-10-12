@@ -1,147 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!--    android:background="@color/colorBlack"-->
+    android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingTop="5dp"
-            android:text="@string/title"
-            android:textAlignment="textStart"
-            android:textSize="30sp"
-            android:textStyle="bold"></TextView>
-        <!--        android:textColor="@color/colorWhite"-->
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/imageRatingReleaseContainer"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp">
-
-        <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="160dp"
-            android:layout_height="284dp"
-            android:layout_gravity="fill"
-            android:src="@drawable/placeholder"></ImageView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--    android:background="@color/colorBlack"-->
 
         <LinearLayout
-            android:id="@+id/ratingAndReleaseContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/ratingContainer"
+            <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingTop="5dp"
+                android:text="@string/title"
+                android:textAlignment="textStart"
+                android:textSize="30sp"
+                android:textStyle="bold"></TextView>
+            <!--        android:textColor="@color/colorWhite"-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/imageRatingReleaseContainer"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="160dp"
+                android:layout_height="284dp"
                 android:layout_gravity="fill"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/ratingLabel"
-                    style="@style/DetailActivityStyle"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="28dp"
-                    android:text="@string/rating"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/rating"
-                    style="@style/DetailActivityStyle"
-                    android:paddingLeft="10dp" />
-
-            </LinearLayout>
+                android:src="@drawable/placeholder"></ImageView>
 
             <LinearLayout
-                android:id="@+id/releaseDateContainer"
+                android:id="@+id/ratingAndReleaseContainer"
                 android:layout_width="match_parent"
-                android:layout_height="103dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/releaseDateLabel"
-                    style="@style/DetailActivityStyle"
-                    android:paddingLeft="5dp"
-                    android:text="@string/releaseDate"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:id="@+id/ratingContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_gravity="fill"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/releaseDate"
-                    style="@style/DetailActivityStyle"
-                    android:paddingLeft="10dp" />
+                    <TextView
+                        android:id="@+id/ratingLabel"
+                        style="@style/DetailActivityStyle"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="28dp"
+                        android:text="@string/rating"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/rating"
+                        style="@style/DetailActivityStyle"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/releaseDateContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="103dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/releaseDateLabel"
+                        style="@style/DetailActivityStyle"
+                        android:paddingLeft="5dp"
+                        android:text="@string/releaseDate"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/releaseDate"
+                        style="@style/DetailActivityStyle"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/plotContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
 
-    <LinearLayout
-        android:id="@+id/plotContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="10dp">
+            <TextView
+                android:id="@+id/plotTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/plot"
+                android:textSize="20sp"
+                android:textStyle="bold"></TextView>
+            <!--        android:textColor="@color/colorWhite"-->
+
+            <TextView
+                android:id="@+id/plot"
+                style="@style/DetailActivityStyle"
+                android:paddingTop="5dp"
+                android:text="Plot Content"></TextView>
+
+        </LinearLayout>
+
+        <include layout="@layout/divider" />
 
         <TextView
-            android:id="@+id/plotTitle"
+            android:id="@+id/trailerHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:text="@string/plot"
-            android:textSize="20sp"
-            android:textStyle="bold"></TextView>
-        <!--        android:textColor="@color/colorWhite"-->
+            android:paddingLeft="10dp"
+            android:text="Trailers:"></TextView>
 
-        <TextView
-            android:id="@+id/plot"
-            style="@style/DetailActivityStyle"
-            android:paddingTop="5dp"
-            android:text="Plot Content"></TextView>
+
+
+        <include
+            layout="@layout/trailer"
+            android:paddingTop="10dp" />
+
+        <include layout="@layout/divider" />
+
+        <include
+            layout="@layout/trailer"
+            android:paddingTop="10dp" />
+
+        <include layout="@layout/divider" />
+
+        <include
+            layout="@layout/trailer"
+            android:paddingTop="10dp" />
+
+        <include layout="@layout/divider" />
+
 
     </LinearLayout>
 
-<!--    Move this to a separate layout-->
-    
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/darker_gray"></View>
-
-    <TextView
-        android:id="@+id/trailerHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trailers:"
-        android:paddingLeft="10dp"></TextView>
-
-    <include
-        layout="@layout/trailer"
-        android:paddingTop="10dp" />
-    <include
-        layout="@layout/trailer"
-        android:paddingTop="10dp" />
-    <include
-        layout="@layout/trailer"
-        android:paddingTop="10dp" />
-
-
-</LinearLayout>
+</ScrollView>
