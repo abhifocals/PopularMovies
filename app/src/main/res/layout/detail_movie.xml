@@ -24,7 +24,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/two"
+        android:id="@+id/imageRatingReleaseContainer"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:orientation="horizontal"
@@ -37,13 +37,13 @@
             android:layout_gravity="fill"></ImageView>
 
         <LinearLayout
-            android:id="@+id/three_2"
+            android:id="@+id/ratingAndReleaseContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/four_1"
+                android:id="@+id/ratingContainer"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_gravity="fill"
@@ -71,7 +71,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/four_2"
+                android:id="@+id/releaseDateContainer"
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
                 android:orientation="horizontal">
@@ -104,7 +104,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp">
+        android:paddingLeft="10dp"
+        android:id="@+id/plotContainer">
 
         <TextView
             android:id="@+id/plotTitle"
