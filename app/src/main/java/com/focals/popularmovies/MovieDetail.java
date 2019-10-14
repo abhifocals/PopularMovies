@@ -58,33 +58,11 @@ public class MovieDetail extends AppCompatActivity {
     }
 
     public void showReview(View view) {
-
-        String reviewUrlStrilg = NetworkUtils.getReviewUrl(currentMovie.getId()).toString();
-        openWebPage(reviewUrlStrilg);
-
-
-//        Toast toast = Toast.makeText(this, "Review Shown", Toast.LENGTH_SHORT);
-//        toast.show();
-    }
-
-    private void openWebPage(String url) {
-
-            FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
-            reviewTask.execute();
-
-
-
-
-
-        //        Uri uri = Uri.parse(url);
-//
-//        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//        if (intent.resolveActivity(getPackageManager()) != null)
-//            startActivity(intent);
+        FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
+        reviewTask.execute();
     }
 
     class FetchMovieReviewTask extends AsyncTask<URL, Void, String> {
-
 
         @Override
         protected String doInBackground(URL... urls) {
@@ -102,16 +80,15 @@ public class MovieDetail extends AppCompatActivity {
 
 
                 // Start Review Activity here
+                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                intent.putExtra("REVIEW", content);
 
-
-
+                startActivity(intent);
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 }
