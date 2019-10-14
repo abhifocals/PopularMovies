@@ -10,14 +10,16 @@ public class Movie implements Parcelable {
     final String releaseDate;
     final String rating;
     private final String popularity;
+    final int id;
 
-    public Movie(String title, String posterUri, String plotSynopsis, String releaseDate, String rating, String popularity) {
+    public Movie(String title, String posterUri, String plotSynopsis, String releaseDate, String rating, String popularity, int id) {
         this.title = title;
         this.posterPath = posterUri;
         this.plotSynopsis = plotSynopsis;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.popularity = popularity;
+        this.id = id;
     }
 
     private Movie(Parcel in) {
@@ -27,6 +29,7 @@ public class Movie implements Parcelable {
         releaseDate = in.readString();
         rating = in.readString();
         popularity = in.readString();
+        id = in.readInt();
     }
 
     public String getRating() {
