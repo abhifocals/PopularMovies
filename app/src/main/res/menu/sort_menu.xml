@@ -1,23 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/sortMenu"
-        android:title="Sort"
-        app:showAsAction="ifRoom">
+        android:id="@+id/sort_popular"
+        android:enabled="false"
+        android:title="Popular"
+        app:showAsAction="never"></item>
 
-        <menu>
-            <item
-                android:id="@+id/sort_popular"
-                android:title="Popular"
-                android:enabled="false"></item>
+    <item
+        android:id="@+id/sort_rated"
+        android:title="Top Rated"
+        app:showAsAction="never"></item>
 
-            <item
-                android:id="@+id/sort_rated"
-                android:title="Top Rated"></item>
-        </menu>
+    <item
+        android:id="@+id/sort_rated"
+        android:title="Favorites"
+        app:showAsAction="never"></item>
 
-    </item>
 </menu>
