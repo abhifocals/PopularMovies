@@ -1,6 +1,7 @@
 package com.focals.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 // Disable this option, enable other
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_rated).setEnabled(true);
-
                 break;
 
             case R.id.sort_rated:
@@ -75,8 +75,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
                 // Disable this option, enable other
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_popular).setEnabled(true);
-
                 break;
+
+            case R.id.sort_favorites:
+//                openWebPage("http://www.google.com");
         }
         setUpAdapterAndLayoutManager();
         return super.onOptionsItemSelected(item);
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             error.setVisibility(View.VISIBLE);
 
             // Hide Sort Menu
-            findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE);
+//            findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE); TODO: Hide Overflow Menu. 30m.
         }
     }
 }
