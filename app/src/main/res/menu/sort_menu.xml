@@ -14,7 +14,7 @@
         app:showAsAction="never"></item>
 
     <item
-        android:id="@+id/sort_rated"
+        android:id="@+id/sort_favorites"
         android:title="Favorites"
         app:showAsAction="never"></item>
 
