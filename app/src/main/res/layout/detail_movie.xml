@@ -154,23 +154,31 @@
         <include layout="@layout/divider" />
 
 
-        <include
-            layout="@layout/trailer"
-            android:paddingTop="10dp" />
 
-        <include layout="@layout/divider" />
 
-        <include
-            layout="@layout/trailer"
-            android:paddingTop="10dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTrailers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
-        <include layout="@layout/divider" />
 
-        <include
-            layout="@layout/trailer"
-            android:paddingTop="10dp" />
+<!--        <include-->
+<!--            layout="@layout/trailer"-->
+<!--            android:paddingTop="10dp" />-->
 
-        <include layout="@layout/divider" />
+<!--        <include layout="@layout/divider" />-->
+
+<!--        <include-->
+<!--            layout="@layout/trailer"-->
+<!--            android:paddingTop="10dp" />-->
+
+<!--        <include layout="@layout/divider" />-->
+
+<!--        <include-->
+<!--            layout="@layout/trailer"-->
+<!--            android:paddingTop="10dp" />-->
+
+<!--        <include layout="@layout/divider" />-->
 
 
     </LinearLayout>

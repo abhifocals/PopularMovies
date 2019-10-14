@@ -23,10 +23,14 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieDetail extends AppCompatActivity {
 
     private Movie currentMovie;
+    private RecyclerView trailersRecyclerView;
+    private TrailersAdapter trailersAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +57,13 @@ public class MovieDetail extends AppCompatActivity {
             plot.setText(currentMovie.plotSynopsis);
             rating.setText(currentMovie.rating);
         }
+
+        // Setting up Adapter for RecyclerView Trailers
+        trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
+        trailersAdapter = new TrailersAdapter();
+        trailersRecyclerView.setAdapter(trailersAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        trailersRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
     public void addToFavorites(View view) {

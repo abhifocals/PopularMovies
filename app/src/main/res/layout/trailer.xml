@@ -3,28 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/trailer">
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/trailerPlayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        app:layout_constraintTop_toTopOf="parent" />
+<!--    app:srcCompat="@android:drawable/ic_media_play"-->
 
     <TextView
-        android:id="@+id/trailer1"
+        android:id="@+id/trailerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="23dp"
-        android:text="Trailer"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        tools:text="Trailer"
+        app:layout_constraintStart_toEndOf="@+id/trailerPlayButton"
         app:layout_constraintTop_toTopOf="parent">
 
     </TextView>
