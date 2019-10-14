@@ -10,7 +10,7 @@ public class Movie implements Parcelable {
     final String releaseDate;
     final String rating;
     private final String popularity;
-    final int id;
+    private final int id;
 
     public Movie(String title, String posterUri, String plotSynopsis, String releaseDate, String rating, String popularity, int id) {
         this.title = title;
@@ -40,6 +40,10 @@ public class Movie implements Parcelable {
         return popularity;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -53,6 +57,7 @@ public class Movie implements Parcelable {
         dest.writeString(releaseDate);
         dest.writeString(rating);
         dest.writeString(popularity);
+        dest.writeInt(id);
     }
 
     public final static Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
