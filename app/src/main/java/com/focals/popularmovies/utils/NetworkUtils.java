@@ -70,11 +70,11 @@ public class NetworkUtils {
     }
 
     public static URL getReview(int id) {
-        return buildUrl("https://api.themoviedb.org/3/movie/" + id + "/reviews");
+        return buildUrl("http://api.themoviedb.org/3/movie/" + id + "/reviews");
     }
 
     public static URL getTrailers(int id) {
-        return buildUrl("https://api.themoviedb.org/3/movie/" + id + "/videos");
+        return buildUrl("http://api.themoviedb.org/3/movie/" + id + "/videos");
     }
 
     public static Uri buildPosterUri(String posterPath) {

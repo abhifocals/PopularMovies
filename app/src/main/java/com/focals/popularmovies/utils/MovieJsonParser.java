@@ -28,7 +28,7 @@ public class MovieJsonParser {
                 String releaseDate = movieJson.getString("release_date");
                 String rating = movieJson.getString("vote_average");
                 String popularity = movieJson.getString("popularity");
-                int id = movieJson.getInt("id");
+                int id = Integer.valueOf(movieJson.getString("id"));
 
                 Uri posterUri = NetworkUtils.buildPosterUri(posterPath);
 
