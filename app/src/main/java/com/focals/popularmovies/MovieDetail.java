@@ -17,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
+import java.sql.SQLSyntaxErrorException;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,8 +61,15 @@ public class MovieDetail extends AppCompatActivity {
     }
 
     public void showReview(View view) {
-        FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
-        reviewTask.execute();
+
+
+
+
+        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
+        fetchMovieTrailersTask.execute();
+
+//        FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
+//        reviewTask.execute();
     }
 
     class FetchMovieReviewTask extends AsyncTask<URL, Void, String> {
@@ -89,6 +99,48 @@ public class MovieDetail extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    class FetchMovieTrailersTask extends AsyncTask<URL, Void, String> {
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovie.getId()));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            List<String> keys = new ArrayList<>();
+            List<String> videoUrls = new ArrayList<>();
+
+            // Get keys from Response.
+            try {
+                JSONObject videos = new JSONObject(s);
+                JSONArray results = videos.getJSONArray("results");
+
+                for (int i=0; i<results.length(); i++) {
+
+                    String key = results.getJSONObject(i).getString("key");
+
+                    String videoUrl = "https://www.youtube.com/watch?v=" + key;
+
+                    keys.add(key);
+
+                    videoUrls.add(videoUrl);
+
+
+                }
+
+                System.out.println();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
         }
     }
 }
