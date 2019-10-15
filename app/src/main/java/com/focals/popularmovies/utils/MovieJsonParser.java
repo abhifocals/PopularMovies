@@ -28,11 +28,12 @@ public class MovieJsonParser {
                 String releaseDate = movieJson.getString("release_date");
                 String rating = movieJson.getString("vote_average");
                 String popularity = movieJson.getString("popularity");
-                int id = Integer.valueOf(movieJson.getString("id"));
+                int movieId = Integer.valueOf(movieJson.getString("id"));
+                boolean favorite = false;
 
                 Uri posterUri = NetworkUtils.buildPosterUri(posterPath);
 
-                Movie movie = new Movie(title, posterUri.toString(), plotSynopsis, releaseDate, rating, popularity, id);
+                Movie movie = new Movie(title, posterUri.toString(), plotSynopsis, releaseDate, rating, popularity, favorite, movieId);
 
                 if (!listOfMovies.contains(movie)) {
                     listOfMovies.add(movie);

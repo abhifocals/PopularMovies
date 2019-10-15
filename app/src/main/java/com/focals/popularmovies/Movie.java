@@ -16,13 +16,14 @@ public class Movie {
     String rating;
     private String popularity;
     private int movieId;
+    private boolean favorite;
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
 
     @Ignore
-    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, int movieId) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, boolean favorite, int movieId) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
@@ -30,15 +31,17 @@ public class Movie {
         this.rating = rating;
         this.popularity = popularity;
         this.movieId = movieId;
+        this.favorite = favorite;
     }
 
-    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, int movieId, int id) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, boolean favorite,  int movieId, int id) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.popularity = popularity;
+        this.favorite = favorite;
         this.movieId = movieId;
         this.id = id;
     }
@@ -71,6 +74,14 @@ public class Movie {
         return movieId;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -99,11 +110,11 @@ public class Movie {
         this.movieId = movieId;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }
