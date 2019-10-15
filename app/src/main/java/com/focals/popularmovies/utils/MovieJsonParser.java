@@ -3,6 +3,7 @@ package com.focals.popularmovies.utils;
 import android.net.Uri;
 
 import com.focals.popularmovies.Movie;
+import com.focals.popularmovies.MovieInDb;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,8 +13,8 @@ import java.util.ArrayList;
 
 public class MovieJsonParser {
 
-    public static ArrayList<Movie> buildMovieArray(String response) {
-        ArrayList<Movie> listOfMovies = new ArrayList<>();
+    public static ArrayList<MovieInDb> buildMovieArray(String response) {
+        ArrayList<MovieInDb> listOfMovies = new ArrayList<>();
 
         try { // add a null check
             JSONObject jsonObject = new JSONObject(response);
@@ -32,7 +33,7 @@ public class MovieJsonParser {
 
                 Uri posterUri = NetworkUtils.buildPosterUri(posterPath);
 
-                Movie movie = new Movie(title, posterUri.toString(), plotSynopsis, releaseDate, rating, popularity, id);
+                MovieInDb movie = new MovieInDb(title, posterUri.toString(), plotSynopsis, releaseDate, rating, popularity, id);
 
                 if (!listOfMovies.contains(movie)) {
                     listOfMovies.add(movie);
