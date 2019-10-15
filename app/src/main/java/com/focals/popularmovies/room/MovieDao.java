@@ -1,5 +1,7 @@
-package com.focals.popularmovies;
+package com.focals.popularmovies.room;
 
+
+import com.focals.popularmovies.Movie;
 
 import java.util.List;
 

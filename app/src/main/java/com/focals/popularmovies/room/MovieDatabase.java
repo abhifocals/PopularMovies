@@ -1,6 +1,8 @@
-package com.focals.popularmovies;
+package com.focals.popularmovies.room;
 
 import android.content.Context;
+
+import com.focals.popularmovies.Movie;
 
 import androidx.room.Database;
 import androidx.room.Room;
