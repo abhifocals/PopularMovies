@@ -103,15 +103,15 @@
                         android:id="@+id/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mark as Favorite"
-                        android:onClick="addToFavorites"/>
+                        android:onClick="addToFavorites"
+                        android:text="Mark as Favorite" />
 
                     <Button
                         android:id="@+id/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Read Review"
-                        android:onClick="showReview"/>
+                        android:onClick="showReview"
+                        android:text="Read Review" />
 
                 </LinearLayout>
 
@@ -151,35 +151,10 @@
             android:paddingLeft="10dp"
             android:text="Trailers:"></TextView>
 
-        <include layout="@layout/divider" />
-
-
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTrailers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
-
-
-<!--        <include-->
-<!--            layout="@layout/trailer"-->
-<!--            android:paddingTop="10dp" />-->
-
-<!--        <include layout="@layout/divider" />-->
-
-<!--        <include-->
-<!--            layout="@layout/trailer"-->
-<!--            android:paddingTop="10dp" />-->
-
-<!--        <include layout="@layout/divider" />-->
-
-<!--        <include-->
-<!--            layout="@layout/trailer"-->
-<!--            android:paddingTop="10dp" />-->
-
-<!--        <include layout="@layout/divider" />-->
-
 
     </LinearLayout>
 
