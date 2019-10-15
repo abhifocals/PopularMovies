@@ -7,10 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerViewHolder> {
+
+    OnClickHandler clickHandler;
+    List<String> trailerUrls;
+
+    public TrailersAdapter(List<String> trailerUrls, OnClickHandler clickHandler) {
+        this.clickHandler = clickHandler;
+        this.trailerUrls = trailerUrls;
+    }
 
     @NonNull
     @Override
@@ -31,10 +41,14 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
     @Override
     public int getItemCount() {
-        return 4;
+        return trailerUrls.size();
     }
 
-    class TrailerViewHolder extends RecyclerView.ViewHolder {
+    public interface OnClickHandler {
+        void onClick(int position);
+    }
+
+    class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView trailerPlayButton;
         TextView trailerText;
@@ -45,6 +59,16 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
             trailerPlayButton = (ImageView) itemView.findViewById(R.id.trailerPlayButton);
             trailerText = (TextView) itemView.findViewById(R.id.trailerText);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+
+        @Override
+        public void onClick(View v) {
+
+            clickHandler.onClick(getAdapterPosition());
         }
     }
 }

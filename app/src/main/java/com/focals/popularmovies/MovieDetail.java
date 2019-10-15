@@ -26,11 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MovieDetail extends AppCompatActivity {
+public class MovieDetail extends AppCompatActivity implements TrailersAdapter.OnClickHandler {
 
     private Movie currentMovie;
     private RecyclerView trailersRecyclerView;
     private TrailersAdapter trailersAdapter;
+    private List<String> trailerUrls;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,12 +59,20 @@ public class MovieDetail extends AppCompatActivity {
             rating.setText(currentMovie.rating);
         }
 
-        // Setting up Adapter for RecyclerView Trailers
+        // Get Trailer Urls
+
+        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
+        fetchMovieTrailersTask.execute();
+    }
+
+    private void setUpTrailersAdapter(List<String> trailerUrls) {
         trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
-        trailersAdapter = new TrailersAdapter();
+        trailersAdapter = new TrailersAdapter(trailerUrls, this);
         trailersRecyclerView.setAdapter(trailersAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         trailersRecyclerView.setLayoutManager(linearLayoutManager);
+
+        this.trailerUrls = trailerUrls;
     }
 
     public void addToFavorites(View view) {
@@ -72,15 +81,21 @@ public class MovieDetail extends AppCompatActivity {
     }
 
     public void showReview(View view) {
+        FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
+        reviewTask.execute();
+    }
+
+    public void onClick(int position) {
+        String trailerUrl = trailerUrls.get(position);
+
+        Uri uri = Uri.parse(trailerUrl);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
 
 
-
-
-        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
-        fetchMovieTrailersTask.execute();
-
-//        FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
-//        reviewTask.execute();
     }
 
     class FetchMovieReviewTask extends AsyncTask<URL, Void, String> {
@@ -131,7 +146,7 @@ public class MovieDetail extends AppCompatActivity {
                 JSONObject videos = new JSONObject(s);
                 JSONArray results = videos.getJSONArray("results");
 
-                for (int i=0; i<results.length(); i++) {
+                for (int i = 0; i < results.length(); i++) {
 
                     String key = results.getJSONObject(i).getString("key");
 
@@ -140,8 +155,6 @@ public class MovieDetail extends AppCompatActivity {
                     keys.add(key);
 
                     videoUrls.add(videoUrl);
-
-
                 }
 
                 System.out.println();
@@ -151,7 +164,7 @@ public class MovieDetail extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
+            setUpTrailersAdapter(videoUrls);
         }
     }
 }
