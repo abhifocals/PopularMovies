@@ -9,10 +9,10 @@ import androidx.room.Query;
 public interface MovieDao {
 
     @Insert
-    void insertMovie (MovieInDb movie);
+    void insertMovie (Movie movie);
 
-    @Query("SELECT * FROM movie where movieId = :movieId")
-    MovieInDb getMovieById (int movieId);
+    @Query("SELECT * FROM Movie where movieId = :movieId")
+    Movie getMovieById (int movieId);
 
 //    @Query("SELECT * FROM movie")
 //    void getMovies();

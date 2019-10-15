@@ -1,7 +1,6 @@
 package com.focals.popularmovies;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
 
     private RecyclerView rv_main;
-    private ArrayList<MovieInDb> movieList;
+    private ArrayList<Movie> movieList;
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
     private Menu menu;

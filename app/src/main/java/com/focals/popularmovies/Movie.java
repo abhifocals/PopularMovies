@@ -7,7 +7,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie")
-public class MovieInDb {
+public class Movie {
 
     String title;
     String posterPath;
@@ -22,7 +22,7 @@ public class MovieInDb {
 
 
     @Ignore
-    public MovieInDb(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, int movieId) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, int movieId) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
@@ -32,7 +32,7 @@ public class MovieInDb {
         this.movieId = movieId;
     }
 
-    public MovieInDb(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, int movieId, int id) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, int movieId, int id) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
