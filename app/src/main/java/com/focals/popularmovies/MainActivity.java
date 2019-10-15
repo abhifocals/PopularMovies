@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.focals.popularmovies.room.MovieDao;
 import com.focals.popularmovies.room.MovieDatabase;
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
@@ -100,10 +101,23 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
     private void testDatabase() {
 
-        // Insert
-        MovieDatabase.getInstance(this).movieDao().insertMovie(movieList.get(0));
+        MovieDatabase db =  MovieDatabase.getInstance(this);
+        MovieDao movieDao = db.movieDao();
 
-        Movie movie = MovieDatabase.getInstance(this).movieDao().getMovieById(movieList.get(0).getMovieId());
+
+        // Insert
+        movieDao.insertMovie(movieList.get(0));
+
+        Movie movie = movieDao.getMovieById(movieList.get(0).getMovieId());
+
+        boolean favFlag = movie.isFavorite();
+
+
+        movie.setFavorite(true);
+
+        movieDao.updateFavoriteFlag(movie);
+
+        favFlag = movieDao.getMovieById(movieList.get(0).getMovieId()).isFavorite();
 
 
         // Query
