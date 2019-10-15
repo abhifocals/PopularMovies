@@ -17,6 +17,8 @@ public class Movie {
     private String popularity;
     private int movieId;
     private boolean favorite;
+    private String reviewUrl;
+//    private List<String> trailers;
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -82,6 +84,14 @@ public class Movie {
         return favorite;
     }
 
+    public String getReviewUrl() {
+        return reviewUrl;
+    }
+
+//    public List<String> getTrailers() {
+//        return trailers;
+//    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -117,4 +127,12 @@ public class Movie {
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
+
+    public void setReviewUrl(String reviewUrl) {
+        this.reviewUrl = reviewUrl;
+    }
+
+//    public void setTrailers(List<String> trailers) {
+//        this.trailers = trailers;
+//    }
 }
