@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,8 +103,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         // Insert
         MovieDatabase.getInstance(this).movieDao().insertMovie(movieList.get(0));
 
-
-
+        Movie movie = MovieDatabase.getInstance(this).movieDao().getMovieById(movieList.get(0).getMovieId());
 
 
         // Query
@@ -111,8 +111,10 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
 
 
-
     }
+
+
+
 
 
 
