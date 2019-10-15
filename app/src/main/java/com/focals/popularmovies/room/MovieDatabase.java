@@ -7,8 +7,11 @@ import com.focals.popularmovies.Movie;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
+@TypeConverters(ListConverter.class)
 public abstract class MovieDatabase extends RoomDatabase {
 
     private static final Object LOCK = new Object();
