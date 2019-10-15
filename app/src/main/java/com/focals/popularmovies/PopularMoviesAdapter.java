@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.focals.popularmovies.room.MovieDao;
+import com.focals.popularmovies.room.MovieDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,14 +20,12 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     private final int itemCount;
     private final OnClickHandler clickHandler;
     private List<Movie> movies;
+    MovieDatabase db;
+    MovieDao movieDao;
 
     PopularMoviesAdapter(int numOfItems, OnClickHandler clickHandler) {
         this.itemCount = numOfItems;
         this.clickHandler = clickHandler;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
     }
 
     @NonNull
@@ -35,12 +35,15 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.movie_card, parent, false);
 
+        db = MovieDatabase.getInstance(parent.getContext());
+        movieDao = db.movieDao();
+
         return new PopularMoviesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-         Picasso.get().load(movies.get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
+        Picasso.get().load(movieDao.getMovies().get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
     }
 
     @Override

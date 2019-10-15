@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
     private Menu menu;
+    MovieDatabase db;
+    MovieDao movieDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
             showProgressBar();
         } else {
-             movieList = savedInstanceState.getParcelableArrayList("movies");
+            movieList = savedInstanceState.getParcelableArrayList("movies");
         }
     }
 
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     @Override
     public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetail.class);
-         intent.putExtra("movie", movieList.get(index));
+        intent.putExtra("movie", movieList.get(index));
         startActivity(intent);
     }
 
@@ -100,10 +102,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
 
     private void testDatabase() {
-
-        MovieDatabase db =  MovieDatabase.getInstance(this);
+        MovieDatabase db = MovieDatabase.getInstance(this);
         MovieDao movieDao = db.movieDao();
-
 
         // Insert
         movieDao.insertMovie(movieList.get(0));
@@ -112,28 +112,15 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         boolean favFlag = movie.isFavorite();
 
-
         movie.setFavorite(true);
 
         movieDao.updateFavoriteFlag(movie);
 
         favFlag = movieDao.getMovieById(movieList.get(0).getMovieId()).isFavorite();
 
-
         // Query
         System.out.println();
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
     class FetchMovieData extends AsyncTask<URL, Void, String> {
@@ -157,7 +144,15 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
                 testDatabase();
 
-                 // Attach Adapter and Layout Manager
+                // Insert into Database
+                db = MovieDatabase.getInstance(getApplicationContext());
+                movieDao = db.movieDao();
+
+                for (Movie movie : movieList) {
+                    movieDao.insertMovie(movie);
+                }
+
+                // Attach Adapter and Layout Manager
                 setUpAdapterAndLayoutManager();
             }
         }
@@ -167,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         PopularMoviesAdapter adapter = new PopularMoviesAdapter(movieList.size(), this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
-        adapter.setMovies(movieList);
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
