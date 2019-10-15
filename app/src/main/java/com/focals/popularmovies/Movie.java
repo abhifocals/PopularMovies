@@ -1,5 +1,8 @@
 package com.focals.popularmovies;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 import androidx.room.Entity;
@@ -7,7 +10,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie")
-public class Movie {
+public class Movie implements Parcelable {
 
     String title;
     String posterPath;
@@ -18,7 +21,7 @@ public class Movie {
     private int movieId;
     private boolean favorite;
     private String reviewUrl;
-//    private List<String> trailers;
+    private List<String> trailers;
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -88,9 +91,9 @@ public class Movie {
         return reviewUrl;
     }
 
-//    public List<String> getTrailers() {
-//        return trailers;
-//    }
+    public List<String> getTrailers() {
+        return trailers;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -132,7 +135,48 @@ public class Movie {
         this.reviewUrl = reviewUrl;
     }
 
-//    public void setTrailers(List<String> trailers) {
-//        this.trailers = trailers;
-//    }
+    public void setTrailers(List<String> trailers) {
+        this.trailers = trailers;
+    }
+
+    private Movie(Parcel in) {
+        title = in.readString();
+        posterPath = in.readString();
+        plotSynopsis = in.readString();
+        releaseDate = in.readString();
+        rating = in.readString();
+        popularity = in.readString();
+        id = in.readInt();
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(posterPath);
+        dest.writeString(plotSynopsis);
+        dest.writeString(releaseDate);
+        dest.writeString(rating);
+        dest.writeString(popularity);
+        dest.writeInt(id);
+    }
+
+    public final static Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int i) {
+            return new Movie[i];
+        }
+    };
+
 }

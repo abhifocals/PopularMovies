@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
             showProgressBar();
         } else {
-            // movieList = savedInstanceState.getParcelableArrayList("movies");
+             movieList = savedInstanceState.getParcelableArrayList("movies");
         }
     }
 
@@ -88,14 +88,14 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     @Override
     public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetail.class);
-        // intent.putExtra("movie", movieList.get(index));
+         intent.putExtra("movie", movieList.get(index));
         startActivity(intent);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //outState.putParcelableArrayList("movies", movieList);
+        outState.putParcelableArrayList("movies", movieList);
     }
 
 
@@ -157,8 +157,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
                 testDatabase();
 
-                // Attach Adapter and Layout Manager
-                //setUpAdapterAndLayoutManager();
+                 // Attach Adapter and Layout Manager
+                setUpAdapterAndLayoutManager();
             }
         }
     }
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         PopularMoviesAdapter adapter = new PopularMoviesAdapter(movieList.size(), this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
-        //adapter.setMovies(movieList);
+        adapter.setMovies(movieList);
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
