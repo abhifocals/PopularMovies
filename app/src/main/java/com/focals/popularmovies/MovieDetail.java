@@ -102,7 +102,7 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
 
         @Override
         protected String doInBackground(URL... urls) {
-            return NetworkUtils.getResponseFromUrl(NetworkUtils.getReviewUrl(currentMovie.getId()));
+            return NetworkUtils.getResponseFromUrl(NetworkUtils.getReviewUrl(currentMovie.getMovieId()));
         }
 
         @Override
@@ -132,7 +132,7 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
 
         @Override
         protected String doInBackground(URL... urls) {
-            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovie.getId()));
+            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovie.getMovieId()));
         }
 
         @Override
