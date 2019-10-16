@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity implements PopularMoviesAdapter.OnClickHandler {
+public class MainActivity extends AppCompatActivity implements MainAdapter.OnClickHandler {
 
     private RecyclerView rv_main;
     private ArrayList<Movie> movieList;
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     }
 
     private void setUpAdapterAndLayoutManager() {
-        PopularMoviesAdapter adapter = new PopularMoviesAdapter(movieList.size(), this);
+        MainAdapter adapter = new MainAdapter(movieList.size(), this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
         rv_main.setAdapter(adapter);

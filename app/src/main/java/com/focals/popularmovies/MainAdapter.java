@@ -15,7 +15,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdapter.PopularMoviesViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesViewHolder> {
 
     private final int itemCount;
     private final OnClickHandler clickHandler;
@@ -23,7 +23,7 @@ public class PopularMoviesAdapter extends RecyclerView.Adapter<PopularMoviesAdap
     MovieDatabase db;
     MovieDao movieDao;
 
-    PopularMoviesAdapter(int numOfItems, OnClickHandler clickHandler) {
+    MainAdapter(int numOfItems, OnClickHandler clickHandler) {
         this.itemCount = numOfItems;
         this.clickHandler = clickHandler;
     }
