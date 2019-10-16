@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     @Override
     public void onItemClick(int index) {
-        Intent intent = new Intent(this, MovieDetail.class);
+        Intent intent = new Intent(this, MovieDetailActivity.class);
 
         // TODO Room
 

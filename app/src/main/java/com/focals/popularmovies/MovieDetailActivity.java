@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MovieDetail extends AppCompatActivity implements TrailersAdapter.OnClickHandler {
+public class MovieDetailActivity extends AppCompatActivity implements TrailersAdapter.OnClickHandler {
 
     private Movie currentMovie;
     private RecyclerView trailersRecyclerView;
