@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.focals.popularmovies.room.MovieDao;
+import com.focals.popularmovies.room.MovieDatabase;
 import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URL;
-import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     private RecyclerView trailersRecyclerView;
     private TrailersAdapter trailersAdapter;
     private List<String> trailerUrls;
+    private int id;
+
+    MovieDatabase db;
+    MovieDao movieDao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +53,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         // Getting intent
         Intent intent = getIntent();
-        currentMovie = intent.getParcelableExtra("movie");
 
-        // TODO Room Get from DB
+        // Room Get from DB
+        db = MovieDatabase.getInstance(this);
+        movieDao = db.movieDao();
+        id = intent.getIntExtra("ID", 0);
+        currentMovie = movieDao.getMovieById(id);
+
 
         // Setting content in views
         if (currentMovie != null) {
@@ -62,16 +71,14 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         }
 
         // Get Trailer Urls
-
         FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
         fetchMovieTrailersTask.execute();
     }
 
     private void setUpTrailersAdapter(List<String> trailerUrls) {
         trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
-
-        // TODO Room,  get TrailerUrls from Room?
         trailersAdapter = new TrailersAdapter(trailerUrls, this);
+
         trailersRecyclerView.setAdapter(trailersAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         trailersRecyclerView.setLayoutManager(linearLayoutManager);
@@ -83,7 +90,11 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         Toast toast = Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT);
         toast.show();
 
-        // TODO Room. Update Movie.
+        // Room
+        currentMovie.setFavorite(true);
+        movieDao.updateMovie(currentMovie);
+
+
     }
 
     public void showReview(View view) {
@@ -100,8 +111,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
-
-
     }
 
     class FetchMovieReviewTask extends AsyncTask<URL, Void, String> {
@@ -120,6 +129,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
                 String content = new JSONArray(review.getString("results")).getJSONObject(0).getString("content");
 
+                // Room
+                currentMovie.setReview(content);
 
                 // Start Review Activity here
                 Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
@@ -131,8 +142,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            // TODO Room  Update Movie
         }
     }
 
@@ -174,7 +183,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
             setUpTrailersAdapter(videoUrls);
 
-            // TODO Room Update Movie
+            // Room
+            currentMovie.setTrailers(videoUrls);
         }
     }
 }

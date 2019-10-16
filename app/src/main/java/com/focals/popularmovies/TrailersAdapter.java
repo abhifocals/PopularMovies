@@ -16,7 +16,6 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
     OnClickHandler clickHandler;
     List<String> trailerUrls;
-    // TODO Room, get from Room
 
     public TrailersAdapter(List<String> trailerUrls, OnClickHandler clickHandler) {
         this.clickHandler = clickHandler;

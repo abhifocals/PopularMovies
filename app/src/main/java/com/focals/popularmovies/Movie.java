@@ -20,7 +20,7 @@ public class Movie implements Parcelable {
     private String popularity;
     private int movieId;
     private boolean favorite;
-    private String reviewUrl;
+    private String review;
     private List<String> trailers;
 
     @PrimaryKey(autoGenerate = true)
@@ -87,8 +87,8 @@ public class Movie implements Parcelable {
         return favorite;
     }
 
-    public String getReviewUrl() {
-        return reviewUrl;
+    public String getReview() {
+        return review;
     }
 
     public List<String> getTrailers() {
@@ -131,8 +131,8 @@ public class Movie implements Parcelable {
         this.favorite = favorite;
     }
 
-    public void setReviewUrl(String reviewUrl) {
-        this.reviewUrl = reviewUrl;
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public void setTrailers(List<String> trailers) {

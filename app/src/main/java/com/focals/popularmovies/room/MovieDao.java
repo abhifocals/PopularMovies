@@ -27,5 +27,5 @@ public interface MovieDao {
     List<Movie> getMovies();
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateFavoriteFlag(Movie movie);
+    void updateMovie(Movie movie);
 }

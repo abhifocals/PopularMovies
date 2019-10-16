@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         rv_main = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progressBar);
 
+        // Get DB
+        db = MovieDatabase.getInstance(this);
+        movieDao = db.movieDao();
+
         // Get Popular Movies
         if (movieList == null) {
             fetchTask = new FetchMovieData();
@@ -93,9 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
 
-        // TODO Room
-
-        intent.putExtra("movie", movieList.get(index));
+        intent.putExtra("ID", index + 1);
         startActivity(intent);
     }
 
@@ -106,29 +108,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         // TODO ViewModel
     }
-
-
-    private void testDatabase() {
-        MovieDatabase db = MovieDatabase.getInstance(this);
-        MovieDao movieDao = db.movieDao();
-
-        // Insert
-        movieDao.insertMovie(movieList.get(0));
-
-        Movie movie = movieDao.getMovieByMovieId(movieList.get(0).getMovieId());
-
-        boolean favFlag = movie.isFavorite();
-
-        movie.setFavorite(true);
-
-        movieDao.updateFavoriteFlag(movie);
-
-        favFlag = movieDao.getMovieByMovieId(movieList.get(0).getMovieId()).isFavorite();
-
-        // Query
-        System.out.println();
-    }
-
 
     class FetchMovieData extends AsyncTask<URL, Void, String> {
 
@@ -149,12 +128,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 movieList = null;
                 movieList = MovieJsonParser.buildMovieArray(s);
 
-                testDatabase();
-
-                // Insert into Database
-                db = MovieDatabase.getInstance(getApplicationContext());
-                movieDao = db.movieDao();
-
+                // Room Insert into Database
                 for (Movie movie : movieList) {
                     movieDao.insertMovie(movie);
                 }
