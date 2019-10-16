@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+            // TODO ViewModel
             case R.id.sort_popular:
                 fetchTask = new FetchMovieData();
                 fetchTask.execute(NetworkUtils.getPopularMoviesURL());
@@ -90,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     @Override
     public void onItemClick(int index) {
         Intent intent = new Intent(this, MovieDetail.class);
+
+        // TODO Room
+
         intent.putExtra("movie", movieList.get(index));
         startActivity(intent);
     }
@@ -98,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList("movies", movieList);
+
+        // TODO ViewModel
     }
 
 
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
         // Insert
         movieDao.insertMovie(movieList.get(0));
 
-        Movie movie = movieDao.getMovieById(movieList.get(0).getMovieId());
+        Movie movie = movieDao.getMovieByMovieId(movieList.get(0).getMovieId());
 
         boolean favFlag = movie.isFavorite();
 
@@ -116,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements PopularMoviesAdap
 
         movieDao.updateFavoriteFlag(movie);
 
-        favFlag = movieDao.getMovieById(movieList.get(0).getMovieId()).isFavorite();
+        favFlag = movieDao.getMovieByMovieId(movieList.get(0).getMovieId()).isFavorite();
 
         // Query
         System.out.println();

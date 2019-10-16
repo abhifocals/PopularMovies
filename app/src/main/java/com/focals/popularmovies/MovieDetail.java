@@ -50,6 +50,8 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
         Intent intent = getIntent();
         currentMovie = intent.getParcelableExtra("movie");
 
+        // TODO Room Get from DB
+
         // Setting content in views
         if (currentMovie != null) {
             title.setText(currentMovie.title);
@@ -67,6 +69,8 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
 
     private void setUpTrailersAdapter(List<String> trailerUrls) {
         trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
+
+        // TODO Room,  get TrailerUrls from Room?
         trailersAdapter = new TrailersAdapter(trailerUrls, this);
         trailersRecyclerView.setAdapter(trailersAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -78,6 +82,8 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
     public void addToFavorites(View view) {
         Toast toast = Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT);
         toast.show();
+
+        // TODO Room. Update Movie.
     }
 
     public void showReview(View view) {
@@ -125,6 +131,8 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            // TODO Room  Update Movie
         }
     }
 
@@ -165,6 +173,8 @@ public class MovieDetail extends AppCompatActivity implements TrailersAdapter.On
             }
 
             setUpTrailersAdapter(videoUrls);
+
+            // TODO Room Update Movie
         }
     }
 }
