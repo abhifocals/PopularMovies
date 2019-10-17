@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +28,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MovieDetailActivity extends AppCompatActivity implements TrailersAdapter.OnClickHandler {
+public class MovieDetailActivity extends AppCompatActivity implements TrailersAdapter.OnClickHandler, View.OnClickListener {
 
     private Movie currentMovie;
     private RecyclerView trailersRecyclerView;
     private TrailersAdapter trailersAdapter;
     private List<String> trailerUrls;
     private int id;
+    private TextView favoriteButton;
 
     MovieDatabase db;
     MovieDao movieDao;
@@ -50,6 +52,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         TextView rating = findViewById(R.id.rating);
         TextView releaseDate = findViewById(R.id.releaseDate);
         TextView plot = findViewById(R.id.plot);
+        favoriteButton = (TextView) findViewById(R.id.favoriteButton);
 
         // Getting intent
         Intent intent = getIntent();
@@ -73,6 +76,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         // Get Trailer Urls
         FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
         fetchMovieTrailersTask.execute();
+
+        // Set the listener
+        favoriteButton.setOnClickListener(this);
     }
 
     private void setUpTrailersAdapter(List<String> trailerUrls) {
@@ -94,7 +100,20 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         currentMovie.setFavorite(true);
         movieDao.updateMovie(currentMovie);
 
+        // Change Text of Button
+        favoriteButton.setText("Remove from Favorite");
+    }
 
+    public void removeFromFavorites(View view) {
+        Toast toast = Toast.makeText(this, "Removed from Favorites", Toast.LENGTH_SHORT);
+        toast.show();
+
+        // Room
+        currentMovie.setFavorite(false);
+        movieDao.updateMovie(currentMovie);
+
+        // Change Text of Button
+        favoriteButton.setText("Mark as Favorite");
     }
 
     public void showReview(View view) {
@@ -111,6 +130,22 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        Button favoriteButton = (Button) v;
+
+        if (v != null) {
+
+            if (((Button) v).getText().equals("Mark as Favorite")) {
+                addToFavorites(v);
+            } else {
+                removeFromFavorites(v);
+            }
+        }
+
     }
 
     class FetchMovieReviewTask extends AsyncTask<URL, Void, String> {
