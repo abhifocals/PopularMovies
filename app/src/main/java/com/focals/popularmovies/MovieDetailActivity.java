@@ -47,11 +47,11 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         setContentView(R.layout.detail_movie);
 
         // Getting views
-        TextView title = findViewById(R.id.title);
-        ImageView thumbnail = findViewById(R.id.thumbnail);
-        TextView rating = findViewById(R.id.rating);
-        TextView releaseDate = findViewById(R.id.releaseDate);
-        TextView plot = findViewById(R.id.plot);
+        final TextView title = findViewById(R.id.title);
+        final ImageView thumbnail = findViewById(R.id.thumbnail);
+        final TextView rating = findViewById(R.id.rating);
+        final TextView releaseDate = findViewById(R.id.releaseDate);
+        final TextView plot = findViewById(R.id.plot);
         favoriteButton = (TextView) findViewById(R.id.favoriteButton);
 
         // Getting intent
@@ -61,21 +61,33 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
         id = intent.getIntExtra("ID", 0);
-        currentMovie = movieDao.getMovieById(id);
 
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                currentMovie = movieDao.getMovieById(id);
 
-        // Setting content in views
-        if (currentMovie != null) {
-            title.setText(currentMovie.title);
-            Picasso.get().load(currentMovie.posterPath).into(thumbnail);
-            releaseDate.setText(currentMovie.releaseDate);
-            plot.setText(currentMovie.plotSynopsis);
-            rating.setText(currentMovie.rating);
-        }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Setting content in views
+                        if (currentMovie != null) {
+                            title.setText(currentMovie.title);
+                            Picasso.get().load(currentMovie.posterPath).into(thumbnail);
+                            releaseDate.setText(currentMovie.releaseDate);
+                            plot.setText(currentMovie.plotSynopsis);
+                            rating.setText(currentMovie.rating);
+                        }
 
-        // Get Trailer Urls
-        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
-        fetchMovieTrailersTask.execute();
+                        // Get Trailer Urls
+                        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
+                        fetchMovieTrailersTask.execute();
+
+                    }
+                });
+
+            }
+        });
 
         // Set the listener
         favoriteButton.setOnClickListener(this);
@@ -98,7 +110,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         // Room
         currentMovie.setFavorite(true);
-        movieDao.updateMovie(currentMovie);
+
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDao.updateMovie(currentMovie);
+            }
+        });
 
         // Change Text of Button
         favoriteButton.setText("Remove from Favorite");
@@ -110,7 +128,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         // Room
         currentMovie.setFavorite(false);
-        movieDao.updateMovie(currentMovie);
+
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDao.updateMovie(currentMovie);
+            }
+        });
 
         // Change Text of Button
         favoriteButton.setText("Mark as Favorite");

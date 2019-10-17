@@ -141,8 +141,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 movieList = MovieJsonParser.buildMovieArray(s);
 
                 // Room Insert into Database
-                for (Movie movie : movieList) {
-                    movieDao.insertMovie(movie);
+                for (final Movie movie : movieList) {
+
+                    AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            movieDao.insertMovie(movie);
+                        }
+                    });
                 }
 
                 // Attach Adapter and Layout Manager

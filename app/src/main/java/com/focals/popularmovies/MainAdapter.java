@@ -42,8 +42,23 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesV
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PopularMoviesViewHolder holder, int position) {
-        Picasso.get().load(movieDao.getMovies().get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
+    public void onBindViewHolder(@NonNull final PopularMoviesViewHolder holder, final int position) {
+
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+             final List<Movie>  movies = movieDao.getMovies();
+
+                AppExecutors.getsInstance().getMainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Picasso.get().load(movies.get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
+                    }
+                });
+            }
+        });
+
+
     }
 
     @Override
