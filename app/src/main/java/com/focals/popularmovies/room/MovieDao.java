@@ -18,7 +18,7 @@ import androidx.room.Update;
 public interface MovieDao {
 
     @Insert
-    void insertMovie (Movie movie);
+    void insertMovie(Movie movie);
 
     @Query("SELECT * FROM Movie where movieId = :movieId")
     Movie getMovieByMovieId(int movieId);
@@ -33,5 +33,11 @@ public interface MovieDao {
     void updateMovie(Movie movie);
 
     @Query("SELECT * FROM movie where favorite = 1")
-    LiveData<List<Movie>> getFavorites ();
+    LiveData<List<Movie>> getFavorites();
+
+    @Query("SELECT * FROM movie ORDER By popularity DESC")
+    List<Movie> getPopularMovies();
+
+    @Query("SELECT * FROM movie ORDER By favorite DESC")
+    List<Movie> getFavoriteMovies();
 }
