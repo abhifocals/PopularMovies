@@ -3,6 +3,7 @@ package com.focals.popularmovies;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +17,11 @@ import com.focals.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -87,9 +91,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 break;
 
             case R.id.sort_favorites:
-//                openWebPage("http://www.google.com");
+                final LiveData<List<Movie>> movieLiveData = movieDao.getFavorites();
+
+                movieLiveData.observe(this, new Observer<List<Movie>>() {
+                    @Override
+                    public void onChanged(List<Movie> movies) {
+                        movieList = new ArrayList<>(movies);
+                    }
+                });
+
+                setUpAdapterAndLayoutManager();
         }
-        setUpAdapterAndLayoutManager();
         return super.onOptionsItemSelected(item);
     }
 
