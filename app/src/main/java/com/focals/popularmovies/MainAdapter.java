@@ -17,14 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesViewHolder> {
 
-    private final int itemCount;
     private final OnClickHandler clickHandler;
     private List<Movie> movies;
-    MovieDatabase db;
-    MovieDao movieDao;
 
-    MainAdapter(int numOfItems, OnClickHandler clickHandler) {
-        this.itemCount = numOfItems;
+    MainAdapter(List<Movie> movies, OnClickHandler clickHandler) {
+        this.movies = movies;
         this.clickHandler = clickHandler;
     }
 
@@ -35,37 +32,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesV
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.movie_card, parent, false);
 
-        db = MovieDatabase.getInstance(parent.getContext());
-        movieDao = db.movieDao();
-
         return new PopularMoviesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final PopularMoviesViewHolder holder, final int position) {
-
-        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-             final List<Movie>  movies = movieDao.getPopularMovies();
-
-                AppExecutors.getsInstance().getMainThread().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Picasso.get().load(movies.get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
-                    }
-                });
-            }
-        });
-
-
+        Picasso.get().load(movies.get(position).posterPath).error(R.drawable.placeholder).into(holder.movieCard);
     }
 
     @Override
     public int getItemCount() {
-        return itemCount;
+        return movies.size();
     }
-
 
     public interface OnClickHandler {
         void onItemClick(int index);
