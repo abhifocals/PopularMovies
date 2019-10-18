@@ -27,7 +27,7 @@ public class MovieJsonParser {
                 String plotSynopsis = movieJson.getString("overview");
                 String releaseDate = movieJson.getString("release_date");
                 String rating = movieJson.getString("vote_average");
-                String popularity = movieJson.getString("popularity");
+                double popularity = Double.parseDouble(movieJson.getString("popularity"));
                 int movieId = Integer.valueOf(movieJson.getString("id"));
                 boolean favorite = false;
 

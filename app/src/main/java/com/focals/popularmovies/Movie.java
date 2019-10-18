@@ -10,14 +10,14 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "movie")
-public class Movie implements Parcelable {
+public class Movie {
 
     String title;
     String posterPath;
     String plotSynopsis;
     String releaseDate;
     String rating;
-    private String popularity;
+    private double popularity;
     private int movieId;
     private boolean favorite;
     private String review;
@@ -28,7 +28,7 @@ public class Movie implements Parcelable {
 
 
     @Ignore
-    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, boolean favorite, int movieId) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, double popularity, boolean favorite, int movieId) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
@@ -39,7 +39,7 @@ public class Movie implements Parcelable {
         this.favorite = favorite;
     }
 
-    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, String popularity, boolean favorite,  int movieId, int id) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, double popularity, boolean favorite, int movieId, int id) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
@@ -71,7 +71,7 @@ public class Movie implements Parcelable {
         return rating;
     }
 
-    public String getPopularity() {
+    public double getPopularity() {
         return popularity;
     }
 
@@ -115,7 +115,7 @@ public class Movie implements Parcelable {
         this.rating = rating;
     }
 
-    public void setPopularity(String popularity) {
+    public void setPopularity(double popularity) {
         this.popularity = popularity;
     }
 
@@ -138,45 +138,4 @@ public class Movie implements Parcelable {
     public void setTrailers(List<String> trailers) {
         this.trailers = trailers;
     }
-
-    private Movie(Parcel in) {
-        title = in.readString();
-        posterPath = in.readString();
-        plotSynopsis = in.readString();
-        releaseDate = in.readString();
-        rating = in.readString();
-        popularity = in.readString();
-        id = in.readInt();
-    }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(posterPath);
-        dest.writeString(plotSynopsis);
-        dest.writeString(releaseDate);
-        dest.writeString(rating);
-        dest.writeString(popularity);
-        dest.writeInt(id);
-    }
-
-    public final static Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
-
-        @Override
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
-        }
-
-        @Override
-        public Movie[] newArray(int i) {
-            return new Movie[i];
-        }
-    };
-
 }
