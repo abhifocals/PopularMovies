@@ -16,7 +16,7 @@ public class Movie {
     String posterPath;
     String plotSynopsis;
     String releaseDate;
-    String rating;
+    double rating;
     private double popularity;
     private int movieId;
     private boolean favorite;
@@ -28,7 +28,7 @@ public class Movie {
 
 
     @Ignore
-    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, double popularity, boolean favorite, int movieId) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, double rating, double popularity, boolean favorite, int movieId) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
@@ -39,7 +39,7 @@ public class Movie {
         this.favorite = favorite;
     }
 
-    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, String rating, double popularity, boolean favorite, int movieId, int id) {
+    public Movie(String title, String posterPath, String plotSynopsis, String releaseDate, double rating, double popularity, boolean favorite, int movieId, int id) {
         this.title = title;
         this.posterPath = posterPath;
         this.plotSynopsis = plotSynopsis;
@@ -67,7 +67,7 @@ public class Movie {
         return releaseDate;
     }
 
-    public String getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -111,7 +111,7 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public void setRating(String rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
