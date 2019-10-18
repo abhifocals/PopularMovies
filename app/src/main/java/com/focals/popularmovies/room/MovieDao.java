@@ -17,7 +17,7 @@ import androidx.room.Update;
 @Dao
 public interface MovieDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovie(Movie movie);
 
     @Query("SELECT * FROM Movie where movieId = :movieId")
