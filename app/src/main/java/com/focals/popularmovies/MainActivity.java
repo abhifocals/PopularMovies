@@ -35,6 +35,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     MovieDatabase db;
     MovieDao movieDao;
 
+    public static String LOADED_DATA_TAG;
+    public static String LOADED_DATA_VALUE;
+    public static final String MOVIE_ID = "MOVIE_ID";
+    public static boolean POPULAR;
+    private static boolean TOP_RATED;
+    private static boolean FAVORITE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         if (movieList == null) {
             fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+            POPULAR = true;
+
             showProgressBar();
         } else {
         }
@@ -105,11 +114,38 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     @Override
-    public void onItemClick(int index) {
-        Intent intent = new Intent(this, MovieDetailActivity.class);
+    public void onItemClick(final int index) {
+        final Intent intent = new Intent(this, MovieDetailActivity.class);
 
-        intent.putExtra("ID", index + 1);
-        startActivity(intent);
+        // intent.putExtra(LOADED_DATA_TAG,LOADED_DATA_VALUE);
+
+        final List<Movie> list;
+
+
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                final int movieId;
+
+                if (POPULAR) {
+                    movieId = movieDao.getPopularMovies().get(index).getMovieId();
+                } else if (TOP_RATED) {
+                    movieId = movieDao.getTopRatedMovies().get(index).getMovieId();
+                } else if (FAVORITE) {
+                    movieId = movieDao.getFavoriteMovies().get(index).getMovieId();
+                } else {
+                    movieId = 0;
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        intent.putExtra(MOVIE_ID, movieId);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
     }
 
     @Override

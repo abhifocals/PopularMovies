@@ -47,7 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesV
         AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
             @Override
             public void run() {
-             final List<Movie>  movies = movieDao.getMovies();
+             final List<Movie>  movies = movieDao.getPopularMovies();
 
                 AppExecutors.getsInstance().getMainThread().execute(new Runnable() {
                     @Override

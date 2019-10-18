@@ -34,7 +34,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     private RecyclerView trailersRecyclerView;
     private TrailersAdapter trailersAdapter;
     private List<String> trailerUrls;
-    private int id;
+    private String loadedData;
     private TextView favoriteButton;
 
     MovieDatabase db;
@@ -60,12 +60,14 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         // Room Get from DB
         db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
-        id = intent.getIntExtra("ID", 0);
+
+        final int movieId = intent.getIntExtra("MOVIE_ID", 0);
 
         AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
             @Override
             public void run() {
-                currentMovie = movieDao.getMovieById(id);
+
+                currentMovie = movieDao.getMovieByMovieId(movieId);
 
                 runOnUiThread(new Runnable() {
                     @Override
