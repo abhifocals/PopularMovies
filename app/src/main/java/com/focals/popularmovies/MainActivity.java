@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
             showProgressBar();
         } else {
-            movieList = savedInstanceState.getParcelableArrayList("movies");
         }
     }
 
@@ -116,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("movies", movieList);
 
         // TODO ViewModel
     }
