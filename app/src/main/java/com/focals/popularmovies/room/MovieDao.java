@@ -40,4 +40,7 @@ public interface MovieDao {
 
     @Query("SELECT * FROM movie ORDER By favorite DESC")
     List<Movie> getFavoriteMovies();
+
+    @Query("SELECT * FROM movie ORDER By rating DESC")
+    List<Movie> getTopRatedMovies();
 }
