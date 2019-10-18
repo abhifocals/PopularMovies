@@ -18,12 +18,14 @@ public class Movie {
     String releaseDate;
     double rating;
     private double popularity;
+
+    @PrimaryKey(autoGenerate = false)
     private int movieId;
     private boolean favorite;
     private String review;
     private List<String> trailers;
 
-    @PrimaryKey(autoGenerate = true)
+//    @PrimaryKey(autoGenerate = true)
     private int id;
 
 
