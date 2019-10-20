@@ -3,7 +3,6 @@ package com.focals.popularmovies;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity implements MainAdapter.OnClickHandler {
 
     private RecyclerView rv_main;
-    private ArrayList<Movie> movieList;
+    private ArrayList<Movie> popularList;
     private ArrayList<Movie> topRatedList;
     private ArrayList<Movie> favoriteList;
 
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
 
         // Get Popular Movies
-        if (movieList == null) {
+        if (popularList == null) {
             fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
             GET_POPULAR = true;
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 //showProgressBar();
 
-                setUpAdapterAndLayoutManager(movieList);
+                setUpAdapterAndLayoutManager(popularList);
 
                 // Disable this option, enable other
                 item.setEnabled(false);
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         int movieId = 0;
 
         if (LOADED_POPULAR) {
-            movieId = movieList.get(index).getMovieId();
+            movieId = popularList.get(index).getMovieId();
 
         } else if (LOADED_TOP_RATED) {
             movieId = topRatedList.get(index).getMovieId();
@@ -169,35 +168,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         intent.putExtra(MOVIE_ID, movieId);
         startActivity(intent);
-
-//
-//        final List<Movie> list;
-//
-//
-//        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                final int movieId;
-//
-//                if (GET_POPULAR) {
-//                    movieId = movieDao.getPopularMovies().get(index).getMovieId();
-//                } else if (GET_TOP_RATED) {
-//                    movieId = movieDao.getTopRatedMovies().get(index).getMovieId();
-//                } else if (GET_FAVORITE) {
-//                    movieId = movieDao.getFavoriteMovies().get(index).getMovieId();
-//                } else {
-//                    movieId = 0;
-//                }
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        intent.putExtra(MOVIE_ID, movieId);
-//                        startActivity(intent);
-//                    }
-//                });
-//            }
-//        });
     }
 
     @Override
@@ -224,11 +194,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             super.onPostExecute(s);
 
             if (GET_POPULAR) {
-                movieList = MovieJsonParser.buildMovieArray(s);
+                popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
 
                 // Attach Adapter and Layout Manager
-                setUpAdapterAndLayoutManager(movieList);
+                setUpAdapterAndLayoutManager(popularList);
 
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
@@ -236,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     public void run() {
 
                         // loop here
-                        for (final Movie movie : movieList) {
+                        for (final Movie movie : popularList) {
                             movieDao.insertMovie(movie);
                         }
                     }
@@ -267,8 +237,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 //                showError();
 //            } else {
 //                // Build Movie Objects from Response
-//                movieList = null;
-//                movieList = MovieJsonParser.buildMovieArray(s);
+//                popularList = null;
+//                popularList = MovieJsonParser.buildMovieArray(s);
 
 
         }
@@ -298,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     private void showError() {
-        if (movieList == null) {
+        if (popularList == null) {
             progressBar.setVisibility(View.INVISIBLE);
             TextView error = findViewById(R.id.tv_error);
             error.setVisibility(View.VISIBLE);
