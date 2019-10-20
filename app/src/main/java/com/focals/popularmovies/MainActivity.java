@@ -197,9 +197,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
 
-                // Attach Adapter and Layout Manager
-                setUpAdapterAndLayoutManager(popularList);
-
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
@@ -211,6 +208,26 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         }
                     }
                 });
+
+
+                // Get data from DB
+
+                final LiveData<List<Movie>> popularData = movieDao.getPopularMovies();
+
+                popularData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                    @Override
+                    public void onChanged(List<Movie> movies) {
+                        popularData.removeObserver(this);
+                        setUpAdapterAndLayoutManager(movies);
+                    }
+                });
+
+
+
+                // Attach Adapter and Layout Manager
+//                setUpAdapterAndLayoutManager(popularList);
+
+
 
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
