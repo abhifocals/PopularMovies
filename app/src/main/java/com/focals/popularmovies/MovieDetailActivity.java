@@ -81,6 +81,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                             rating.setText(String.valueOf(currentMovie.rating));
                         }
 
+                        if (currentMovie.isFavorite()) {
+                            favoriteButton.setText("Remove from Favorite");
+                        }
+
                         // Get Trailer Urls
                         FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
                         fetchMovieTrailersTask.execute();
