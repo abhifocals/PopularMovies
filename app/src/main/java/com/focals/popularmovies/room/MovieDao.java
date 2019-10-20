@@ -52,5 +52,5 @@ public interface MovieDao {
     List<Movie> getFavoriteMovies();
 
     @Query("SELECT * FROM movie ORDER By rating DESC")
-    List<Movie> getTopRatedMovies();
+    LiveData<List<Movie>> getTopRatedMovies();
 }

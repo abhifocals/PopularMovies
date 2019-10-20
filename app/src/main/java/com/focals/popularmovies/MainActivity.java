@@ -94,7 +94,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 //showProgressBar();
 
-                setUpAdapterAndLayoutManager(popularList);
+
+                // Get data from DB
+                final LiveData<List<Movie>> popularData = movieDao.getPopularMovies();
+
+                popularData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                    @Override
+                    public void onChanged(List<Movie> movies) {
+                        setUpAdapterAndLayoutManager(movies);
+                    }
+                });
+
 
                 // Disable this option, enable other
                 item.setEnabled(false);
@@ -114,7 +124,16 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     fetchTask = new FetchMovieData();
                     fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
                 } else {
-                    setUpAdapterAndLayoutManager(topRatedList);
+
+                    // Get data from DB
+                    final LiveData<List<Movie>> topRatedData = movieDao.getTopRatedMovies();
+
+                    topRatedData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                        @Override
+                        public void onChanged(List<Movie> movies) {
+                            setUpAdapterAndLayoutManager(movies);
+                        }
+                    });
                 }
 
                 // Disable this option, enable other
@@ -131,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // showProgressBar();
 
+                // Get data from DB
                 final LiveData<List<Movie>> favoriteListLive = movieDao.getFavorites();
 
                 favoriteListLive.observe(MainActivity.this, new Observer<List<Movie>>() {
@@ -211,7 +231,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
 
                 // Get data from DB
-
                 final LiveData<List<Movie>> popularData = movieDao.getPopularMovies();
 
                 popularData.observe(MainActivity.this, new Observer<List<Movie>>() {
@@ -222,19 +241,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
 
-
-
-                // Attach Adapter and Layout Manager
-//                setUpAdapterAndLayoutManager(popularList);
-
-
-
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
-
-                // Attach Adapter and Layout Manager
-                setUpAdapterAndLayoutManager(topRatedList);
 
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
@@ -245,6 +254,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         for (final Movie movie : topRatedList) {
                             movieDao.insertMovie(movie);
                         }
+                    }
+                });
+
+                // Get data from DB
+                final LiveData<List<Movie>> topRatedData = movieDao.getTopRatedMovies();
+
+                topRatedData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                    @Override
+                    public void onChanged(List<Movie> movies) {
+                        topRatedData.removeObserver(this);
+                        setUpAdapterAndLayoutManager(movies);
                     }
                 });
             }
