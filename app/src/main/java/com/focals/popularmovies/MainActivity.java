@@ -29,18 +29,24 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     private RecyclerView rv_main;
     private ArrayList<Movie> movieList;
+    private ArrayList<Movie> topRatedList;
+    private ArrayList<Movie> favoriteList;
+
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
     private Menu menu;
     MovieDatabase db;
     MovieDao movieDao;
 
-    public static String LOADED_DATA_TAG;
-    public static String LOADED_DATA_VALUE;
     public static final String MOVIE_ID = "MOVIE_ID";
-    public static boolean POPULAR;
-    private static boolean TOP_RATED;
-    private static boolean FAVORITE;
+    public static boolean GET_POPULAR;
+    private static boolean GET_TOP_RATED;
+
+    private static boolean LOADED_POPULAR;
+    private static boolean LOADED_TOP_RATED;
+    private static boolean LOADED_FAVORITE;
+
+    private static final String TAG = "Test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +61,18 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
 
+
+        // Get top-rated movies
+        topRatedList = new ArrayList<>();
+
+
         // Get Popular Movies
         if (movieList == null) {
             fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-            POPULAR = true;
+            GET_POPULAR = true;
+            GET_TOP_RATED = true;
+            LOADED_POPULAR = true;
 
             showProgressBar();
         } else {
@@ -74,78 +87,117 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
+
         switch (item.getItemId()) {
 
-            // TODO ViewModel
             case R.id.sort_popular:
-                fetchTask = new FetchMovieData();
-                fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-                showProgressBar();
+
+                //showProgressBar();
+
+                setUpAdapterAndLayoutManager(movieList);
 
                 // Disable this option, enable other
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_rated).setEnabled(true);
+
+                LOADED_POPULAR = true;
+                LOADED_FAVORITE = false;
+                LOADED_TOP_RATED = false;
+
                 break;
 
             case R.id.sort_rated:
-                fetchTask = new FetchMovieData();
-                fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
-                showProgressBar();
+
+                // showProgressBar();
+
+                if (GET_TOP_RATED) {
+                    fetchTask = new FetchMovieData();
+                    fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
+                } else {
+                    setUpAdapterAndLayoutManager(topRatedList);
+                }
 
                 // Disable this option, enable other
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_popular).setEnabled(true);
+
+                LOADED_POPULAR = false;
+                LOADED_FAVORITE = false;
+                LOADED_TOP_RATED = true;
+
                 break;
 
             case R.id.sort_favorites:
-                final LiveData<List<Movie>> movieLiveData = movieDao.getFavorites();
 
-                movieLiveData.observe(this, new Observer<List<Movie>>() {
+                // showProgressBar();
+
+                final LiveData<List<Movie>> favoriteListLive = movieDao.getFavorites();
+
+                favoriteListLive.observe(MainActivity.this, new Observer<List<Movie>>() {
+
                     @Override
                     public void onChanged(List<Movie> movies) {
-                        movieList = new ArrayList<>(movies);
+                        favoriteList = new ArrayList<>(movies);
+                        setUpAdapterAndLayoutManager(movies);
                     }
                 });
 
-                setUpAdapterAndLayoutManager();
+                LOADED_POPULAR = false;
+                LOADED_FAVORITE = true;
+                LOADED_TOP_RATED = false;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onItemClick(final int index) {
         final Intent intent = new Intent(this, MovieDetailActivity.class);
+        int movieId = 0;
 
-        // intent.putExtra(LOADED_DATA_TAG,LOADED_DATA_VALUE);
+        if (LOADED_POPULAR) {
+            movieId = movieList.get(index).getMovieId();
 
-        final List<Movie> list;
+        } else if (LOADED_TOP_RATED) {
+            movieId = topRatedList.get(index).getMovieId();
 
+        } else if (LOADED_FAVORITE) {
+            movieId = favoriteList.get(index).getMovieId();
+        }
 
-        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                final int movieId;
+        intent.putExtra(MOVIE_ID, movieId);
+        startActivity(intent);
 
-                if (POPULAR) {
-                    movieId = movieDao.getPopularMovies().get(index).getMovieId();
-                } else if (TOP_RATED) {
-                    movieId = movieDao.getTopRatedMovies().get(index).getMovieId();
-                } else if (FAVORITE) {
-                    movieId = movieDao.getFavoriteMovies().get(index).getMovieId();
-                } else {
-                    movieId = 0;
-                }
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        intent.putExtra(MOVIE_ID, movieId);
-                        startActivity(intent);
-                    }
-                });
-            }
-        });
+//
+//        final List<Movie> list;
+//
+//
+//        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                final int movieId;
+//
+//                if (GET_POPULAR) {
+//                    movieId = movieDao.getPopularMovies().get(index).getMovieId();
+//                } else if (GET_TOP_RATED) {
+//                    movieId = movieDao.getTopRatedMovies().get(index).getMovieId();
+//                } else if (GET_FAVORITE) {
+//                    movieId = movieDao.getFavoriteMovies().get(index).getMovieId();
+//                } else {
+//                    movieId = 0;
+//                }
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        intent.putExtra(MOVIE_ID, movieId);
+//                        startActivity(intent);
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
@@ -159,42 +211,76 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         @Override
         protected String doInBackground(URL... urls) {
-            return NetworkUtils.getResponseFromUrl(urls[0]);
+
+            if (GET_POPULAR || GET_TOP_RATED) {
+                return NetworkUtils.getResponseFromUrl(urls[0]);
+            }
+
+            return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            hideProgressBar();
 
-            if (s == null) {
-                showError();
-            } else {
-                // Build Movie Objects from Response
-                movieList = null;
+            if (GET_POPULAR) {
                 movieList = MovieJsonParser.buildMovieArray(s);
-
-                // Room Insert into Database
-                for (final Movie movie : movieList) {
-
-                    AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            movieDao.insertMovie(movie);
-                        }
-                    });
-                }
+                GET_POPULAR = false;
 
                 // Attach Adapter and Layout Manager
-                setUpAdapterAndLayoutManager();
+                setUpAdapterAndLayoutManager(movieList);
+
+                // Room Insert into Database
+                AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // loop here
+                        for (final Movie movie : movieList) {
+                            movieDao.insertMovie(movie);
+                        }
+                    }
+                });
+
+            } else if (GET_TOP_RATED) {
+                topRatedList = MovieJsonParser.buildMovieArray(s);
+                GET_TOP_RATED = false;
+
+                // Attach Adapter and Layout Manager
+                setUpAdapterAndLayoutManager(topRatedList);
+
+                // Room Insert into Database
+                AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // loop here
+                        for (final Movie movie : topRatedList) {
+                            movieDao.insertMovie(movie);
+                        }
+                    }
+                });
             }
+
+
+//            if (s == null) {
+//                showError();
+//            } else {
+//                // Build Movie Objects from Response
+//                movieList = null;
+//                movieList = MovieJsonParser.buildMovieArray(s);
+
+
         }
+
     }
 
-    private void setUpAdapterAndLayoutManager() {
-        MainAdapter adapter = new MainAdapter(movieList.size(), this);
+
+    private void setUpAdapterAndLayoutManager(List<Movie> listOfMovies) {
+        MainAdapter adapter = new MainAdapter(listOfMovies, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
+        hideProgressBar();
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
