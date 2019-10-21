@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.focals.popularmovies.room.MovieDao;
 import com.focals.popularmovies.room.MovieDatabase;
-import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -25,11 +24,14 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailersAdapter.OnClickHandler, View.OnClickListener {
 
+    private LiveData<Movie> currentMovieData;
     private Movie currentMovie;
     private RecyclerView trailersRecyclerView;
     private TrailersAdapter trailersAdapter;
@@ -63,41 +65,60 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         final int movieId = intent.getIntExtra("MOVIE_ID", 0);
 
-        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+
+        currentMovieData = movieDao.getMovieByMovieId(movieId);
+
+        currentMovieData.observe(MovieDetailActivity.this, new Observer<Movie>() {
             @Override
-            public void run() {
+            public void onChanged(Movie movie) {
+                currentMovie = movie;
 
-                currentMovie = movieDao.getMovieByMovieId(movieId);
+                title.setText(movie.title);
+                Picasso.get().load(movie.posterPath).into(thumbnail);
+                releaseDate.setText(movie.releaseDate);
+                plot.setText(movie.plotSynopsis);
+                rating.setText(String.valueOf(movie.rating));
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Setting content in views
-                        if (currentMovie != null) {
-                            title.setText(currentMovie.title);
-                            Picasso.get().load(currentMovie.posterPath).into(thumbnail);
-                            releaseDate.setText(currentMovie.releaseDate);
-                            plot.setText(currentMovie.plotSynopsis);
-                            rating.setText(String.valueOf(currentMovie.rating));
-                        }
-
-                        if (currentMovie.isFavorite()) {
-                            favoriteButton.setText("Remove from Favorite");
-                        }
-
-                        // Get Trailer Urls
-                        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
-                        fetchMovieTrailersTask.execute();
-
-                    }
-                });
-
+                if (currentMovie.isFavorite()) {
+                    favoriteButton.setText("Remove from Favorite");
+                } else {
+                    favoriteButton.setText("Mark as Favorite");
+                }
             }
         });
 
+        // Get Trailer Urls
+//        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
+//        fetchMovieTrailersTask.execute();
+
         // Set the listener
         favoriteButton.setOnClickListener(this);
+
+
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        // Setting content in views
+//                        if (currentMovieData != null) {
+//                            title.setText(currentMovieData.title);
+//                            Picasso.get().load(currentMovieData.posterPath).into(thumbnail);
+//                            releaseDate.setText(currentMovieData.releaseDate);
+//                            plot.setText(currentMovieData.plotSynopsis);
+//                            rating.setText(String.valueOf(currentMovieData.rating));
+//                        }
+//
+//                        if (currentMovieData.isFavorite()) {
+//                            favoriteButton.setText("Remove from Favorite");
+//                        }
+//
+//
+//
+//                    }
+//                });
+
+
     }
+
 
     private void setUpTrailersAdapter(List<String> trailerUrls) {
         trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
@@ -114,36 +135,20 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         Toast toast = Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT);
         toast.show();
 
-        // Room
         currentMovie.setFavorite(true);
-
-        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                movieDao.updateMovie(currentMovie);
-            }
-        });
-
-        // Change Text of Button
         favoriteButton.setText("Remove from Favorite");
+
+        movieDao.updateMovie(currentMovie);
     }
 
     public void removeFromFavorites(View view) {
         Toast toast = Toast.makeText(this, "Removed from Favorites", Toast.LENGTH_SHORT);
         toast.show();
 
-        // Room
         currentMovie.setFavorite(false);
-
-        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                movieDao.updateMovie(currentMovie);
-            }
-        });
-
-        // Change Text of Button
         favoriteButton.setText("Mark as Favorite");
+
+        movieDao.updateMovie(currentMovie);
     }
 
     public void showReview(View view) {
@@ -182,7 +187,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         @Override
         protected String doInBackground(URL... urls) {
-            return NetworkUtils.getResponseFromUrl(NetworkUtils.getReviewUrl(currentMovie.getMovieId()));
+//            return NetworkUtils.getResponseFromUrl(NetworkUtils.getReviewUrl(currentMovieData.getMovieId()));
+
+            return null;
         }
 
         @Override
@@ -195,7 +202,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 String content = new JSONArray(review.getString("results")).getJSONObject(0).getString("content");
 
                 // Room
-                currentMovie.setReview(content);
+//                currentMovieData.setReview(content);
 
                 // Start Review Activity here
                 Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
@@ -214,7 +221,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         @Override
         protected String doInBackground(URL... urls) {
-            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovie.getMovieId()));
+//            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovieData.getMovieId()));
+            return null;
         }
 
         @Override
@@ -249,7 +257,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             setUpTrailersAdapter(videoUrls);
 
             // Room
-            currentMovie.setTrailers(videoUrls);
+//            currentMovieData.setTrailers(videoUrls);
         }
     }
 }

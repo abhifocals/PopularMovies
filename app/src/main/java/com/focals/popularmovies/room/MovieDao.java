@@ -21,10 +21,10 @@ public interface MovieDao {
     void insertMovie(Movie movie);
 
     @Query("SELECT * FROM Movie where movieId = :movieId")
-    Movie getMovieByMovieId(int movieId);
+    LiveData<Movie> getMovieByMovieId(int movieId);
 
-//    @Query("SELECT * FROM movie where id = :id")
-//    Movie getMovieById(int id);
+    @Query("SELECT * FROM movie where id = :id")
+    LiveData<Movie> getMovieById(int id);
 
     @Query("SELECT * FROM movie")
     List<Movie> getMovies();

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private RecyclerView rv_main;
     private ArrayList<Movie> popularList;
     private ArrayList<Movie> topRatedList;
-    private ArrayList<Movie> favoriteList;
 
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
@@ -40,10 +39,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     public static final String MOVIE_ID = "MOVIE_ID";
     public static boolean GET_POPULAR;
     private static boolean GET_TOP_RATED;
-
-    private static boolean LOADED_POPULAR;
-    private static boolean LOADED_TOP_RATED;
-    private static boolean LOADED_FAVORITE;
 
     private static final String TAG = "Test";
 
@@ -65,13 +60,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         topRatedList = new ArrayList<>();
 
 
+        GET_POPULAR = true;
+        GET_TOP_RATED = true;
+
         // Get Popular Movies
         if (popularList == null) {
             fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-            GET_POPULAR = true;
-            GET_TOP_RATED = true;
-            LOADED_POPULAR = true;
 
             showProgressBar();
         } else {
@@ -110,10 +105,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_rated).setEnabled(true);
 
-                LOADED_POPULAR = true;
-                LOADED_FAVORITE = false;
-                LOADED_TOP_RATED = false;
-
                 break;
 
             case R.id.sort_rated:
@@ -140,10 +131,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_popular).setEnabled(true);
 
-                LOADED_POPULAR = false;
-                LOADED_FAVORITE = false;
-                LOADED_TOP_RATED = true;
-
                 break;
 
             case R.id.sort_favorites:
@@ -157,14 +144,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                     @Override
                     public void onChanged(List<Movie> movies) {
-                        favoriteList = new ArrayList<>(movies);
-                        setUpAdapterAndLayoutManager(movies);
+                        setUpAdapterAndLayoutManager(new ArrayList<Movie>(movies));
                     }
                 });
 
-                LOADED_POPULAR = false;
-                LOADED_FAVORITE = true;
-                LOADED_TOP_RATED = false;
         }
 
         return super.onOptionsItemSelected(item);
@@ -176,18 +159,16 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         final Intent intent = new Intent(this, MovieDetailActivity.class);
         int movieId = 0;
 
-        if (LOADED_POPULAR) {
-            movieId = popularList.get(index).getMovieId();
 
-        } else if (LOADED_TOP_RATED) {
-            movieId = topRatedList.get(index).getMovieId();
+        LiveData<Movie> movieLiveData = movieDao.getMovieById(index);
 
-        } else if (LOADED_FAVORITE) {
-            movieId = favoriteList.get(index).getMovieId();
-        }
-
-        intent.putExtra(MOVIE_ID, movieId);
-        startActivity(intent);
+        movieLiveData.observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(Movie movie) {
+                intent.putExtra(MOVIE_ID, movie.getMovieId());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
