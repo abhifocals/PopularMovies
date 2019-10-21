@@ -85,39 +85,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 } else {
                     favoriteButton.setText("Mark as Favorite");
                 }
+
+                // Get Trailer Urls
+                FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
+                fetchMovieTrailersTask.execute();
             }
         });
-
-        // Get Trailer Urls
-//        FetchMovieTrailersTask fetchMovieTrailersTask = new FetchMovieTrailersTask();
-//        fetchMovieTrailersTask.execute();
-
+        
         // Set the listener
         favoriteButton.setOnClickListener(this);
-
-
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        // Setting content in views
-//                        if (currentMovieData != null) {
-//                            title.setText(currentMovieData.title);
-//                            Picasso.get().load(currentMovieData.posterPath).into(thumbnail);
-//                            releaseDate.setText(currentMovieData.releaseDate);
-//                            plot.setText(currentMovieData.plotSynopsis);
-//                            rating.setText(String.valueOf(currentMovieData.rating));
-//                        }
-//
-//                        if (currentMovieData.isFavorite()) {
-//                            favoriteButton.setText("Remove from Favorite");
-//                        }
-//
-//
-//
-//                    }
-//                });
-
-
     }
 
 
@@ -157,7 +133,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         reviewTask.execute();
     }
 
-    public void onClick(int position) {
+    public void onClickTrailer(int position) {
         String trailerUrl = trailerUrls.get(position);
 
         Uri uri = Uri.parse(trailerUrl);
@@ -171,8 +147,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     @Override
     public void onClick(View v) {
 
-        Button favoriteButton = (Button) v;
-
         if (v != null) {
 
             if (((Button) v).getText().equals("Mark as Favorite")) {
@@ -181,7 +155,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 removeFromFavorites(v);
             }
         }
-
     }
 
     class FetchMovieReviewTask extends AsyncTask<URL, Void, String> {
