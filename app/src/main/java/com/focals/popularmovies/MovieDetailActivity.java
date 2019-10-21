@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.focals.popularmovies.room.MovieDao;
 import com.focals.popularmovies.room.MovieDatabase;
+import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -187,9 +188,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         @Override
         protected String doInBackground(URL... urls) {
-//            return NetworkUtils.getResponseFromUrl(NetworkUtils.getReviewUrl(currentMovieData.getMovieId()));
-
-            return null;
+            return NetworkUtils.getResponseFromUrl(NetworkUtils.getReviewUrl(currentMovie.getMovieId()));
         }
 
         @Override
@@ -202,7 +201,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 String content = new JSONArray(review.getString("results")).getJSONObject(0).getString("content");
 
                 // Room
-//                currentMovieData.setReview(content);
+                currentMovie.setReview(content);
 
                 // Start Review Activity here
                 Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
@@ -221,8 +220,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         @Override
         protected String doInBackground(URL... urls) {
-//            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovieData.getMovieId()));
-            return null;
+            return NetworkUtils.getResponseFromUrl(NetworkUtils.getTrailersUrl(currentMovie.getMovieId()));
         }
 
         @Override
@@ -257,7 +255,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             setUpTrailersAdapter(videoUrls);
 
             // Room
-//            currentMovieData.setTrailers(videoUrls);
+            currentMovie.setTrailers(videoUrls);
         }
     }
 }
