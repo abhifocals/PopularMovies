@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     public static boolean GET_POPULAR;
     private static boolean GET_TOP_RATED;
 
+    private static boolean LOADED_POPULAR;
+    private static boolean LOADED_TOP_RATED;
+    private static boolean LOADED_FAVORITE;
+
     private static final String TAG = "Test";
 
     @Override
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         GET_POPULAR = true;
         GET_TOP_RATED = true;
+        LOADED_POPULAR = true;
 
         // Get Popular Movies
         if (popularList == null) {
@@ -105,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_rated).setEnabled(true);
 
+                LOADED_POPULAR = true;
+
+                LOADED_TOP_RATED = false;
+                LOADED_FAVORITE = false;
+
                 break;
 
             case R.id.sort_rated:
@@ -131,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 item.setEnabled(false);
                 menu.findItem(R.id.sort_popular).setEnabled(true);
 
+                LOADED_TOP_RATED = true;
+
+                LOADED_POPULAR = false;
+                LOADED_FAVORITE = false;
+
                 break;
 
             case R.id.sort_favorites:
@@ -148,6 +163,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
 
+                LOADED_FAVORITE = true;
+
+                LOADED_TOP_RATED = false;
+                LOADED_POPULAR = false;
+
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -157,18 +178,44 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     @Override
     public void onItemClick(final int index) {
         final Intent intent = new Intent(this, MovieDetailActivity.class);
-        int movieId = 0;
+
+        if (LOADED_POPULAR) {
+            LiveData<List<Movie>> getMoviesData = movieDao.getPopularMovies();
+
+            getMoviesData.observe(this, new Observer<List<Movie>>() {
+                @Override
+                public void onChanged(List<Movie> movies) {
+                    final int movieId = movies.get(index).getMovieId();
+                    intent.putExtra(MOVIE_ID, movieId);
+                    startActivity(intent);
+                }
+            });
+
+        } else if (LOADED_TOP_RATED) {
+            LiveData<List<Movie>> getMoviesData = movieDao.getTopRatedMovies();
+
+            getMoviesData.observe(this, new Observer<List<Movie>>() {
+                @Override
+                public void onChanged(List<Movie> movies) {
+                    final int movieId = movies.get(index).getMovieId();
+                    intent.putExtra(MOVIE_ID, movieId);
+                    startActivity(intent);
+                }
+            });
 
 
-        LiveData<Movie> movieLiveData = movieDao.getMovieById(index);
+        } else if (LOADED_FAVORITE) {
+            LiveData<List<Movie>> getMoviesData = movieDao.getFavorites();
 
-        movieLiveData.observe(this, new Observer<Movie>() {
-            @Override
-            public void onChanged(Movie movie) {
-                intent.putExtra(MOVIE_ID, movie.getMovieId());
-                startActivity(intent);
-            }
-        });
+            getMoviesData.observe(this, new Observer<List<Movie>>() {
+                @Override
+                public void onChanged(List<Movie> movies) {
+                    final int movieId = movies.get(index).getMovieId();
+                    intent.putExtra(MOVIE_ID, movieId);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
