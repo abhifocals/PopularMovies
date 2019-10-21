@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.focals.popularmovies.room.MainViewModel;
 import com.focals.popularmovies.room.MovieDao;
 import com.focals.popularmovies.room.MovieDatabase;
 import com.focals.popularmovies.utils.MovieJsonParser;
@@ -21,6 +22,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
 
                 // Get data from DB
-                final LiveData<List<Movie>> popularData = movieDao.getPopularMovies();
+                MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-                popularData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                mainViewModel.getPopularMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
                         setUpAdapterAndLayoutManager(movies);
