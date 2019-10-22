@@ -134,10 +134,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
             case R.id.sort_favorites:
 
-                // showProgressBar();
+                showProgressBar();
 
-                // Setup ViewModel
-                setupViewModel(mainViewModel.getFavoriteMovieData());
+                mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
+                    @Override
+                    public void onChanged(List<Movie> movies) {
+
+                        if (movies.size() == 0) {
+                            showEmptyFavoriteListMessage();
+                        } else {
+                            setUpAdapterAndLayoutManager(movies);
+                        }
+                    }
+                });
 
                 LOADED_FAVORITE = true;
 
