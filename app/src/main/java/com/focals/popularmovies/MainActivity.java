@@ -265,14 +265,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     private void showError() {
-        if (popularList == null) {
-            progressBar.setVisibility(View.INVISIBLE);
-            error.setText(getString(R.string.error));
-            error.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        error.setText(getString(R.string.error));
+        error.setVisibility(View.VISIBLE);
 
-            // Hide Overflow Menu
-            menu.setGroupVisible(R.id.overflowMenu, false);
-        }
+        // Hide Overflow Menu
+        menu.setGroupVisible(R.id.overflowMenu, false);
     }
 
     private void showEmptyFavoriteListMessage() {
