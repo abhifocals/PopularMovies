@@ -289,8 +289,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             TextView error = findViewById(R.id.tv_error);
             error.setVisibility(View.VISIBLE);
 
-            // Hide Sort Menu
-//            findViewById(R.id.sortMenu).setVisibility(View.INVISIBLE); TODO: Hide Overflow Menu. 30m.
+            // Hide Overflow Menu
+            menu.setGroupVisible(R.id.overflowMenu, false);
         }
     }
 }

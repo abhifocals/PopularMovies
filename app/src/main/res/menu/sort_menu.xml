@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <group android:id="@+id/overflowMenu">
     <item
         android:id="@+id/sort_popular"
         android:enabled="false"
@@ -20,5 +21,7 @@
         android:orderInCategory="3"
         android:title="Favorites"
         app:showAsAction="never"></item>
+
+    </group>
 
 </menu>
