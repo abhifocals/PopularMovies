@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     private void showEmptyFavoriteListMessage() {
         progressBar.setVisibility(View.INVISIBLE);
-        error.setText("Your Favorite List is empty. Please add some favorites!");
+        error.setText(getString(R.string.emptyFavListMessage));
         error.setVisibility(View.VISIBLE);
     }
 

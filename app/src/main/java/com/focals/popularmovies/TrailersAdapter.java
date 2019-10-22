@@ -1,6 +1,7 @@
 package com.focals.popularmovies;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,10 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     @Override
     public void onBindViewHolder(@NonNull TrailerViewHolder holder, int position) {
         holder.trailerPlayButton.setImageResource(android.R.drawable.ic_media_play);
-        holder.trailerText.setText("Trailer");
+
+        String trailerText = holder.itemView.getContext().getResources().getString(R.string.trailer) + " " + (position + 1);
+
+        holder.trailerText.setText(trailerText);
     }
 
     @Override

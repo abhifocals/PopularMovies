@@ -1,8 +1,13 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
+    <string name="main_activity_label">Popular Movies</string>
+    <string name="detail_activity_label">Movie Detail</string>
     <string name="error">Something bad happened! Please try later.</string>
     <string name="title">Title</string>
     <string name="rating">Rating:</string>
     <string name="releaseDate">Release Date:</string>
     <string name="plot">Plot</string>
+    <string name="emptyFavListMessage">Your Favorite List is empty. Please add some favorites!</string>
+    <string name="addFavorite">Add as Favorite</string>
+    <string name="removeFavorite">Remove as Favorite</string>
+    <string name="trailer">Trailer</string>
 </resources>

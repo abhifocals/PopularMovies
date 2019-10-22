@@ -85,9 +85,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 rating.setText(String.valueOf(movie.rating));
 
                 if (currentMovie.isFavorite()) {
-                    favoriteButton.setText("Remove from Favorite");
+                    favoriteButton.setText(getString(R.string.removeFavorite));
                 } else {
-                    favoriteButton.setText("Mark as Favorite");
+                    favoriteButton.setText(getString(R.string.addFavorite));
                 }
 
                 // Get Trailer Urls
@@ -117,7 +117,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         toast.show();
 
         currentMovie.setFavorite(true);
-        favoriteButton.setText("Remove from Favorite");
+        favoriteButton.setText(getString(R.string.removeFavorite));
 
         AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
             @Override
@@ -134,7 +134,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         toast.show();
 
         currentMovie.setFavorite(false);
-        favoriteButton.setText("Mark as Favorite");
+        favoriteButton.setText(getString(R.string.addFavorite));
 
         AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
             @Override
@@ -165,7 +165,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         if (v != null) {
 
-            if (((Button) v).getText().equals("Mark as Favorite")) {
+            if (((Button) v).getText().equals(getString(R.string.addFavorite))) {
                 addToFavorites(v);
             } else {
                 removeFromFavorites(v);
