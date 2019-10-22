@@ -95,15 +95,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 //showProgressBar();
 
-                // Get data from DB
-                mainViewModel.getPopularMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
-                    @Override
-                    public void onChanged(List<Movie> movies) {
-                        setUpAdapterAndLayoutManager(movies);
-                        mainViewModel.getPopularMoviesData().removeObserver(this);
-                    }
-                });
-
+                // Setup ViewModel
+                setupViewModel(mainViewModel.getPopularMoviesData());
 
                 // Disable this option, enable other
                 item.setEnabled(false);
@@ -124,15 +117,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     fetchTask = new FetchMovieData();
                     fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
                 } else {
-
-                    // Get data from DB
-                    mainViewModel.getTopRatedMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
-                        @Override
-                        public void onChanged(List<Movie> movies) {
-                            setUpAdapterAndLayoutManager(movies);
-                            mainViewModel.getTopRatedMoviesData().removeObserver(this);
-                        }
-                    });
+                    // Setup ViewModel
+                    setupViewModel(mainViewModel.getTopRatedMoviesData());
                 }
 
                 // Disable this option, enable other
@@ -150,15 +136,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // showProgressBar();
 
-                // Get data from DB
-                mainViewModel.getFavoriteMovieData().observe(MainActivity.this, new Observer<List<Movie>>() {
-
-                    @Override
-                    public void onChanged(List<Movie> movies) {
-                        setUpAdapterAndLayoutManager(new ArrayList<Movie>(movies));
-                        mainViewModel.getFavoriteMovieData().removeObserver(this);
-                    }
-                });
+                // Setup ViewModel
+                setupViewModel(mainViewModel.getFavoriteMovieData());
 
                 LOADED_FAVORITE = true;
 
