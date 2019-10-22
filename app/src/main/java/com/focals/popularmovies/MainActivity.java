@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     @Override
                     public void onChanged(List<Movie> movies) {
                         setUpAdapterAndLayoutManager(movies);
+                        mainViewModel.getPopularMoviesData().removeObserver(this);
                     }
                 });
 
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         @Override
                         public void onChanged(List<Movie> movies) {
                             setUpAdapterAndLayoutManager(movies);
+                            mainViewModel.getTopRatedMoviesData().removeObserver(this);
                         }
                     });
                 }
@@ -154,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     @Override
                     public void onChanged(List<Movie> movies) {
                         setUpAdapterAndLayoutManager(new ArrayList<Movie>(movies));
+                        mainViewModel.getFavoriteMovieData().removeObserver(this);
                     }
                 });
 
@@ -213,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
 
-                setUpAdapterAndLayoutManager(popularList);
+//                setUpAdapterAndLayoutManager(popularList);
 
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
@@ -234,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
 
-                setUpAdapterAndLayoutManager(topRatedList);
+//                setUpAdapterAndLayoutManager(topRatedList);
 
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
@@ -253,15 +256,15 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     }
 
-    private void setupViewModel(LiveData<List<Movie>> movieData) {
+    private void setupViewModel(final LiveData<List<Movie>> movieData) {
         movieData.observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-
+                setUpAdapterAndLayoutManager(movies);
+                movieData.removeObserver(this);
             }
         });
     }
-
 
     private void setUpAdapterAndLayoutManager(List<Movie> listOfMovies) {
         MainAdapter adapter = new MainAdapter(listOfMovies, this);
