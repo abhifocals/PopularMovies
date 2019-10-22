@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-
         fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
 
@@ -214,6 +213,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
 
+                setUpAdapterAndLayoutManager(popularList);
+
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
@@ -226,18 +227,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
 
-
-                // Get data from DBs
-                mainViewModel.getPopularMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
-                    @Override
-                    public void onChanged(List<Movie> movies) {
-                        setUpAdapterAndLayoutManager(movies);
-                    }
-                });
-
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
+
+                setUpAdapterAndLayoutManager(topRatedList);
 
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
@@ -246,14 +240,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         for (final Movie movie : topRatedList) {
                             movieDao.insertMovie(movie);
                         }
-                    }
-                });
-
-                // Get data from DB
-                mainViewModel.getTopRatedMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
-                    @Override
-                    public void onChanged(List<Movie> movies) {
-                        setUpAdapterAndLayoutManager(movies);
                     }
                 });
             }
