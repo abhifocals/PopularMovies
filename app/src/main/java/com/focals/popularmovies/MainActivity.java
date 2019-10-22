@@ -73,14 +73,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        // Get Popular Movies
-        if (popularList == null) {
-            fetchTask = new FetchMovieData();
-            fetchTask.execute(NetworkUtils.getPopularMoviesURL());
 
-            showProgressBar();
-        } else {
-        }
+        fetchTask = new FetchMovieData();
+        fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+
+//            showProgressBar();
     }
 
     @Override
@@ -190,13 +187,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         intent.putExtra(MOVIE_ID, movieId);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // TODO ViewModel
     }
 
     class FetchMovieData extends AsyncTask<URL, Void, String> {
