@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         progressBar.setVisibility(View.INVISIBLE);
         error.setText(getString(R.string.emptyFavListMessage));
         error.setVisibility(View.VISIBLE);
+        rv_main.setVisibility(View.INVISIBLE);
     }
 
     private void hidePopularMenu() {
