@@ -205,6 +205,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
+            if (s == null) {
+                showError();
+                return;
+            }
+
             if (GET_POPULAR) {
                 popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
@@ -252,16 +257,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
             }
-
-
-//            if (s == null) {
-//                showError();
-//            } else {
-//                // Build Movie Objects from Response
-//                popularList = null;
-//                popularList = MovieJsonParser.buildMovieArray(s);
-
-
         }
 
     }
