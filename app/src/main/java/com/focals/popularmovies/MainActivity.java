@@ -227,6 +227,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
 
+                // Setup ViewModel
+                setupViewModel(mainViewModel.getPopularMoviesData());
+
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
@@ -242,9 +245,21 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         }
                     }
                 });
+
+                // Setup ViewModel
+                setupViewModel(mainViewModel.getTopRatedMoviesData());
             }
         }
 
+    }
+
+    private void setupViewModel(LiveData<List<Movie>> movieData) {
+        movieData.observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+
+            }
+        });
     }
 
 
