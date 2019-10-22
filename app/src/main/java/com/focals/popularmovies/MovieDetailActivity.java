@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.focals.popularmovies.room.MovieDao;
 import com.focals.popularmovies.room.MovieDatabase;
+import com.focals.popularmovies.room.MovieDetailViewModel;
+import com.focals.popularmovies.room.MovieDetailViewModelFactory;
 import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
@@ -27,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -66,10 +70,10 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         final int movieId = intent.getIntExtra("MOVIE_ID", 0);
 
+        MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(db, movieId);
+        MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel.class);
 
-        currentMovieData = movieDao.getMovieByMovieId(movieId);
-
-        currentMovieData.observe(MovieDetailActivity.this, new Observer<Movie>() {
+        movieDetailViewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
                 currentMovie = movie;
@@ -91,7 +95,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 fetchMovieTrailersTask.execute();
             }
         });
-        
+
         // Set the listener
         favoriteButton.setOnClickListener(this);
     }
