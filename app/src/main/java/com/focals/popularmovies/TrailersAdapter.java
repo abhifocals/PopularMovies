@@ -39,7 +39,6 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
         holder.trailerPlayButton.setImageResource(android.R.drawable.ic_media_play);
 
         String trailerText = holder.itemView.getContext().getResources().getString(R.string.trailer) + " " + (position + 1);
-
         holder.trailerText.setText(trailerText);
     }
 
