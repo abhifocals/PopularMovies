@@ -16,7 +16,7 @@ public class MainViewModel extends AndroidViewModel {
     LiveData<List<Movie>> topRatedMoviesData;
     LiveData<List<Movie>> favoriteMovieData;
 
-    public MainViewModel(@NonNull Application application, LiveData<List<Movie>> getMoviesData) {
+    public MainViewModel(@NonNull Application application) {
         super(application);
 
         MovieDatabase db = MovieDatabase.getInstance(application.getApplicationContext());
