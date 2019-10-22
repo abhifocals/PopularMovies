@@ -195,8 +195,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
 
-//                setUpAdapterAndLayoutManager(popularList);
-
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
@@ -215,9 +213,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
-
-//                setUpAdapterAndLayoutManager(topRatedList);
-
+                
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
