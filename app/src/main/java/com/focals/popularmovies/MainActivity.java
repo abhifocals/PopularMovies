@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static boolean LOADED_FAVORITE;
 
     private static final String TAG = "Test";
+    MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         GET_POPULAR = true;
         GET_TOP_RATED = true;
         LOADED_POPULAR = true;
+
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         // Get Popular Movies
         if (popularList == null) {
@@ -96,10 +99,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 //showProgressBar();
 
-
                 // Get data from DB
-                MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
                 mainViewModel.getPopularMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
@@ -129,9 +129,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 } else {
 
                     // Get data from DB
-                    final LiveData<List<Movie>> topRatedData = movieDao.getTopRatedMovies();
-
-                    topRatedData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                    mainViewModel.getTopRatedMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                         @Override
                         public void onChanged(List<Movie> movies) {
                             setUpAdapterAndLayoutManager(movies);
@@ -155,9 +153,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 // showProgressBar();
 
                 // Get data from DB
-                final LiveData<List<Movie>> favoriteListLive = movieDao.getFavorites();
-
-                favoriteListLive.observe(MainActivity.this, new Observer<List<Movie>>() {
+                mainViewModel.getFavoriteMovieData().observe(MainActivity.this, new Observer<List<Movie>>() {
 
                     @Override
                     public void onChanged(List<Movie> movies) {
@@ -260,13 +256,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 });
 
 
-                // Get data from DB
-                final LiveData<List<Movie>> popularData = movieDao.getPopularMovies();
-
-                popularData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                // Get data from DBs
+                mainViewModel.getPopularMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
-                        popularData.removeObserver(this);
+                        mainViewModel.getPopularMoviesData().removeObserver(this);
                         setUpAdapterAndLayoutManager(movies);
                     }
                 });
@@ -289,8 +283,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // Get data from DB
                 final LiveData<List<Movie>> topRatedData = movieDao.getTopRatedMovies();
-
-                topRatedData.observe(MainActivity.this, new Observer<List<Movie>>() {
+                mainViewModel.getTopRatedMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
                         topRatedData.removeObserver(this);
