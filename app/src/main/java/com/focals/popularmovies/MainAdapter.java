@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.focals.popularmovies.room.MovieDao;
-import com.focals.popularmovies.room.MovieDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -30,7 +28,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesV
     public PopularMoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.movie_card, parent, false);
+        View view = inflater.inflate(R.layout.main_movie_card, parent, false);
 
         return new PopularMoviesViewHolder(view);
     }
