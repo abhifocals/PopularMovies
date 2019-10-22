@@ -176,44 +176,20 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     @Override
     public void onItemClick(final int index) {
         final Intent intent = new Intent(this, MovieDetailActivity.class);
+        int movieId = 0;
 
         if (LOADED_POPULAR) {
-            LiveData<List<Movie>> getMoviesData = movieDao.getPopularMovies();
-
-            getMoviesData.observe(this, new Observer<List<Movie>>() {
-                @Override
-                public void onChanged(List<Movie> movies) {
-                    final int movieId = movies.get(index).getMovieId();
-                    intent.putExtra(MOVIE_ID, movieId);
-                    startActivity(intent);
-                }
-            });
+            movieId = mainViewModel.getPopularMoviesData().getValue().get(index).getMovieId();
 
         } else if (LOADED_TOP_RATED) {
-            LiveData<List<Movie>> getMoviesData = movieDao.getTopRatedMovies();
-
-            getMoviesData.observe(this, new Observer<List<Movie>>() {
-                @Override
-                public void onChanged(List<Movie> movies) {
-                    final int movieId = movies.get(index).getMovieId();
-                    intent.putExtra(MOVIE_ID, movieId);
-                    startActivity(intent);
-                }
-            });
-
+            movieId = mainViewModel.getTopRatedMoviesData().getValue().get(index).getMovieId();
 
         } else if (LOADED_FAVORITE) {
-            LiveData<List<Movie>> getMoviesData = movieDao.getFavorites();
-
-            getMoviesData.observe(this, new Observer<List<Movie>>() {
-                @Override
-                public void onChanged(List<Movie> movies) {
-                    final int movieId = movies.get(index).getMovieId();
-                    intent.putExtra(MOVIE_ID, movieId);
-                    startActivity(intent);
-                }
-            });
+            movieId = mainViewModel.getFavoriteMovieData().getValue().get(index).getMovieId();
         }
+
+        intent.putExtra(MOVIE_ID, movieId);
+        startActivity(intent);
     }
 
     @Override
