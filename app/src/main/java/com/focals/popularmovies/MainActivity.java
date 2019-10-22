@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     private static final String TAG = "Test";
     MainViewModel mainViewModel;
+    TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         // Initializing Views
         rv_main = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progressBar);
+        error = (TextView) findViewById(R.id.tv_error);
 
         // Get DB
         db = MovieDatabase.getInstance(this);
@@ -76,6 +78,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         showProgressBar();
         fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+
+        // Observe for Favorite Data
+        mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                setUpAdapterAndLayoutManager(movies);
+            }
+        });
     }
 
     @Override
@@ -135,17 +145,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 showProgressBar();
 
-                mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
-                    @Override
-                    public void onChanged(List<Movie> movies) {
+                List<Movie> favoriteMovies = mainViewModel.getFavoriteMovieData().getValue();
 
-                        if (movies.size() == 0) {
-                            showEmptyFavoriteListMessage();
-                        } else {
-                            setUpAdapterAndLayoutManager(movies);
-                        }
-                    }
-                });
+                if (favoriteMovies.size() == 0) {
+                    showEmptyFavoriteListMessage();
+                } else {
+                    setUpAdapterAndLayoutManager(favoriteMovies);
+                }
 
                 LOADED_FAVORITE = true;
 
@@ -252,6 +258,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
         hideProgressBar();
+        hideNoFavoriteMessage();
+
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
@@ -263,6 +271,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         progressBar.setVisibility(View.INVISIBLE);
     }
 
+    private void hideNoFavoriteMessage() {
+        rv_main.setVisibility(View.VISIBLE);
+        error.setVisibility(View.INVISIBLE);
+    }
+
     private void showProgressBar() {
         rv_main.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -271,7 +284,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private void showError() {
         if (popularList == null) {
             progressBar.setVisibility(View.INVISIBLE);
-            TextView error = findViewById(R.id.tv_error);
             error.setText(getString(R.string.error));
             error.setVisibility(View.VISIBLE);
 
@@ -282,7 +294,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     private void showEmptyFavoriteListMessage() {
         progressBar.setVisibility(View.INVISIBLE);
-        TextView error = findViewById(R.id.tv_error);
         error.setText("Your Favorite List is empty. Please add some favorites!");
         error.setVisibility(View.VISIBLE);
     }
