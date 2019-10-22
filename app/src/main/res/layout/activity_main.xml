@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/error"
             android:textSize="26dp"
             android:visibility="invisible"
             android:textColor="@color/colorAccent"></TextView>

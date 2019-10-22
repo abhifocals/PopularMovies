@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
-                
+
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
@@ -266,10 +266,18 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         if (popularList == null) {
             progressBar.setVisibility(View.INVISIBLE);
             TextView error = findViewById(R.id.tv_error);
+            error.setText(getString(R.string.error));
             error.setVisibility(View.VISIBLE);
 
             // Hide Overflow Menu
             menu.setGroupVisible(R.id.overflowMenu, false);
         }
+    }
+
+    private void showEmptyFavoriteListMessage() {
+        progressBar.setVisibility(View.INVISIBLE);
+        TextView error = findViewById(R.id.tv_error);
+        error.setText("Your Favorite List is empty. Please add some favorites!");
+        error.setVisibility(View.VISIBLE);
     }
 }
