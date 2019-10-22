@@ -22,7 +22,7 @@ public abstract class MovieDatabase extends RoomDatabase {
         if (sInstance == null) {
             synchronized (LOCK) {
                 // TODO: remove allowMainThread
-                sInstance = Room.databaseBuilder(context.getApplicationContext(), MovieDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+                sInstance = Room.databaseBuilder(context.getApplicationContext(), MovieDatabase.class, DATABASE_NAME).build();
             }
         }
         return sInstance;
