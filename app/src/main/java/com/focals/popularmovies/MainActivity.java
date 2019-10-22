@@ -73,10 +73,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
+        showProgressBar();
         fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-
-//            showProgressBar();
     }
 
     @Override
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
             case R.id.sort_popular:
 
-                //showProgressBar();
+                showProgressBar();
 
                 // Setup ViewModel
                 setupViewModel(mainViewModel.getPopularMoviesData());
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
             case R.id.sort_rated:
 
-                // showProgressBar();
+                showProgressBar();
 
                 if (GET_TOP_RATED) {
                     fetchTask = new FetchMovieData();
@@ -152,8 +151,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 LOADED_TOP_RATED = false;
                 LOADED_POPULAR = false;
-
-
         }
 
         return super.onOptionsItemSelected(item);
