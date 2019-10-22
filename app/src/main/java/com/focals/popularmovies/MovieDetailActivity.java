@@ -119,7 +119,14 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         currentMovie.setFavorite(true);
         favoriteButton.setText("Remove from Favorite");
 
-        movieDao.updateMovie(currentMovie);
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDao.updateMovie(currentMovie);
+            }
+        });
+
+
     }
 
     public void removeFromFavorites(View view) {
@@ -129,7 +136,12 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         currentMovie.setFavorite(false);
         favoriteButton.setText("Mark as Favorite");
 
-        movieDao.updateMovie(currentMovie);
+        AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDao.updateMovie(currentMovie);
+            }
+        });
     }
 
     public void showReview(View view) {
