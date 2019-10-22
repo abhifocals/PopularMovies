@@ -236,7 +236,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 mainViewModel.getPopularMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
-                        mainViewModel.getPopularMoviesData().removeObserver(this);
                         setUpAdapterAndLayoutManager(movies);
                     }
                 });
@@ -249,8 +248,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-
-                        // loop here
                         for (final Movie movie : topRatedList) {
                             movieDao.insertMovie(movie);
                         }
@@ -258,11 +255,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 });
 
                 // Get data from DB
-                final LiveData<List<Movie>> topRatedData = movieDao.getTopRatedMovies();
                 mainViewModel.getTopRatedMoviesData().observe(MainActivity.this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
-                        topRatedData.removeObserver(this);
                         setUpAdapterAndLayoutManager(movies);
                     }
                 });
