@@ -78,14 +78,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         showProgressBar();
         fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
-
-        // Observe for Favorite Data
-        mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(List<Movie> movies) {
-                setUpAdapterAndLayoutManager(movies);
-            }
-        });
     }
 
     @Override
@@ -108,13 +100,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 setupViewModel(mainViewModel.getPopularMoviesData());
 
                 // Disable this option, enable other
-                item.setEnabled(false);
-                menu.findItem(R.id.sort_rated).setEnabled(true);
-
-                LOADED_POPULAR = true;
-
-                LOADED_TOP_RATED = false;
-                LOADED_FAVORITE = false;
+                hidePopularMenu();
+                setLoadedPopular();
 
                 break;
 
@@ -131,13 +118,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 }
 
                 // Disable this option, enable other
-                item.setEnabled(false);
-                menu.findItem(R.id.sort_popular).setEnabled(true);
-
-                LOADED_TOP_RATED = true;
-
-                LOADED_POPULAR = false;
-                LOADED_FAVORITE = false;
+                hideTopRatedMenu();
+                setLoadedTopRated();
 
                 break;
 
@@ -145,18 +127,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 showProgressBar();
 
-                List<Movie> favoriteMovies = mainViewModel.getFavoriteMovieData().getValue();
+                mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
+                    @Override
+                    public void onChanged(List<Movie> movies) {
+                        if (movies.size() == 0) {
+                            showEmptyFavoriteListMessage();
+                        } else {
+                            setUpAdapterAndLayoutManager(movies);
+                        }
+                    }
+                });
 
-                if (favoriteMovies.size() == 0) {
-                    showEmptyFavoriteListMessage();
-                } else {
-                    setUpAdapterAndLayoutManager(favoriteMovies);
-                }
-
-                LOADED_FAVORITE = true;
-
-                LOADED_TOP_RATED = false;
-                LOADED_POPULAR = false;
+                hideFavorteMenu();
+                setLoadedFavorite();
         }
 
         return super.onOptionsItemSelected(item);
@@ -296,5 +279,46 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         progressBar.setVisibility(View.INVISIBLE);
         error.setText("Your Favorite List is empty. Please add some favorites!");
         error.setVisibility(View.VISIBLE);
+    }
+
+    private void hidePopularMenu() {
+        menu.findItem(R.id.sort_popular).setEnabled(false);
+
+        menu.findItem(R.id.sort_rated).setEnabled(true);
+        menu.findItem(R.id.sort_favorites).setEnabled(true);
+
+    }
+
+    private void hideTopRatedMenu() {
+        menu.findItem(R.id.sort_rated).setEnabled(false);
+
+        menu.findItem(R.id.sort_popular).setEnabled(true);
+        menu.findItem(R.id.sort_favorites).setEnabled(true);
+
+    }
+
+    private void hideFavorteMenu() {
+        menu.findItem(R.id.sort_favorites).setEnabled(false);
+
+        menu.findItem(R.id.sort_popular).setEnabled(true);
+        menu.findItem(R.id.sort_rated).setEnabled(true);
+    }
+
+    private void setLoadedPopular() {
+        LOADED_POPULAR = true;
+        LOADED_TOP_RATED = false;
+        LOADED_FAVORITE = false;
+    }
+
+    private void setLoadedTopRated() {
+        LOADED_POPULAR = false;
+        LOADED_TOP_RATED = true;
+        LOADED_FAVORITE = false;
+    }
+
+    private void setLoadedFavorite() {
+        LOADED_POPULAR = false;
+        LOADED_TOP_RATED = false;
+        LOADED_FAVORITE = true;
     }
 }
