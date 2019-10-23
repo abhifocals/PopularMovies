@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static boolean LOADED_TOP_RATED;
     private static boolean LOADED_FAVORITE;
 
+    private static String loadedPopular = "loadedPopular";
+    private static String loadedTopRated = "loadedTopRated";
+    private static String loadedFavorite = "loadedFavorite";
+
     private static final String TAG = "Test";
     MainViewModel mainViewModel;
     TextView error;
@@ -67,12 +71,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         showProgressBar();
 
         // Upon Rotation
-        if (savedInstanceState != null && savedInstanceState.getBoolean("loadedPopular")) {
+        if (savedInstanceState != null && savedInstanceState.getBoolean(loadedPopular)) {
             setUpAdapterAndLayoutManager(mainViewModel.getPopularMoviesData().getValue());
-        } else if (savedInstanceState != null && savedInstanceState.getBoolean("loadedTopRated")) {
+        } else if (savedInstanceState != null && savedInstanceState.getBoolean(loadedTopRated)) {
             setUpAdapterAndLayoutManager(mainViewModel.getTopRatedMoviesData().getValue());
-
-        } else if (savedInstanceState != null && savedInstanceState.getBoolean("loadedFavorite")) {
+        } else if (savedInstanceState != null && savedInstanceState.getBoolean(loadedFavorite)) {
             setUpAdapterAndLayoutManager(mainViewModel.getFavoriteMovieData().getValue());
         } else {
             GET_POPULAR = true;
@@ -84,13 +87,30 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         }
     }
 
+
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        if (LOADED_POPULAR) {
+//            hidePopularMenu();
+//
+//        } else if (LOADED_TOP_RATED) {
+//            hideTopRatedMenu();
+//
+//        } else if (LOADED_FAVORITE) {
+//            hideFavoriteMenu();
+//        }
+//    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean("loadedPopular", LOADED_POPULAR);
-        outState.putBoolean("loadedTopRated", LOADED_TOP_RATED);
-        outState.putBoolean("loadedFavorite", LOADED_FAVORITE);
+        outState.putBoolean(loadedPopular, LOADED_POPULAR);
+        outState.putBoolean(loadedTopRated, LOADED_TOP_RATED);
+        outState.putBoolean(loadedFavorite, LOADED_FAVORITE);
     }
 
     @Override
@@ -139,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             case R.id.sort_favorites:
 
                 showProgressBar();
-                hideFavorteMenu();
+                hideFavoriteMenu();
                 setLoadedFavorite();
 
                 mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
@@ -310,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     }
 
-    private void hideFavorteMenu() {
+    private void hideFavoriteMenu() {
         menu.findItem(R.id.sort_favorites).setEnabled(false);
 
         menu.findItem(R.id.sort_popular).setEnabled(true);
