@@ -17,7 +17,7 @@ import androidx.room.Update;
 @Dao
 public interface MovieDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMovie(Movie movie);
 
     @Query("SELECT * FROM Movie where movieId = :movieId")
@@ -35,18 +35,8 @@ public interface MovieDao {
     @Query("SELECT * FROM movie where favorite = 1")
     LiveData<List<Movie>> getFavorites();
 
-
-
-
-
-
     @Query("SELECT * FROM movie ORDER By popularity DESC")
     LiveData<List<Movie>> getPopularMovies();
-
-
-
-
-
 
     @Query("SELECT * FROM movie ORDER By favorite DESC")
     List<Movie> getFavoriteMovies();
