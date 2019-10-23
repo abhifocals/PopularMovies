@@ -87,23 +87,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         }
     }
 
-
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        if (LOADED_POPULAR) {
-//            hidePopularMenu();
-//
-//        } else if (LOADED_TOP_RATED) {
-//            hideTopRatedMenu();
-//
-//        } else if (LOADED_FAVORITE) {
-//            hideFavoriteMenu();
-//        }
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -117,6 +100,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.sort_menu, menu);
+
+        if (LOADED_POPULAR) {
+            hidePopularMenu();
+
+        } else if (LOADED_TOP_RATED) {
+            hideTopRatedMenu();
+
+        } else if (LOADED_FAVORITE) {
+            hideFavoriteMenu();
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
