@@ -63,18 +63,34 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         // Get DB
         db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
-
-        GET_POPULAR = true;
-        GET_TOP_RATED = true;
-        LOADED_POPULAR = true;
-
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         showProgressBar();
-        fetchTask = new FetchMovieData();
-        fetchTask.execute(NetworkUtils.getPopularMoviesURL());
 
+        // Upon Rotation
+        if (savedInstanceState != null && savedInstanceState.getBoolean("loadedPopular")) {
+            setUpAdapterAndLayoutManager(mainViewModel.getPopularMoviesData().getValue());
+        } else if (savedInstanceState != null && savedInstanceState.getBoolean("loadedTopRated")) {
+            setUpAdapterAndLayoutManager(mainViewModel.getTopRatedMoviesData().getValue());
 
+        } else if (savedInstanceState != null && savedInstanceState.getBoolean("loadedFavorite")) {
+            setUpAdapterAndLayoutManager(mainViewModel.getFavoriteMovieData().getValue());
+        } else {
+            GET_POPULAR = true;
+            GET_TOP_RATED = true;
+            LOADED_POPULAR = true;
+
+            fetchTask = new FetchMovieData();
+            fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("loadedPopular", LOADED_POPULAR);
+        outState.putBoolean("loadedTopRated", LOADED_TOP_RATED);
+        outState.putBoolean("loadedFavorite", LOADED_FAVORITE);
     }
 
     @Override
