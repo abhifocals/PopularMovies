@@ -24,8 +24,6 @@ public class Movie {
     private boolean favorite;
     private String review;
     private List<String> trailers;
-
-//    @PrimaryKey(autoGenerate = true)
     private int id;
 
 

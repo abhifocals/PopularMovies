@@ -26,11 +26,8 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     @NonNull
     @Override
     public TrailerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         Context context = parent.getContext();
-
         View view = LayoutInflater.from(context).inflate(R.layout.trailer, parent, false);
-
         return new TrailerViewHolder(view);
     }
 
@@ -52,25 +49,20 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     }
 
     class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         ImageView trailerPlayButton;
         TextView trailerText;
 
-
         public TrailerViewHolder(@NonNull View itemView) {
             super(itemView);
-
             trailerPlayButton = (ImageView) itemView.findViewById(R.id.trailerPlayButton);
             trailerText = (TextView) itemView.findViewById(R.id.trailerText);
 
             itemView.setOnClickListener(this);
-
         }
 
 
         @Override
         public void onClick(View v) {
-
             clickHandler.onClickTrailer(getAdapterPosition());
         }
     }

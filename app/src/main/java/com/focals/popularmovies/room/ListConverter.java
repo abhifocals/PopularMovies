@@ -10,7 +10,6 @@ import androidx.room.TypeConverter;
 
 public class ListConverter {
 
-
     @TypeConverter
     public String listToString(List<String> list) {
 
@@ -19,7 +18,6 @@ public class ListConverter {
         String json = gson.toJson(list, type);
         return json;
     }
-
 
     @TypeConverter
     public List<String> stringToList(String string) {

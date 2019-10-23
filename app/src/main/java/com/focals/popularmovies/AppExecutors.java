@@ -10,7 +10,6 @@ import androidx.annotation.MainThread;
 
 public class AppExecutors {
 
-
     private static final Object LOCK = new Object();
     private static AppExecutors sInstance;
 
@@ -24,7 +23,6 @@ public class AppExecutors {
         this.networkIO = networkIO;
         this.mainThread = mainThread;
     }
-
 
     public static AppExecutors getsInstance() {
         if (sInstance == null) {
@@ -56,7 +54,5 @@ public class AppExecutors {
             mainThreadHandler.post(command);
         }
     }
-
-
 }
 

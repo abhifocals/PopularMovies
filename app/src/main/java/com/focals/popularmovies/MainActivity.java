@@ -166,13 +166,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         }
                     }
                 });
-
-
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onItemClick(final int index) {
@@ -201,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             if (GET_POPULAR || GET_TOP_RATED) {
                 return NetworkUtils.getResponseFromUrl(urls[0]);
             }
-
             return null;
         }
 
@@ -237,7 +233,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         });
                     }
                 });
-
 
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);

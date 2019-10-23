@@ -15,7 +15,7 @@ public class MovieJsonParser {
     public static ArrayList<Movie> buildMovieArray(String response) {
         ArrayList<Movie> listOfMovies = new ArrayList<>();
 
-        try { // add a null check
+        try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray results = jsonObject.getJSONArray("results");
 

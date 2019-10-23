@@ -125,8 +125,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 movieDao.updateMovie(currentMovie);
             }
         });
-
-
     }
 
     public void removeFromFavorites(View view) {
