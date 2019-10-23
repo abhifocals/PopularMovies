@@ -227,11 +227,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         for (final Movie movie : popularList) {
                             movieDao.insertMovie(movie);
                         }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Setup ViewModel
+                                setupViewModel(mainViewModel.getPopularMoviesData());
+                            }
+                        });
                     }
                 });
 
-                // Setup ViewModel
-                setupViewModel(mainViewModel.getPopularMoviesData());
 
             } else if (GET_TOP_RATED) {
                 topRatedList = MovieJsonParser.buildMovieArray(s);
@@ -244,11 +250,16 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                         for (final Movie movie : topRatedList) {
                             movieDao.insertMovie(movie);
                         }
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Setup ViewModel
+                                setupViewModel(mainViewModel.getTopRatedMoviesData());
+                            }
+                        });
                     }
                 });
-
-                // Setup ViewModel
-                setupViewModel(mainViewModel.getTopRatedMoviesData());
             }
         }
 
