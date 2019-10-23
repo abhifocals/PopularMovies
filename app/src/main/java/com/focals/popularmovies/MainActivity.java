@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     private RecyclerView rv_main;
     private ArrayList<Movie> popularList;
-    private ArrayList<Movie> topRatedList;
+    private ArrayList<Movie> topRatedList = new ArrayList<>();
 
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
@@ -64,11 +64,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
 
-
-        // Get top-rated movies
-        topRatedList = new ArrayList<>();
-
-
         GET_POPULAR = true;
         GET_TOP_RATED = true;
         LOADED_POPULAR = true;
@@ -78,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         showProgressBar();
         fetchTask = new FetchMovieData();
         fetchTask.execute(NetworkUtils.getPopularMoviesURL());
+
+
     }
 
     @Override
