@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             case R.id.sort_favorites:
 
                 showProgressBar();
+                hideFavorteMenu();
+                setLoadedFavorite();
 
                 mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
                     @Override
@@ -138,8 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
 
-                hideFavorteMenu();
-                setLoadedFavorite();
+
         }
 
         return super.onOptionsItemSelected(item);
