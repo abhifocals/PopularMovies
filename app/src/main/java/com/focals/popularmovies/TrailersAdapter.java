@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerViewHolder> {
 
-    OnClickHandler clickHandler;
-    List<String> trailerUrls;
+    private OnClickHandler clickHandler;
+    private List<String> trailerUrls;
 
     public TrailersAdapter(List<String> trailerUrls, OnClickHandler clickHandler) {
         this.clickHandler = clickHandler;
@@ -59,7 +59,6 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
 
             itemView.setOnClickListener(this);
         }
-
 
         @Override
         public void onClick(View v) {
