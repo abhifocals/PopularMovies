@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     MovieDatabase db;
     MovieDao movieDao;
 
-    public static final String MOVIE_ID = "MOVIE_ID";
     public static boolean GET_POPULAR;
     private static boolean GET_TOP_RATED;
 
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static final String TAG = "Test";
     MainViewModel mainViewModel;
     TextView error;
+    public static final String MOVIE_ID= "MOVIE_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

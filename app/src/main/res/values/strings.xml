@@ -11,4 +11,6 @@
     <string name="removeFavorite">Remove as Favorite</string>
     <string name="trailer">Trailer</string>
     <string name="reviewActivityLabel">Review</string>
+    <string name="addToFavToast">Added to Favorites</string>
+    <string name="removeFromFavToast">Removed from Favorites</string>
 </resources>

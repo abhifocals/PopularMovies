@@ -45,8 +45,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     private TextView favoriteButton;
     public static final String REVIEW_TAG = "REVIEW";
 
-    MovieDatabase db;
-    MovieDao movieDao;
+    private MovieDatabase db;
+    private MovieDao movieDao;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,16 +64,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
         // Getting intent
         Intent intent = getIntent();
+        final int movieId = intent.getIntExtra(MainActivity.MOVIE_ID, 0);
 
-        // Room Get from DB
+        // Initialize for database access
         db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
-
-        final int movieId = intent.getIntExtra("MOVIE_ID", 0);
-
         MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(db, movieId);
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel.class);
 
+        // Observe data
         movieDetailViewModel.getMovie().observe(MovieDetailActivity.this, new Observer<Movie>() {
             @Override
             public void onChanged(Movie movie) {
@@ -101,7 +100,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         favoriteButton.setOnClickListener(this);
     }
 
-
     private void setUpTrailersAdapter(List<String> trailerUrls) {
         trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
         trailersAdapter = new TrailersAdapter(trailerUrls, this);
@@ -114,7 +112,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     }
 
     public void addToFavorites(View view) {
-        Toast toast = Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, getResources().getString(R.string.addToFavToast), Toast.LENGTH_SHORT);
         toast.show();
 
         currentMovie.setFavorite(true);
@@ -129,7 +127,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     }
 
     public void removeFromFavorites(View view) {
-        Toast toast = Toast.makeText(this, "Removed from Favorites", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, getResources().getString(R.string.removeFromFavToast), Toast.LENGTH_SHORT);
         toast.show();
 
         currentMovie.setFavorite(false);
@@ -223,19 +221,12 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 JSONArray results = videos.getJSONArray("results");
 
                 for (int i = 0; i < results.length(); i++) {
-
                     String key = results.getJSONObject(i).getString("key");
-
                     String videoUrl = "https://www.youtube.com/watch?v=" + key;
 
                     keys.add(key);
-
                     videoUrls.add(videoUrl);
                 }
-
-                System.out.println();
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
