@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         // Initializing Views
         rv_main = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progressBar);
-        errorView = (TextView) findViewById(R.id.tv_error);
+        errorView = findViewById(R.id.tv_error);
 
         // Get DB
         MovieDatabase db = MovieDatabase.getInstance(this);

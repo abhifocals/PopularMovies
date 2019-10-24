@@ -60,7 +60,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         final TextView rating = findViewById(R.id.rating);
         final TextView releaseDate = findViewById(R.id.releaseDate);
         final TextView plot = findViewById(R.id.plot);
-        favoriteButton = (TextView) findViewById(R.id.favoriteButton);
+        favoriteButton = findViewById(R.id.favoriteButton);
 
         // Getting intent
         Intent intent = getIntent();
@@ -101,7 +101,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     }
 
     private void setUpTrailersAdapter(List<String> trailerUrls) {
-        trailersRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTrailers);
+        trailersRecyclerView = findViewById(R.id.recyclerViewTrailers);
         trailersAdapter = new TrailersAdapter(trailerUrls, this);
 
         trailersRecyclerView.setAdapter(trailersAdapter);
