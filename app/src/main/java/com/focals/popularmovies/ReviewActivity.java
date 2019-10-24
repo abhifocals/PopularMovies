@@ -17,7 +17,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         textViewReview = (TextView) findViewById(R.id.textViewReview);
         Intent intent = getIntent();
-        String review = intent.getStringExtra("REVIEW");
+        String review = intent.getStringExtra(MovieDetailActivity.REVIEW_TAG);
         textViewReview.setText(review);
     }
 }

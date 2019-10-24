@@ -43,6 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     private List<String> trailerUrls;
     private String loadedData;
     private TextView favoriteButton;
+    public static final String REVIEW_TAG = "REVIEW";
 
     MovieDatabase db;
     MovieDao movieDao;
@@ -192,7 +193,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
                 // Start Review Activity here
                 Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-                intent.putExtra("REVIEW", content);
+                intent.putExtra(REVIEW_TAG, content);
 
                 startActivity(intent);
 
