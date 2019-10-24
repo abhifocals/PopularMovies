@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static final String loadedTopRated = "loadedTopRated";
     private static final String loadedFavorite = "loadedFavorite";
 
-    private  MovieDao movieDao;
+    private MovieDao movieDao;
     private MainViewModel mainViewModel;
     private TextView errorView;
     public static final String MOVIE_ID = "MOVIE_ID";
@@ -227,11 +227,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-
-                        // loop here
-                        for (final Movie movie : popularList) {
-                            movieDao.insertMovie(movie);
-                        }
+                        movieDao.insertMovies(popularList);
                     }
                 });
 
@@ -245,9 +241,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        for (final Movie movie : topRatedList) {
-                            movieDao.insertMovie(movie);
-                        }
+
+                        movieDao.insertMovies(topRatedList);
 
                         runOnUiThread(new Runnable() {
                             @Override

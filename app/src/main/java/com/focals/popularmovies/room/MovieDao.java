@@ -16,7 +16,7 @@ import androidx.room.Update;
 public interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertMovie(Movie movie);
+    void insertMovies(List<Movie> movies);
 
     @Query("SELECT * FROM Movie where movieId = :movieId")
     LiveData<Movie> getMovieByMovieId(int movieId);
