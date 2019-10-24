@@ -29,7 +29,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,14 +37,11 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
 
     private LiveData<Movie> currentMovieData;
     private Movie currentMovie;
-    private RecyclerView trailersRecyclerView;
-    private TrailersAdapter trailersAdapter;
     private List<String> trailerUrls;
     private String loadedData;
     private TextView favoriteButton;
     public static final String REVIEW_TAG = "REVIEW";
 
-    private MovieDatabase db;
     private MovieDao movieDao;
 
     @Override
@@ -67,7 +63,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         final int movieId = intent.getIntExtra(MainActivity.MOVIE_ID, 0);
 
         // Initialize for database access
-        db = MovieDatabase.getInstance(this);
+        MovieDatabase db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
         MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(db, movieId);
         MovieDetailViewModel movieDetailViewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel.class);
@@ -101,8 +97,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
     }
 
     private void setUpTrailersAdapter(List<String> trailerUrls) {
-        trailersRecyclerView = findViewById(R.id.recyclerViewTrailers);
-        trailersAdapter = new TrailersAdapter(trailerUrls, this);
+        RecyclerView trailersRecyclerView = findViewById(R.id.recyclerViewTrailers);
+        TrailersAdapter trailersAdapter = new TrailersAdapter(trailerUrls, this);
 
         trailersRecyclerView.setAdapter(trailersAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

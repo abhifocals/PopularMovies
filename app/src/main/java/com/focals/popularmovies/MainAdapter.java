@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.PopularMoviesViewHolder> {
 
     private final OnClickHandler clickHandler;
-    private List<Movie> movies;
+    private final List<Movie> movies;
 
     MainAdapter(List<Movie> movies, OnClickHandler clickHandler) {
         this.movies = movies;

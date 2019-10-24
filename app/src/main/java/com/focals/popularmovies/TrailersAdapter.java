@@ -1,7 +1,6 @@
 package com.focals.popularmovies;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerViewHolder> {
 
-    private OnClickHandler clickHandler;
-    private List<String> trailerUrls;
+    private final OnClickHandler clickHandler;
+    private final List<String> trailerUrls;
 
     public TrailersAdapter(List<String> trailerUrls, OnClickHandler clickHandler) {
         this.clickHandler = clickHandler;
@@ -49,8 +48,8 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     }
 
     class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView trailerPlayButton;
-        TextView trailerText;
+        final ImageView trailerPlayButton;
+        final TextView trailerText;
 
         public TrailerViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 public class MovieDetailViewModel extends ViewModel {
 
-    LiveData<Movie> movie;
+    final LiveData<Movie> movie;
 
     public MovieDetailViewModel(int movieId, MovieDatabase db) {
         movie = db.movieDao().getMovieByMovieId(movieId);

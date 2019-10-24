@@ -1,8 +1,5 @@
 package com.focals.popularmovies;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
 
 import androidx.room.Entity;

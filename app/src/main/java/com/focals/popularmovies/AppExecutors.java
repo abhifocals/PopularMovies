@@ -6,8 +6,6 @@ import android.os.Looper;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import androidx.annotation.MainThread;
-
 public class AppExecutors {
 
     private static final Object LOCK = new Object();
@@ -47,7 +45,7 @@ public class AppExecutors {
 
     static class MainThreadExecutor implements Executor {
 
-        private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+        private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
         @Override
         public void execute(Runnable command) {

@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     /**
      * Used for keeping track of state during rotation.
      */
-    private static String loadedPopular = "loadedPopular";
-    private static String loadedTopRated = "loadedTopRated";
-    private static String loadedFavorite = "loadedFavorite";
+    private static final String loadedPopular = "loadedPopular";
+    private static final String loadedTopRated = "loadedTopRated";
+    private static final String loadedFavorite = "loadedFavorite";
 
     private  MovieDao movieDao;
     private MainViewModel mainViewModel;

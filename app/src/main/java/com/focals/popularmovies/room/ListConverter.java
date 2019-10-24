@@ -15,15 +15,13 @@ public class ListConverter {
 
         Gson gson = new Gson();
         Type type = new TypeToken<List<String>>() {}.getType();
-        String json = gson.toJson(list, type);
-        return json;
+        return gson.toJson(list, type);
     }
 
     @TypeConverter
     public List<String> stringToList(String string) {
         Gson gson = new Gson();
         Type type = new TypeToken<List<String>>() {}.getType();
-        List<String> json = gson.fromJson(string,type);
-        return json;
+        return gson.fromJson(string,type);
     }
 }
