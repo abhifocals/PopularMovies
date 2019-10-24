@@ -251,8 +251,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 });
             }
         }
-
     }
+
+
+    ///// ***** Helpers ***** /////
 
     private void setupViewModel(final LiveData<List<Movie>> movieData) {
         movieData.observe(this, new Observer<List<Movie>>() {
@@ -273,7 +275,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
-
     }
 
     private void hideProgressBar() {
@@ -312,7 +313,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         menu.findItem(R.id.sort_rated).setEnabled(true);
         menu.findItem(R.id.sort_favorites).setEnabled(true);
-
     }
 
     private void hideTopRatedMenu() {
@@ -320,7 +320,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         menu.findItem(R.id.sort_popular).setEnabled(true);
         menu.findItem(R.id.sort_favorites).setEnabled(true);
-
     }
 
     private void hideFavoriteMenu() {
