@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static final String TAG = "Test";
     MainViewModel mainViewModel;
     TextView error;
-    public static final String MOVIE_ID= "MOVIE_ID";
+    public static final String MOVIE_ID = "MOVIE_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +102,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         getMenuInflater().inflate(R.menu.sort_menu, menu);
 
         if (LOADED_POPULAR) {
-            hidePopularMenu();
+            setMenuOptions(false, true, true);
 
         } else if (LOADED_TOP_RATED) {
-            hideTopRatedMenu();
+            setMenuOptions(true, false, true);
 
         } else if (LOADED_FAVORITE) {
-            hideFavoriteMenu();
+            setMenuOptions(true, true, false);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 setupViewModel(mainViewModel.getPopularMoviesData());
 
                 // Disable this option, enable other
-                hidePopularMenu();
+                setMenuOptions(false, true, true);
                 setLoadedPopular();
 
                 break;
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                 }
 
                 // Disable this option, enable other
-                hideTopRatedMenu();
+                setMenuOptions(true, false, true);
                 setLoadedTopRated();
 
                 break;
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             case R.id.sort_favorites:
 
                 showProgressBar();
-                hideFavoriteMenu();
+                setMenuOptions(true, true, false);
                 setLoadedFavorite();
 
                 mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
@@ -308,25 +308,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         rv_main.setVisibility(View.INVISIBLE);
     }
 
-    private void hidePopularMenu() {
-        menu.findItem(R.id.sort_popular).setEnabled(false);
-
-        menu.findItem(R.id.sort_rated).setEnabled(true);
-        menu.findItem(R.id.sort_favorites).setEnabled(true);
-    }
-
-    private void hideTopRatedMenu() {
-        menu.findItem(R.id.sort_rated).setEnabled(false);
-
-        menu.findItem(R.id.sort_popular).setEnabled(true);
-        menu.findItem(R.id.sort_favorites).setEnabled(true);
-    }
-
-    private void hideFavoriteMenu() {
-        menu.findItem(R.id.sort_favorites).setEnabled(false);
-
-        menu.findItem(R.id.sort_popular).setEnabled(true);
-        menu.findItem(R.id.sort_rated).setEnabled(true);
+    private void setMenuOptions(boolean popular, boolean rated, boolean favorite) {
+        menu.findItem(R.id.sort_popular).setEnabled(popular);
+        menu.findItem(R.id.sort_rated).setEnabled(rated);
+        menu.findItem(R.id.sort_favorites).setEnabled(favorite);
     }
 
     private void setLoadedPopular() {
