@@ -35,23 +35,31 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
     private Menu menu;
-    MovieDatabase db;
-    MovieDao movieDao;
 
-    public static boolean GET_POPULAR;
+    /**
+     * Used for restricting network call to one time only.
+     **/
+    private static boolean GET_POPULAR;
     private static boolean GET_TOP_RATED;
 
+    /**
+     * Used for keeping track of which list is loaded.
+     * Needed during item click.
+     */
     private static boolean LOADED_POPULAR;
     private static boolean LOADED_TOP_RATED;
     private static boolean LOADED_FAVORITE;
 
+    /**
+     * Used for keeping track of state during rotation.
+     */
     private static String loadedPopular = "loadedPopular";
     private static String loadedTopRated = "loadedTopRated";
     private static String loadedFavorite = "loadedFavorite";
 
-    private static final String TAG = "Test";
-    MainViewModel mainViewModel;
-    TextView error;
+    private  MovieDao movieDao;
+    private MainViewModel mainViewModel;
+    private TextView errorView;
     public static final String MOVIE_ID = "MOVIE_ID";
 
     @Override
@@ -62,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         // Initializing Views
         rv_main = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progressBar);
-        error = (TextView) findViewById(R.id.tv_error);
+        errorView = (TextView) findViewById(R.id.tv_error);
 
         // Get DB
-        db = MovieDatabase.getInstance(this);
+        MovieDatabase db = MovieDatabase.getInstance(this);
         movieDao = db.movieDao();
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         showProgressBar();
@@ -128,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // Disable this option, enable other
                 setMenuOptions(false, true, true);
-//                setLoadedList(true, false, false);
 
                 break;
 
@@ -146,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // Disable this option, enable other
                 setMenuOptions(true, false, true);
-//                setLoadedList(false, true, false);
 
                 break;
 
@@ -154,13 +160,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 showProgressBar();
                 setMenuOptions(true, true, false);
-//                setLoadedList(false, false, true);
 
                 mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
                     @Override
                     public void onChanged(List<Movie> movies) {
                         if (movies.size() == 0) {
-                            showEmptyFavoriteListMessage();
+                            showError(R.string.emptyFavListMessage);
                         } else {
                             setUpAdapterAndLayoutManager(movies);
                         }
@@ -206,7 +211,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             super.onPostExecute(s);
 
             if (s == null) {
-                showError();
+                showError(R.string.error);
+
+                // Hide Overflow Menu
+                menu.setGroupVisible(R.id.overflowMenu, false);
+
                 return;
             }
 
@@ -253,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         }
     }
 
-
     ///// ***** Helpers ***** /////
 
     private void setupViewModel(final LiveData<List<Movie>> movieData) {
@@ -269,22 +277,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         MainAdapter adapter = new MainAdapter(listOfMovies, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
-        hideProgressBar();
-        hideNoFavoriteMessage();
-
         rv_main.setAdapter(adapter);
         rv_main.setHasFixedSize(true);
         rv_main.setLayoutManager(gridLayoutManager);
-    }
 
-    private void hideProgressBar() {
         rv_main.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-    }
-
-    private void hideNoFavoriteMessage() {
-        rv_main.setVisibility(View.VISIBLE);
-        error.setVisibility(View.INVISIBLE);
     }
 
     private void showProgressBar() {
@@ -292,29 +290,26 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    private void showError() {
-        progressBar.setVisibility(View.INVISIBLE);
-        error.setText(getString(R.string.error));
-        error.setVisibility(View.VISIBLE);
+    /**
+     * Used for displaying error if response is null or no  favorite items
+     **/
 
-        // Hide Overflow Menu
-        menu.setGroupVisible(R.id.overflowMenu, false);
+    private void showError(int error) {
+        progressBar.setVisibility(View.INVISIBLE);
+        errorView.setText(getString(error));
+        errorView.setVisibility(View.VISIBLE);
     }
 
-    private void showEmptyFavoriteListMessage() {
-        progressBar.setVisibility(View.INVISIBLE);
-        error.setText(getString(R.string.emptyFavListMessage));
-        error.setVisibility(View.VISIBLE);
-        rv_main.setVisibility(View.INVISIBLE);
-    }
+    /**
+     * This disables the menu option for the currently loaded list
+     * Also sets flags that are used for determining which list was loaded for item click method
+     **/
 
     private void setMenuOptions(boolean popular, boolean rated, boolean favorite) {
-        // This disables the menu option for the currently loaded list
         menu.findItem(R.id.sort_popular).setEnabled(popular);
         menu.findItem(R.id.sort_rated).setEnabled(rated);
         menu.findItem(R.id.sort_favorites).setEnabled(favorite);
 
-        // These flags are used for determining which list was loaded for item click method
         LOADED_POPULAR = !popular;
         LOADED_TOP_RATED = !rated;
         LOADED_FAVORITE = !favorite;
