@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // Disable this option, enable other
                 setMenuOptions(false, true, true);
-                setLoadedPopular();
+//                setLoadedList(true, false, false);
 
                 break;
 
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 // Disable this option, enable other
                 setMenuOptions(true, false, true);
-                setLoadedTopRated();
+//                setLoadedList(false, true, false);
 
                 break;
 
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
                 showProgressBar();
                 setMenuOptions(true, true, false);
-                setLoadedFavorite();
+//                setLoadedList(false, false, true);
 
                 mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
                     @Override
@@ -309,26 +309,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     private void setMenuOptions(boolean popular, boolean rated, boolean favorite) {
+        // This disables the menu option for the currently loaded list
         menu.findItem(R.id.sort_popular).setEnabled(popular);
         menu.findItem(R.id.sort_rated).setEnabled(rated);
         menu.findItem(R.id.sort_favorites).setEnabled(favorite);
-    }
 
-    private void setLoadedPopular() {
-        LOADED_POPULAR = true;
-        LOADED_TOP_RATED = false;
-        LOADED_FAVORITE = false;
-    }
-
-    private void setLoadedTopRated() {
-        LOADED_POPULAR = false;
-        LOADED_TOP_RATED = true;
-        LOADED_FAVORITE = false;
-    }
-
-    private void setLoadedFavorite() {
-        LOADED_POPULAR = false;
-        LOADED_TOP_RATED = false;
-        LOADED_FAVORITE = true;
+        // These flags are used for determining which list was loaded for item click method
+        LOADED_POPULAR = !popular;
+        LOADED_TOP_RATED = !rated;
+        LOADED_FAVORITE = !favorite;
     }
 }
