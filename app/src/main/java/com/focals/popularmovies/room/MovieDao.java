@@ -23,9 +23,6 @@ public interface MovieDao {
     @Query("SELECT * FROM Movie where movieId = :movieId")
     LiveData<Movie> getMovieByMovieId(int movieId);
 
-    @Query("SELECT * FROM movie where id = :id")
-    LiveData<Movie> getMovieById(int id);
-
     @Query("SELECT * FROM movie")
     List<Movie> getMovies();
 
@@ -37,9 +34,6 @@ public interface MovieDao {
 
     @Query("SELECT * FROM movie ORDER By popularity DESC")
     LiveData<List<Movie>> getPopularMovies();
-
-    @Query("SELECT * FROM movie ORDER By favorite DESC")
-    List<Movie> getFavoriteMovies();
 
     @Query("SELECT * FROM movie ORDER By rating DESC")
     LiveData<List<Movie>> getTopRatedMovies();
