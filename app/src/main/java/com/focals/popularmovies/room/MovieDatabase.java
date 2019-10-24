@@ -21,7 +21,6 @@ public abstract class MovieDatabase extends RoomDatabase {
     public static MovieDatabase getInstance(Context context) {
         if (sInstance == null) {
             synchronized (LOCK) {
-                // TODO: remove allowMainThread
                 sInstance = Room.databaseBuilder(context.getApplicationContext(), MovieDatabase.class, DATABASE_NAME).build();
             }
         }
