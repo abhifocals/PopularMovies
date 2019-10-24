@@ -180,17 +180,23 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             try {
                 JSONObject review = new JSONObject(s);
 
-                String content = new JSONArray(review.getString("results")).getJSONObject(0).getString("content");
+                // Disable the Review button if no review
 
-                // Room
-                currentMovie.setReview(content);
+                if (review.getString("results").equals("[]")) {
+                    Toast.makeText(MovieDetailActivity.this, getString(R.string.noReviewMessage), Toast.LENGTH_SHORT).show();
+                } else {
 
-                // Start Review Activity here
-                Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
-                intent.putExtra(REVIEW_TAG, content);
+                    String content = new JSONArray(review.getString("results")).getJSONObject(0).getString("content");
 
-                startActivity(intent);
+                    // Room
+                    currentMovie.setReview(content);
 
+                    // Start Review Activity here
+                    Intent intent = new Intent(getApplicationContext(), ReviewActivity.class);
+                    intent.putExtra(REVIEW_TAG, content);
+
+                    startActivity(intent);
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

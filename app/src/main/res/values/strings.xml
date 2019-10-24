@@ -13,4 +13,5 @@
     <string name="reviewActivityLabel">Review</string>
     <string name="addToFavToast">Added to Favorites</string>
     <string name="removeFromFavToast">Removed from Favorites</string>
+    <string name="noReviewMessage">Sorry no review available for this movie at this time.</string>
 </resources>
