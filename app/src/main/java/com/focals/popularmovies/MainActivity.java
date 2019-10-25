@@ -29,9 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity implements MainAdapter.OnClickHandler {
 
     private RecyclerView rv_main;
-    private ArrayList<Movie> popularList;
-    private ArrayList<Movie> topRatedList = new ArrayList<>();
-
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
     private Menu menu;
@@ -53,14 +50,18 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     /**
      * Used for keeping track of state during rotation.
      */
-    private static final String loadedPopular = "loadedPopular";
-    private static final String loadedTopRated = "loadedTopRated";
-    private static final String loadedFavorite = "loadedFavorite";
+    private static final String LOAD_POPULAR = "loadedPopular";
+    private static final String LOAD_TOP_RATED = "loadedTopRated";
+    private static final String LOAD_FAVORITE = "loadedFavorite";
 
     private MovieDao movieDao;
     private MainViewModel mainViewModel;
     private TextView errorView;
     public static final String MOVIE_ID = "MOVIE_ID";
+
+    private ArrayList<Movie> popularMovies;
+    private ArrayList<Movie> topRatedMovies;
+    private ArrayList<Movie> favoriteMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +80,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         showProgressBar();
 
         // Upon Rotation
-        if (savedInstanceState != null && savedInstanceState.getBoolean(loadedPopular)) {
+        if (savedInstanceState != null && savedInstanceState.getBoolean(LOAD_POPULAR)) {
             setUpAdapterAndLayoutManager(mainViewModel.getPopularMoviesData().getValue());
-        } else if (savedInstanceState != null && savedInstanceState.getBoolean(loadedTopRated)) {
+        } else if (savedInstanceState != null && savedInstanceState.getBoolean(LOAD_TOP_RATED)) {
             setUpAdapterAndLayoutManager(mainViewModel.getTopRatedMoviesData().getValue());
-        } else if (savedInstanceState != null && savedInstanceState.getBoolean(loadedFavorite)) {
+        } else if (savedInstanceState != null && savedInstanceState.getBoolean(LOAD_FAVORITE)) {
             setUpAdapterAndLayoutManager(mainViewModel.getFavoriteMovieData().getValue());
         } else {
             GET_POPULAR = true;
@@ -93,15 +94,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             fetchTask = new FetchMovieData();
             fetchTask.execute(NetworkUtils.getPopularMoviesURL());
         }
+
+        setupViewModel();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(loadedPopular, LOADED_POPULAR);
-        outState.putBoolean(loadedTopRated, LOADED_TOP_RATED);
-        outState.putBoolean(loadedFavorite, LOADED_FAVORITE);
+        outState.putBoolean(LOAD_POPULAR, LOADED_POPULAR);
+        outState.putBoolean(LOAD_TOP_RATED, LOADED_TOP_RATED);
+        outState.putBoolean(LOAD_FAVORITE, LOADED_FAVORITE);
     }
 
     @Override
@@ -125,52 +128,29 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
+        showProgressBar();
+
         switch (item.getItemId()) {
 
             case R.id.sort_popular:
-
-                showProgressBar();
-
-                // Setup ViewModel
-                setupViewModel(mainViewModel.getPopularMoviesData());
-
-                // Disable this option, enable other
                 setMenuOptions(false, true, true);
-
+                setUpAdapterAndLayoutManager(popularMovies);
                 break;
 
             case R.id.sort_rated:
-
-                showProgressBar();
+                setMenuOptions(true, false, true);
 
                 if (GET_TOP_RATED) {
                     fetchTask = new FetchMovieData();
                     fetchTask.execute(NetworkUtils.getTopRatedMoviesURL());
                 } else {
-                    // Setup ViewModel
-                    setupViewModel(mainViewModel.getTopRatedMoviesData());
+                    setUpAdapterAndLayoutManager(topRatedMovies);
                 }
-
-                // Disable this option, enable other
-                setMenuOptions(true, false, true);
-
                 break;
 
             case R.id.sort_favorites:
-
-                showProgressBar();
                 setMenuOptions(true, true, false);
-
-                mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
-                    @Override
-                    public void onChanged(List<Movie> movies) {
-                        if (movies.size() == 0) {
-                            showError(R.string.emptyFavListMessage);
-                        } else {
-                            setUpAdapterAndLayoutManager(movies);
-                        }
-                    }
-                });
+                loadFavorites();
         }
 
         return super.onOptionsItemSelected(item);
@@ -182,13 +162,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         int movieId = 0;
 
         if (LOADED_POPULAR) {
-            movieId = mainViewModel.getPopularMoviesData().getValue().get(index).getMovieId();
+            movieId = popularMovies.get(index).getMovieId();
 
         } else if (LOADED_TOP_RATED) {
-            movieId = mainViewModel.getTopRatedMoviesData().getValue().get(index).getMovieId();
+            movieId = topRatedMovies.get(index).getMovieId();
 
         } else if (LOADED_FAVORITE) {
-            movieId = mainViewModel.getFavoriteMovieData().getValue().get(index).getMovieId();
+            movieId = favoriteMovies.get(index).getMovieId();
         }
 
         intent.putExtra(MOVIE_ID, movieId);
@@ -220,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
             }
 
             if (GET_POPULAR) {
-                popularList = MovieJsonParser.buildMovieArray(s);
+                final ArrayList<Movie> popularList = MovieJsonParser.buildMovieArray(s);
                 GET_POPULAR = false;
 
                 // Room Insert into Database
@@ -231,39 +211,50 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
                     }
                 });
 
-                setupViewModel(mainViewModel.getPopularMoviesData());
+                setUpAdapterAndLayoutManager(popularList);
 
             } else if (GET_TOP_RATED) {
-                topRatedList = MovieJsonParser.buildMovieArray(s);
+                final ArrayList<Movie> topRatedList = MovieJsonParser.buildMovieArray(s);
                 GET_TOP_RATED = false;
 
                 // Room Insert into Database
                 AppExecutors.getsInstance().getDiskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-
                         movieDao.insertMovies(topRatedList);
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Setup ViewModel
-                                setupViewModel(mainViewModel.getTopRatedMoviesData());
-                            }
-                        });
                     }
                 });
+
+                setUpAdapterAndLayoutManager(topRatedList);
             }
         }
     }
 
     ///// ***** Helpers ***** /////
 
-    private void setupViewModel(final LiveData<List<Movie>> movieData) {
-        movieData.observe(this, new Observer<List<Movie>>() {
+    private void setupViewModel() {
+        mainViewModel.getPopularMoviesData().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
-                setUpAdapterAndLayoutManager(movies);
+                popularMovies = new ArrayList<>(movies);
+            }
+        });
+
+        mainViewModel.getTopRatedMoviesData().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                topRatedMovies = new ArrayList<>(movies);
+            }
+        });
+
+        mainViewModel.getFavoriteMovieData().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                favoriteMovies = new ArrayList<>(movies);
+
+                if (LOADED_FAVORITE) {
+                    loadFavorites();
+                }
             }
         });
     }
@@ -278,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         rv_main.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
+        errorView.setVisibility(View.INVISIBLE);
     }
 
     private void showProgressBar() {
@@ -308,5 +300,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
         LOADED_POPULAR = !popular;
         LOADED_TOP_RATED = !rated;
         LOADED_FAVORITE = !favorite;
+    }
+
+    private void loadFavorites() {
+        if (favoriteMovies.size() == 0) {
+            showError(R.string.emptyFavListMessage);
+            rv_main.setVisibility(View.INVISIBLE);
+        } else {
+            setUpAdapterAndLayoutManager(favoriteMovies);
+        }
     }
 }
