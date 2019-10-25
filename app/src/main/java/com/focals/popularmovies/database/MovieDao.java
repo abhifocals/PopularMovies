@@ -21,9 +21,6 @@ public interface MovieDao {
     @Query("SELECT * FROM Movie where movieId = :movieId")
     LiveData<Movie> getMovieByMovieId(int movieId);
 
-    @Query("SELECT * FROM movie")
-    List<Movie> getMovies();
-
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateMovie(Movie movie);
 
