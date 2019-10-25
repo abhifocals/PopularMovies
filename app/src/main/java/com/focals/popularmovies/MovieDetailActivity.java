@@ -27,7 +27,6 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,10 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailersAdapter.OnClickHandler, View.OnClickListener {
 
-    private LiveData<Movie> currentMovieData;
     private Movie currentMovie;
     private List<String> trailerUrls;
-    private String loadedData;
     private TextView favoriteButton;
     public static final String REVIEW_TAG = "REVIEW";
 
@@ -107,7 +104,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         this.trailerUrls = trailerUrls;
     }
 
-    public void addToFavorites(View view) {
+    private void addToFavorites(View view) {
         Toast toast = Toast.makeText(this, getResources().getString(R.string.addToFavToast), Toast.LENGTH_SHORT);
         toast.show();
 
@@ -122,7 +119,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         });
     }
 
-    public void removeFromFavorites(View view) {
+    private void removeFromFavorites() {
         Toast toast = Toast.makeText(this, getResources().getString(R.string.removeFromFavToast), Toast.LENGTH_SHORT);
         toast.show();
 
@@ -137,7 +134,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         });
     }
 
-    public void showReview(View view) {
+    public void showReview() {
         FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
         reviewTask.execute();
     }
@@ -161,7 +158,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
             if (((Button) v).getText().equals(getString(R.string.addFavorite))) {
                 addToFavorites(v);
             } else {
-                removeFromFavorites(v);
+                removeFromFavorites();
             }
         }
     }

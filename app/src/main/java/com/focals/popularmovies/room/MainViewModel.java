@@ -13,8 +13,8 @@ import androidx.lifecycle.LiveData;
 public class MainViewModel extends AndroidViewModel {
 
     final LiveData<List<Movie>> popularMoviesData;
-    final LiveData<List<Movie>> topRatedMoviesData;
-    final LiveData<List<Movie>> favoriteMovieData;
+    private final LiveData<List<Movie>> topRatedMoviesData;
+    private final LiveData<List<Movie>> favoriteMovieData;
 
     public MainViewModel(@NonNull Application application) {
         super(application);

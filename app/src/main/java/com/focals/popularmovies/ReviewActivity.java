@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    TextView textViewReview;
+    private TextView textViewReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

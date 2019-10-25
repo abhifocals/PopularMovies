@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static final String LOAD_FAVORITE = "loadedFavorite";
 
     /**
-     * Passed to MovieDetailActivity
+     * Passed to MovieDetailActivity.
      */
     public static final String MOVIE_ID = "MOVIE_ID";
 
@@ -164,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
     /**
      * Clicks the movie and launches MovieDetailActivity.
-     * @param index
+     * @param index Index of the movie clicked from the list.
      */
 
     @Override
@@ -289,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     /**
-     * Used for displaying error if response is null or no  favorite items
+     * Used for displaying error if response is null or no  favorite items.
      **/
 
     private void showError(int error) {
@@ -299,8 +298,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     }
 
     /**
-     * This disables the menu option for the currently loaded list
-     * Also sets flags that are used for determining which list was loaded for item click method
+     * This disables the menu option for the currently loaded list.
+     * Also sets flags that are used for determining which list was loaded for item click method.
      **/
 
     private void setMenuOptions(boolean popular, boolean rated, boolean favorite) {

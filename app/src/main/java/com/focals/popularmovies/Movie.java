@@ -16,7 +16,7 @@ public class Movie {
     double rating;
     private double popularity;
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey()
     private int movieId;
     private boolean favorite;
     private String review;
@@ -90,38 +90,6 @@ public class Movie {
 
     public List<String> getTrailers() {
         return trailers;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
-
-    public void setPlotSynopsis(String plotSynopsis) {
-        this.plotSynopsis = plotSynopsis;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setFavorite(boolean favorite) {
