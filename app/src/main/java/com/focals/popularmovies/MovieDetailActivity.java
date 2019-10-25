@@ -134,7 +134,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
         });
     }
 
-    public void showReview() {
+    public void showReview(View view) {
         FetchMovieReviewTask reviewTask = new FetchMovieReviewTask();
         reviewTask.execute();
     }
