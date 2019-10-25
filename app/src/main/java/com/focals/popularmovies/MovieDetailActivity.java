@@ -72,7 +72,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailersAd
                 currentMovie = movie;
 
                 title.setText(movie.title);
-                Picasso.get().load(movie.posterPath).into(thumbnail);
+                Picasso.get().load(movie.posterPath).error(R.drawable.placeholder).into(thumbnail);
                 releaseDate.setText(movie.releaseDate);
                 plot.setText(movie.plotSynopsis);
                 rating.setText(String.valueOf(movie.rating));
