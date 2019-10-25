@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.focals.popularmovies.room.MovieDao;
-import com.focals.popularmovies.room.MovieDatabase;
-import com.focals.popularmovies.room.MovieDetailViewModel;
-import com.focals.popularmovies.room.MovieDetailViewModelFactory;
+import com.focals.popularmovies.database.MovieDao;
+import com.focals.popularmovies.database.MovieDatabase;
+import com.focals.popularmovies.database.MovieDetailViewModel;
+import com.focals.popularmovies.database.MovieDetailViewModelFactory;
 import com.focals.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 

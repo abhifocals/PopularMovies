@@ -1,4 +1,4 @@
-package com.focals.popularmovies.room;
+package com.focals.popularmovies.database;
 
 import com.focals.popularmovies.Movie;
 

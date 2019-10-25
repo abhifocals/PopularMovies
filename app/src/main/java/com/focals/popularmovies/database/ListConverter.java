@@ -1,4 +1,4 @@
-package com.focals.popularmovies.room;
+package com.focals.popularmovies.database;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

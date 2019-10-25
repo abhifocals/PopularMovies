@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.focals.popularmovies.room.MainViewModel;
-import com.focals.popularmovies.room.MovieDao;
-import com.focals.popularmovies.room.MovieDatabase;
+import com.focals.popularmovies.database.MainViewModel;
+import com.focals.popularmovies.database.MovieDao;
+import com.focals.popularmovies.database.MovieDatabase;
 import com.focals.popularmovies.utils.MovieJsonParser;
 import com.focals.popularmovies.utils.NetworkUtils;
 
