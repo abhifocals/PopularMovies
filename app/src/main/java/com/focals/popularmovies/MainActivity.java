@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private ProgressBar progressBar;
     private FetchMovieData fetchTask;
     private Menu menu;
+    private MovieDao movieDao;
+    private MainViewModel mainViewModel;
+    private TextView errorView;
 
     /**
      * Used for restricting network call to one time only.
@@ -54,11 +57,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
     private static final String LOAD_TOP_RATED = "loadedTopRated";
     private static final String LOAD_FAVORITE = "loadedFavorite";
 
-    private MovieDao movieDao;
-    private MainViewModel mainViewModel;
-    private TextView errorView;
+    /**
+     * Passed to MovieDetailActivity
+     */
     public static final String MOVIE_ID = "MOVIE_ID";
 
+    /**
+     * Storing movie lists locally since there is a slight lag between calling the database and receiving the values.
+     */
     private ArrayList<Movie> popularMovies;
     private ArrayList<Movie> topRatedMovies;
     private ArrayList<Movie> favoriteMovies;
@@ -155,6 +161,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnCli
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Clicks the movie and launches MovieDetailActivity.
+     * @param index
+     */
 
     @Override
     public void onItemClick(final int index) {
